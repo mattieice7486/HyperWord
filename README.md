@@ -46,7 +46,7 @@ We use SemVer for versioning. For the versions available, see the tags on this r
 ## Authors
 Matthew Eisenstadter - 
 Jesse Loring - 
-Amy  - 
+Amy Mclaughlin - 
 Molly Zurheide - 
 
 ## License
