@@ -6,6 +6,8 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
+// allows the entire public folder to be accessed by the server
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
