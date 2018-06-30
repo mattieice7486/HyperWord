@@ -1,21 +1,46 @@
--- Replace database_title with a title of your choosing --
--- Drops the database_title if it exists currently --
-DROP DATABASE IF EXISTS database_title;
--- Creates the "database_title" database --
-CREATE DATABASE database_title;
--- Allows the "database_title" database to be modified --
-USE database_title;
+DROP DATABASE IF EXISTS scrabbleValues_db;
+CREATE scrabbleValues_db;
 
--- Replace placeholder names with desired labels --
-CREATE TABLE table_1(
-    id INT NOT NULL AUTO_INCREMENT,
-    item_name VARCHAR(100) NOT NULL,
-    category VARCHAR(45) NOT NULL,
-    integer_1 INT default 0,
-    price DECIMAL(10,2) NULL,
-    quantity INT NULL,
-    PRIMARY KEY (id)
+USE scrabbleValues_db;
+
+CREATE TABLE letters;
+
+INSERT INTO letters(
+    letter VARCHAR (1),
+    points INT (2)
 );
 
--- Displays table_1 in the database shell --
-SELECT * FROM table_1;
+CREATE TABLE nouns;
+
+INSERT INTO nouns(
+    word VARCHAR (3, 15) NOT NULL,
+    partOfSpeech VARCHAR (15) NOT NULL
+);
+
+CREATE TABLE verbs;
+
+INSERT INTO verbs(
+    word VARCHAR (3, 15) NOT NULL,
+    partOfSpeech VARCHAR (15) NOT NULL
+);
+
+CREATE TABLE adverbs;
+
+INSERT INTO adverbs(
+    word VARCHAR (3, 15) NOT NULL,
+    partOfSpeech VARCHAR (15) NOT NULL
+);
+
+CREATE TABLE adjectives;
+
+INSERT INTO adjectives(
+    word VARCHAR (3, 15) NOT NULL,
+    partOfSpeech VARCHAR (15) NOT NULL
+);
+
+CREATE TABLE prepositions;
+
+INSERT INTO prepositions(
+    word VARCHAR (3, 15) NOT NULL,
+    partOfSpeech VARCHAR (15) NOT NULL
+);
