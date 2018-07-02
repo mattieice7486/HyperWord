@@ -23,6 +23,11 @@ module.exports = function(app) {
   });
 
   // replace #### with relevant file name for a .html file
+  app.get("/score", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/score.html"));
+  });
+
+  // replace #### with relevant file name for a .html file
   app.get("/####", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/####.html"));
   });
