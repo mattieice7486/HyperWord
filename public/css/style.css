@@ -1,48 +1,15 @@
-.keyboard {
-    float: center;
-}
-
-#row1 {
-    margin-top: 10px;
-}
-
-#row2 {
-    margin-top: 10px;
-    text-indent: 37px;
-}
-
-#row3 {
-    margin-top: 10px;
-    text-indent: 75px;
-}
-
-#row4 {
-    margin-top: 10px;
-    text-indent: 112px;
-}
-
-.btn-link {
-    background-color: tan;
-    font-family: arial;
-    font-size: 25px;
-    padding: 10px;
-    border-style: groove;
-    text-align: center;
-    height: 75px;
-    width: 75px;
-}
-
-sub {
-    font-size: 12px;
-}
-
-.btn-primary {
-    background-color: tan;
-    font-family: arial;
-    font-size: 20px;
-    padding: 10px;
-    border-style: groove;
-    text-align: center;
-    height: 80px;
-    width: 150px;
-}
+		body {
+			background-color: #ededed;
+			background-image: url("http://4.bp.blogspot.com/-9ZlCMPcJRww/Ug-07RhzLoI/AAAAAAAAA6o/oTipxIj7r6M/s1600/fzm-Wooden.Scrabble.Letter.Tiles-01.jpg");
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+			position: relative;
+			height: 100vh;
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		}
+		#survey-button {
+			margin-left: 35%;
+			margin-right: 35%;
+			width: 30%;
+		}
