@@ -28,7 +28,7 @@ var answerArray = [];
 function generateBlanks() {
     for (t=0; t=randomLength; t++) {
         answerArray.push("_ ");
-        $(".answerSpace").append(answerArray); //$ is not defined??????????????????????
+        $(".answerSpace").append(answerArray); //$ is not defined??????????????????????*****************************
         //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
     }
 }
