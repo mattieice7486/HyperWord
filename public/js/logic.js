@@ -1,5 +1,3 @@
-//$(document).ready(function() {
-
 var mysql = require("mysql");
 
 // create the connection information for the sql database
@@ -7,7 +5,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Batman9!",
+  password: null,
   database: "entries"
 });
 
@@ -31,7 +29,7 @@ function generateBlanks() {
     for (t=0; t=randomLength; t++) {
         answerArray.push("_ ");
         $(".answerSpace").append(answerArray); //$ is not defined??????????????????????
-        //need to identify position of each space??
+        //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
     }
 }
 generateBlanks();
@@ -40,28 +38,52 @@ var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random sc
 //console.log(targetScore); //ok
 
 
-var timer = function() {
+var timer = function() { //should i change this to an object??
     var secondsLeft = 30;
     $(".timer-container").append("<p><span class='timer'></span></p><br>"); // $ IS NOT DEFINED???????!!!!!!!!
-    timer = setInterval(function() { //every second...
+    setInterval(function() { //every second...
         secondsLeft--; //decrease seconds left by 1
         $(".timer").text(secondsLeft); //display seconds left
-        if (secondsLeft === 0) { //if time runs out...
+        if (secondsLeft === 0) { //if time runs out (or submit button is clicked...)
             clearInterval(timer);  //stop timer
-            endGame();
-            }
+            checkIfWon();
+        }
     }, 1000);
     console.log(secondsLeft);
 }
 timer();
 
 
-$("#letter").on("click", function() {
-    //append each letter to answer array and re-print the array
-    var letterGuessed; /////////////////////
+/*
+var timer = {
+    secondsLeft: 30,
+    append: function() {
+        $(".timer-container").append("<p><span class='timer'></span></p><br>")
+    },
+    set: function() {
+        setInterval(function() {
+            secondsLeft--;
+            $(".timer").text(secondsLeft);
+            if (secondsLeft === 0) {
+                function stop() {
+                clearInterval(timer);  //stop timer
+                checkIfWon();
+                }
+            }
+        }), 1000;
+    }
+}
+timer.set.stop(); //?????
+console.log(timer.set.stop());
+*/
+
+
+
+$("#letter").on("click", function() { //append each letter to answer array and re-print the array
+    var letterGuessed = $("#letter").val(); 
     answerArray.push(letterGuessed);
+    console.log(answerArray);
     $(".answerSpace").html = answerArray.join(" ");
-    return answerArray;
 });
 
 
@@ -73,64 +95,72 @@ $(".clear").on("click", function() {
 });
 
 
+
+//need function to restart game
+
 $(".submit").on("click", function() {
-    //check to make sure all blanks were filled in
-    var scoreArray = [];
-    for (var a=0; a<answerArray.length; a++) { //
-        if (answerArray[a] in letterValues) {
-            var letterScore = letterValues.lettersGuessed[a]; //grab value of each letter
-            scoreArray.push(letterScore); //push to array to calculate total word value
-            var sum;
-            for (var b=0; b<scoreArray.length; b++) {
-                sum += scoreArray[b]; //calculate total word value
-            };
-            return sum;
-            if (sum == targetScore) {
-                
-            //query db; if string matches any word in database...
-                connection.query(
-                    "SELECT word,wordtype FROM entries WHERE CHAR_LENGTH(word) BETWEEN 4 AND 15",
-                    function(err, results) {
-                        //console.log(results);
-                        if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
-                            //if part of speech of that matching word from dictionary matches random POS...
-                                //winner modal
-                        }
-                    });
-
-            } else {
-                endGame();
-            }
-            //compare to target score
-        }
-    };
-    return answerArray;
-    var guessedWord = answerArray.toString();
     
+    //stop timer
 
-    function endGame() { //lost game
+    function checkIfWon() {  //may need to move this outside the on click listener...
+
+    //check to make sure all blanks were filled in
+            if (answerArray.indexOf("_") >= 0) {
+                loss();
+            } else {
+                
+                //check to make sure the value of user's word matches the target score 
+                var scoreArray = [];
+                for (var a=0; a<answerArray.length; a++) {
+                    if (answerArray[a] in letterValues) {
+                        var letterScore = letterValues.answerArray[a]; //grab value of each letter
+                        scoreArray.push(letterScore); //push to array to calculate total word value
+                        var sum;
+                        for (var b=0; b<scoreArray.length; b++) {
+                            sum += scoreArray[b]; //total value
+                        };
+                        return sum;
+                        if (sum === targetScore) { //if word's value matches target value...
+                            
+                        //query db to make sure user's word is found in the dictionary
+                            connection.query(
+                                "SELECT word,wordtype FROM entries WHERE CHAR_LENGTH(word) BETWEEN 4 AND 15",
+                                function(err, results) {
+                                    if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
+                                        //console.log(results.indexOf(guessedWord));
+                                        var position = (results.indexOf(guessedWord));
+                                        //if part of speech of that matching word from dictionary matches randomly generated one...
+                                        if (randomPOS == results.position.wordtype) { //not sure about this
+                                            win();
+                                        }       
+                                        else {
+                                            loss();
+                                        }
+                                    } else {
+                                        loss();
+                                    }
+                                });
+                        } else {
+                            loss();
+                        }
+                    }
+                };
+            return answerArray;
+            var guessedWord = answerArray.toString();
+}
+
+    function loss() { //lost game
         //modal with option to restart game
     };
 
-    function winner() { //won game
+    function win() { //won game
         wins++;
         //calculate score
         //modal with option to proceed to the next round
     };
 
-
-
-    //losing conditions:
-    //time runs out
-    //score doesn't match target score
-    //word not found in dictionary
-    //word found but part of speech is wrong
-
-                    
-
-
+}
 });
-//});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
