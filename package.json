@@ -1,0 +1,23 @@
+{
+  "name": "molly-hyperword",
+  "version": "1.0.0",
+  "description": "A word game where you must fill in the blanks and match the word score",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattieice7486/HyperWord.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattieice7486/HyperWord/issues"
+  },
+  "homepage": "https://github.com/mattieice7486/HyperWord#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
