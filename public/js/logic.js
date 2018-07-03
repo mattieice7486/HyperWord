@@ -19,10 +19,8 @@ var letterValues = {
 var partsOfSpeechArray = ["noun", "adjective", "verb", "adverb", "pronoun", "preposition", "conjunction", "interjection"];
 
 var randomPOS = partsOfSpeechArray[Math.floor(Math.random()*partsOfSpeechArray.length)];
-//console.log(randomPOS); //ok
 
 var randomLength = Math.floor(Math.random() * (10 - 4) ) + 4; //generate random word length
-//console.log(randomLength); //ok
 
 var answerArray = [];
 
@@ -36,7 +34,6 @@ function generateBlanks() {
 generateBlanks();
 
 var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range?????
-//console.log(targetScore); //ok
 
 
 var timer = function() { //should i change this to an object??

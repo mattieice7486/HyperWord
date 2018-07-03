@@ -1,0 +1,48 @@
+.keyboard {
+    float: center;
+}
+
+#row1 {
+    margin-top: 10px;
+}
+
+#row2 {
+    margin-top: 10px;
+    text-indent: 37px;
+}
+
+#row3 {
+    margin-top: 10px;
+    text-indent: 75px;
+}
+
+#row4 {
+    margin-top: 10px;
+    text-indent: 112px;
+}
+
+.btn-link {
+    background-color: tan;
+    font-family: arial;
+    font-size: 25px;
+    padding: 10px;
+    border-style: groove;
+    text-align: center;
+    height: 75px;
+    width: 75px;
+}
+
+sub {
+    font-size: 12px;
+}
+
+.btn-primary {
+    background-color: tan;
+    font-family: arial;
+    font-size: 20px;
+    padding: 10px;
+    border-style: groove;
+    text-align: center;
+    height: 80px;
+    width: 150px;
+}
