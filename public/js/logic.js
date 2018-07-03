@@ -108,7 +108,7 @@ $(".submit").on("click", function() {
             if (answerArray.indexOf("_") >= 0) {
                 loss();
             } else {
-                
+
                 //check to make sure the value of user's word matches the target score 
                 var scoreArray = [];
                 for (var a=0; a<answerArray.length; a++) {
@@ -189,9 +189,5 @@ $(".submit").on("click", function() {
                         }  
                     } 
                 }
-            }else{
-                //adds wins and restarts game
-                numberWins++;
-                pickWord();
             }
             */
