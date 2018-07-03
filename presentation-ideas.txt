@@ -1,0 +1,55 @@
+intro (Amy)
+demo
+front end
+	UI
+	Javascript
+back end
+	Databases
+	Routes
+	Server, file structure
+
+
+----------------------------------------
+
+
+You will also be responsible for preparing a 10 minute formal presentation.
+
+
+
+INTRO: Amy and _____
+- Your overall application’s concept
+
+
+	Cross between Scrabble and hangman
+	How we came up with the concept
+- The motivation for its development
+
+
+	Most games these days are mindless; this actually keeps your brain sharp
+	Helps build vocabulary
+	Good for English language learners
+- Your design process
+
+
+	HyperWord name origin
+- The technologies you used (and briefly how they work)
+
+
+
+
+DEMO: ______
+- A demonstration of its functionality
+
+ (on computer and phone??)
+- Background stuff:
+	*Server
+	*Login
+	*Databases
+	*New library/technology we employed
+
+
+CLOSING: _______
+- Directions for future development
+	*Make more difficult by limiting letters given to user
+	*Show definition of the word they guessed
+	*Show other possible answers
