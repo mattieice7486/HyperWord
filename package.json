@@ -1,0 +1,35 @@
+{
+  "name": "hyperword",
+  "version": "1.0.0",
+  "description": "Word game that checks user's input and matches it to a database using part of speech and letter score",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattieice7486/HyperWord.git"
+  },
+  "keywords": [
+    "Word",
+    "Game",
+    "Dictionary",
+    "Part",
+    "of",
+    "Speech",
+    "Scrabble"
+  ],
+  "author": "Matthew Eisenstadter, Amy Mclaughlin, Jesse Loring, Molly Zurheide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattieice7486/HyperWord/issues"
+  },
+  "homepage": "https://github.com/mattieice7486/HyperWord#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.38.0"
+  }
+}

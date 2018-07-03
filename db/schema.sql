@@ -1,46 +1,19 @@
-DROP DATABASE IF EXISTS scrabbleValues_db;
-CREATE scrabbleValues_db;
+-- Replace database_title with a title of your choosing --
+-- Drops the database_title if it exists currently --
+DROP DATABASE IF EXISTS leaderboard_db;
+-- Creates the "leaderboard_db" database --
+CREATE DATABASE leaderboard_db;
+-- Allows the "leaderboard_db" database to be modified --
+USE leaderboard_db;
 
-USE scrabbleValues_db;
-
-CREATE TABLE letters;
-
-INSERT INTO letters(
-    letter VARCHAR (1),
-    points INT (2)
+-- Replace placeholder names with desired labels --
+CREATE TABLE scores(
+    id INT NOT NULL AUTO_INCREMENT,
+    user_name VARCHAR(100) NOT NULL,
+    round INT default 0,
+    score INT NULL,
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE nouns;
-
-INSERT INTO nouns(
-    word VARCHAR (3, 15) NOT NULL,
-    partOfSpeech VARCHAR (15) NOT NULL
-);
-
-CREATE TABLE verbs;
-
-INSERT INTO verbs(
-    word VARCHAR (3, 15) NOT NULL,
-    partOfSpeech VARCHAR (15) NOT NULL
-);
-
-CREATE TABLE adverbs;
-
-INSERT INTO adverbs(
-    word VARCHAR (3, 15) NOT NULL,
-    partOfSpeech VARCHAR (15) NOT NULL
-);
-
-CREATE TABLE adjectives;
-
-INSERT INTO adjectives(
-    word VARCHAR (3, 15) NOT NULL,
-    partOfSpeech VARCHAR (15) NOT NULL
-);
-
-CREATE TABLE prepositions;
-
-INSERT INTO prepositions(
-    word VARCHAR (3, 15) NOT NULL,
-    partOfSpeech VARCHAR (15) NOT NULL
-);
+-- Displays table_1 in the database shell --
+SELECT * FROM scores;
