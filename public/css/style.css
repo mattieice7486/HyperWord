@@ -1,0 +1,15 @@
+		body {
+			background-color: #ededed;
+			background-image: url("http://4.bp.blogspot.com/-9ZlCMPcJRww/Ug-07RhzLoI/AAAAAAAAA6o/oTipxIj7r6M/s1600/fzm-Wooden.Scrabble.Letter.Tiles-01.jpg");
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+			position: relative;
+			height: 100vh;
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		}
+		#survey-button {
+			margin-left: 35%;
+			margin-right: 35%;
+			width: 30%;
+		}
