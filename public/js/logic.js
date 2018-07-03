@@ -41,10 +41,10 @@ var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random sc
 var timer = function() { //should i change this to an object??
     var secondsLeft = 30;
     $(".timer-container").append("<p><span class='timer'></span></p><br>"); // $ IS NOT DEFINED???????!!!!!!!!
-    setInterval(function() { //every second...
+    setInterval(function() {
         secondsLeft--; //decrease seconds left by 1
         $(".timer").text(secondsLeft); //display seconds left
-        if (secondsLeft === 0) { //if time runs out (or submit button is clicked...)
+        if (secondsLeft === 0) { //if time runs out...
             clearInterval(timer);  //stop timer
             checkIfWon();
         }
