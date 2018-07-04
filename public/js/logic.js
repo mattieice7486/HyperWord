@@ -28,23 +28,24 @@ $(document).ready(function(){
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
 
     var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
+    console.log(randomLength);
 
     var answerArray = [];
 
-
+//on load...
     function generateBlanks() {
         for (t=0; t=randomLength; t++) {
             answerArray.push("_ ");
-            $(".answerSpace").append(answerArray);
+            $("#answerSpace").append(answerArray);
             //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
         }
     }
-    //generateBlanks();
+    //generateBlanks(); //this function kills the page!! BUT NEEDS TO BE CALLED AT SOME POINT!
     
     var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
 
 
-    var timer = function() { //should this be  to an object??
+    var timer = function() { //should this be an object??
         var secondsLeft = 30;
         $(".timer-container").append("<p><span class='timer'></span></p><br>");
         setInterval(function() {
@@ -55,9 +56,9 @@ $(document).ready(function(){
                 checkIfWon();
             }
         }, 1000);
-        console.log(secondsLeft); //ok
+        //console.log(secondsLeft); //ok
     }
-    //timer(); 
+    //timer(); //needs to be called at some point
     
 
 
@@ -94,16 +95,17 @@ console.log(timer.set.stop());
 
 
 $("#letter").on("click", function() { //append each letter to answer array and re-print the array
-    console.log("letter works")
+    //console.log("letter works") //ok
     var letterGuessed = $("#letter").val();
     answerArray.push(letterGuessed);
-    console.log(answerArray);
-    $(".answerSpace").html = answerArray.join(" ");
+    console.log(answerArray); //working so far
+    $("#answerSpace").html = answerArray.join(" ");
 });
 
 
 $("#clear").on("click", function() {
     //console.log("clear works") //ok
+    //generateBlanks(); //needs to be deleted
     answerArray = [];
     for (var z=0; z=randomLength; z++) { 
         $("#answerSpace").html("_ ");
