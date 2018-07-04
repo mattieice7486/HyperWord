@@ -42,6 +42,7 @@ $(document).ready(function(){
     }
     //generateBlanks(); //this function kills the page!! BUT NEEDS TO BE CALLED AT SOME POINT!
     
+
     var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
 
 
@@ -52,9 +53,8 @@ $(document).ready(function(){
             secondsLeft--; //decrease seconds left by 1
             $(".timer").text(secondsLeft); //display seconds left
             if (secondsLeft === 0) { //if time runs out...
-                clearInterval(timer);  //stop timer
-                checkIfWon();
-            }
+                loss(); //add stop timer to loss function; to clearInterval(timer) does timer need to be an object??
+            } return secondsLeft; //?????????????
         }, 1000);
         //console.log(secondsLeft); //ok
     }
@@ -96,7 +96,7 @@ console.log(timer.set.stop());
 
 $("#letter").on("click", function() { //append each letter to answer array and re-print the array
     //console.log("letter works") //ok
-    var letterGuessed = $("#letter").val();
+    var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!!!!!!!!!!!!!!!!!!!
     answerArray.push(letterGuessed);
     console.log(answerArray); //working so far
     $("#answerSpace").html = answerArray.join(" ");
@@ -121,6 +121,10 @@ $("#submit").on("click", function() {
 });
 
 //need function to restart game
+
+//score calculated by time left (10 points per second left)
+// LOSS IF HIT SUBMIT BUTTON!!!!!!!!!!!!!!!!!!!!!!!
+
 
 function checkIfWon() {  //may need to move this outside the on click listener...
 
@@ -167,9 +171,12 @@ function checkIfWon() {  //may need to move this outside the on click listener..
                 };
             return answerArray;
             var guessedWord = answerArray.toString();
+            console.log(guessedWord)
 }
 
     function loss() { //lost game
+        //stop timer
+        //to clearInterval(timer) does timer need to be an object??
         //modal with option to restart game
     };
 
