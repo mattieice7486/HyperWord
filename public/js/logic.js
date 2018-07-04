@@ -1,8 +1,6 @@
-//$(document).ready(function() {
-
-
 //var mysql = require("mysql");
-//var $ = require("jquery");
+
+//search for functional hangman game on github
 
 // create the connection information for the sql database
 /*var connection = mysql.createConnection({
@@ -15,7 +13,7 @@
 
 
 
-$(document).ready(function(){
+$(document).ready(function() {
     
     var wins = 0;
 
@@ -28,19 +26,22 @@ $(document).ready(function(){
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
 
     var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
-    console.log(randomLength);
+    console.log("random length is " + randomLength); //ok
 
     var answerArray = [];
+    $("#answerSpace").html(answerArray);
+
 
 //on load...
     function generateBlanks() {
-        for (t=0; t=randomLength; t++) {
+        for (t=0; t<randomLength; t++) {
             answerArray.push("_ ");
-            $("#answerSpace").append(answerArray);
             //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
         }
+        $("#answerSpace").append(answerArray);
+        console.log("answer array length is " + answerArray.length)
     }
-    //generateBlanks(); //this function kills the page!! BUT NEEDS TO BE CALLED AT SOME POINT!
+    generateBlanks();
     
 
     var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
@@ -108,7 +109,7 @@ $("#clear").on("click", function() {
     //generateBlanks(); //needs to be deleted
     answerArray = [];
     for (var z=0; z=randomLength; z++) { 
-        $("#answerSpace").html("_ ");
+        $("#answerSpace").html("_");
     }
 });
 
@@ -144,6 +145,7 @@ function checkIfWon() {  //may need to move this outside the on click listener..
                             sum += scoreArray[b]; //total value
                         };
                         return sum;
+                        console.log(sum);
                         if (sum === targetScore) { //if word's value matches target value...
                             
                         //query db to make sure user's word is found in the dictionary
@@ -188,6 +190,4 @@ function checkIfWon() {  //may need to move this outside the on click listener..
 
 }
 
-
-//});
 });
