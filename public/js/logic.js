@@ -26,20 +26,21 @@ $(document).ready(function() {
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
 
     var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
-    console.log("random length is " + randomLength); //ok
+    //console.log("random length is " + randomLength); //ok
 
     var answerArray = [];
-    $("#answerSpace").html(answerArray);
+    //$("#answerSpace").html(answerArray);
 
 
-//on load...
+    //on load...
     function generateBlanks() {
+        answerArray = [];
+        $("#answerSpace").empty();
         for (t=0; t<randomLength; t++) {
             answerArray.push("_ ");
-            //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
         }
-        $("#answerSpace").append(answerArray);
-        console.log("answer array length is " + answerArray.length)
+        $("#answerSpace").html(answerArray);
+        //console.log("answer array length is " + answerArray.length) //ok
     }
     generateBlanks();
     
@@ -47,90 +48,73 @@ $(document).ready(function() {
     var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
 
 
-    var timer = function() { //should this be an object??
-        var secondsLeft = 30;
-        $(".timer-container").append("<p><span class='timer'></span></p><br>");
-        setInterval(function() {
-            secondsLeft--; //decrease seconds left by 1
-            $(".timer").text(secondsLeft); //display seconds left
-            if (secondsLeft === 0) { //if time runs out...
-                loss(); //add stop timer to loss function; to clearInterval(timer) does timer need to be an object??
-            } return secondsLeft; //?????????????
-        }, 1000);
-        //console.log(secondsLeft); //ok
-    }
-    //timer(); //needs to be called at some point
-    
+//////////////////////////// timer ////////////////////////////
+var secondsLeft = 30;
+var intervalId;
 
-
-
-/*
-var timer = {
-    secondsLeft: 30,
-    append: function() {
-        $(".timer-container").append("<p><span class='timer'></span></p><br>")
-    },
-    set: {
-        stop: function() {
-
-        }
-    }
-///////////////////////////// need to merge these two ^ v
-    function() {
-        setInterval(function() {
-            secondsLeft--;
-            $(".timer").text(secondsLeft);
-            if (secondsLeft === 0) {
-                function stop() {
-                clearInterval(timer);  //stop timer
-                checkIfWon();
-                }
-            }
-        }), 1000;
-    }
+function run() {
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
 }
-timer.set.stop(); //?????
-console.log(timer.set.stop());
-*/
+
+function decrement() {
+    secondsLeft--;
+    $(".timer-container").text(secondsLeft);
+    if (secondsLeft === 0) {
+        stop();
+        loss();
+    }
+    return secondsLeft;
+}
+
+function stop() {
+    clearInterval(intervalId);
+}
+
+run();
+
+//////////////////////////////////////////////////////////////////////
+
+
+var score = secondsLeft * 10; //?????
 
 
 
-$("#letter").on("click", function() { //append each letter to answer array and re-print the array
+//find first occurring blank in answerarray and replace it with letter button's value
+
+$("#letter").on("click", function() { //fill in the blanks with letters guessed
     //console.log("letter works") //ok
-    var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!!!!!!!!!!!!!!!!!!!
-    answerArray.push(letterGuessed);
-    console.log(answerArray); //working so far
+    var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
+    var index = answerArray.indexOf("_"); //find first blank in array
+    if (index !== -1) {
+        answerArray[index] = letterGuessed; //...and replace with letter
+    }
+    //answerArray.push(letterGuessed);
+    console.log(answerArray);
     $("#answerSpace").html = answerArray.join(" ");
 });
 
 
 $("#clear").on("click", function() {
     //console.log("clear works") //ok
-    //generateBlanks(); //needs to be deleted
-    answerArray = [];
-    for (var z=0; z=randomLength; z++) { 
-        $("#answerSpace").html("_");
-    }
+    generateBlanks();
 });
 
 
 $("#submit").on("click", function() {
     //console.log("submit works") //ok
-    //stop timer
-
+    stop();
     checkIfWon();
 });
 
 //need function to restart game
 
-//score calculated by time left (10 points per second left)
-// LOSS IF HIT SUBMIT BUTTON!!!!!!!!!!!!!!!!!!!!!!!
 
 
-function checkIfWon() {  //may need to move this outside the on click listener...
+function checkIfWon() {
 
     //check to make sure all blanks were filled in
-            if (answerArray.indexOf("_") >= 0) {
+            if (answerArray.indexOf("_") > -1) {
                 loss();
             } else {
 
@@ -166,6 +150,7 @@ function checkIfWon() {  //may need to move this outside the on click listener..
                                         loss();
                                     }
                                 }); */
+                                //need to calculate score
                         } else {
                             loss();
                         }
@@ -176,13 +161,14 @@ function checkIfWon() {  //may need to move this outside the on click listener..
             console.log(guessedWord)
 }
 
+
     function loss() { //lost game
-        //stop timer
-        //to clearInterval(timer) does timer need to be an object??
+        stop();
         //modal with option to restart game
     };
 
     function win() { //won game
+        stop();
         wins++;
         //calculate score
         //modal with option to proceed to the next round
