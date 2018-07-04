@@ -15,7 +15,11 @@
 
 $(document).ready(function() {
     
+    var won = false;
+
+    
     var wins = 0;
+    var score = 0;
 
     var letterValues = {
         a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1, m: 3, n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10
@@ -28,8 +32,7 @@ $(document).ready(function() {
     var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
     //console.log("random length is " + randomLength); //ok
 
-    var answerArray = [];
-    //$("#answerSpace").html(answerArray);
+    var answerArray;
 
 
     //on load...
@@ -48,7 +51,9 @@ $(document).ready(function() {
     var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
 
 
-//////////////////////////// timer ////////////////////////////
+
+//////////////////////////// TIMER ////////////////////////////
+
 var secondsLeft = 30;
 var intervalId;
 
@@ -73,19 +78,16 @@ function stop() {
 
 run();
 
-//////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////
 
 
-var score = secondsLeft * 10; //?????
-
-
-
-//find first occurring blank in answerarray and replace it with letter button's value
+//find first occurring blank in answerArray and replace it with letter button's value
 
 $("#letter").on("click", function() { //fill in the blanks with letters guessed
     //console.log("letter works") //ok
     var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
-    var index = answerArray.indexOf("_"); //find first blank in array
+    var index = answerArray.indexOf("_ "); //find first blank in array
     if (index !== -1) {
         answerArray[index] = letterGuessed; //...and replace with letter
     }
@@ -107,13 +109,11 @@ $("#submit").on("click", function() {
     checkIfWon();
 });
 
-//need function to restart game
-
 
 
 function checkIfWon() {
 
-    //check to make sure all blanks were filled in
+            //check to make sure all blanks were filled in
             if (answerArray.indexOf("_") > -1) {
                 loss();
             } else {
@@ -123,14 +123,16 @@ function checkIfWon() {
                 for (var a=0; a<answerArray.length; a++) {
                     if (answerArray[a] in letterValues) {
                         var letterScore = letterValues.answerArray[a]; //grab value of each letter
-                        scoreArray.push(letterScore); //push to array to calculate total word value
+                        scoreArray.push(letterScore); //push to array
                         var sum;
                         for (var b=0; b<scoreArray.length; b++) {
-                            sum += scoreArray[b]; //total value
+                            sum += scoreArray[b]; //calculate total value
                         };
                         return sum;
                         console.log(sum);
-                        if (sum === targetScore) { //if word's value matches target value...
+
+                        //if word's value matches target value...
+                        //if (sum === targetScore) {
                             
                         //query db to make sure user's word is found in the dictionary
                             /*connection.query(
@@ -151,29 +153,65 @@ function checkIfWon() {
                                     }
                                 }); */
                                 //need to calculate score
-                        } else {
-                            loss();
-                        }
-                    }
-                };
+                        //} else {
+                          //  loss();
+                        //}
+                    //}
+                //};
             return answerArray;
             var guessedWord = answerArray.toString();
             console.log(guessedWord)
+        }
 }
 
 
-    function loss() { //lost game
-        stop();
-        //modal with option to restart game
-    };
+function loss() {
+    stop();
+    $("#lossModal").modal(); //modal with option to restart game
+    //won = false;
+    //return won;
+};
 
-    function win() { //won game
-        stop();
-        wins++;
-        //calculate score
-        //modal with option to proceed to the next round
-    };
+function win() {
+    stop();
+    $("#winModal").modal(); //modal with option to proceed to next round
+    wins++;
+    return {
+        score: score + secondsLeft * 10,
+        won: true
+    }
+    //push score to the leaderboard
+};
 
 }
-
+}
 });
+
+
+
+
+
+
+
+/*
+function startGame() { //for initial game, loss/restarted game, and won/next round game
+
+
+    //both cases:
+    //generate new target score, word length, and part of speech
+    //logic for determining wins vs. losses
+    //functionality for all 3 buttons
+
+    if (won === true) {
+        //add this round's score to total score
+        //add to win count
+    }
+    
+    else {
+        //score = 0
+        //timer reset
+        //
+    }
+
+}
+*/
