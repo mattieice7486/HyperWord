@@ -1,7 +1,4 @@
-// ON LOAD IT'S GENERATING 2 DIFFERENT RANDOMPOSs AND LENGTHS!!!!!!!!!!!!!!!!!
-
 $(document).ready(function() {
-
 
     var score = 0;
     var won;
@@ -21,7 +18,7 @@ $(document).ready(function() {
 
 
     var letterValues = {
-        a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1, m: 3, n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10
+        "a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1, "v": 4, "w": 4, "x": 8, "y": 4, "z": 10
     }
 
     var partsOfSpeechArray = ["noun", "adjective", "verb", "adverb", "pronoun", "preposition", "conjunction", "interjection"];
@@ -33,45 +30,47 @@ $(document).ready(function() {
 
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
-$("#letter").on("click", function() { //fill in the blanks with letters guessed
-    //console.log("letter works") //ok
-    var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
-    var index = answerArray.indexOf("_ "); //find first blank in array
-    if (index !== -1) {
-        answerArray[index] = letterGuessed; //...and replace with letter
-    }
-    //answerArray.push(letterGuessed);
-    console.log(answerArray);
-    $("#answerSpace").html = answerArray.join(" ");
-});
+    $("#letter").on("click", function() { //fill in the blanks with letters guessed
+        //console.log("letter works") //ok
+        var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
+        var index = answerArray.indexOf("_ "); //find first blank in array
+        if (index !== -1) {
+            answerArray[index] = letterGuessed; //...and replace with letter
+        }
+        //answerArray.push(letterGuessed);
+        console.log(answerArray);
+        $("#answerSpace").html = answerArray.join(" ");
+    });
 
 
-$("#clear").on("click", function() {
-    //console.log("clear works") //ok
-    function newBlanks() {
-        answerArray = [];
-        $("#answerSpace").empty();
-        //for (t=0; t<randomLength; t++) { //randomLength is not defined
-          //  answerArray.push("_ ");
-        //}
-        $("#answerSpace").html(answerArray);
-        //console.log("answer array length is " + answerArray.length) //ok
-    }
-    newBlanks(); ///not defined???????????????????????????????????
-});
+    $("#clear").on("click", function() { //needs work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //console.log("clear works") //ok
+        function newBlanks() {
+            var length = answerArray.length;
+            //console.log(length); //ok
+            $("#answerSpace").empty();
+            for (t=0; t<length; t++) {
+                answerArray.splice(t, 1, "_ ");
+                //replace (don't push) all array items with blanks
+            }
+            $("#answerSpace").html(answerArray);
+            //console.log("answer array length is " + answerArray.length) //ok
+        }
+        newBlanks();
+    });
 
 
-$("#submit").on("click", function() {
-    //console.log("submit works") //ok
-    stop();
-    checkIfWon();
-});
+    $("#submit").on("click", function() {
+        //console.log("submit works") //ok
+        stop();
+        checkIfWon();
+    });
 
 
 
 //////////////////////////////////////// TIMER ////////////////////////////////////////////
 
-    var secondsLeft = 5;
+    var secondsLeft = 15;
     var intervalId;
 
     function run() {
@@ -93,7 +92,6 @@ $("#submit").on("click", function() {
         clearInterval(intervalId);
     }
 
-    run();
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,6 +100,7 @@ $("#submit").on("click", function() {
         $("#lossModal").modal(); //modal with option to restart game
         won = false;
         return won;
+        console.log(won)
     };
 
     function win() {
@@ -110,7 +109,8 @@ $("#submit").on("click", function() {
         return {
             score: score + secondsLeft * 10,
             won: true
-        }
+        };
+        console.log(won)
         //push score to the leaderboard
     };
 
@@ -120,14 +120,18 @@ $("#submit").on("click", function() {
     function checkIfWon() {
 
         //check to make sure all blanks were filled in
-        if (answerArray.indexOf("_") > -1) {
+        if (answerArray.indexOf("_ ") > -1) {
             loss();
+            //console.log("blanks remaining") //ok
         } else {
+            //console.log("no blanks left") //ok
 
             //check to make sure the value of user's word matches the target score 
-            var scoreArray = [];
+            var scoreArray = []; //START HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             for (var a=0; a<answerArray.length; a++) {
+                console.log(answerArray[a]);
                 if (answerArray[a] in letterValues) {
+                    console.log("this works")
                     var letterScore = letterValues.answerArray[a]; //grab value of each letter
                     scoreArray.push(letterScore); //push to array
                     var sum;
@@ -138,10 +142,10 @@ $("#submit").on("click", function() {
                     console.log(sum);
 
                     //if word's value matches target value...
-                    //if (sum === targetScore) {
-                        
+                    if (sum === targetScore) {
+                        console.log("oh hey")
                     //query db to make sure user's word is found in the dictionary
-                        /*connection.query(
+                        /* connection.query(
                             "SELECT word,wordtype FROM entries WHERE CHAR_LENGTH(word) BETWEEN 4 AND 15",
                             function(err, results) {
                                 if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
@@ -168,6 +172,10 @@ $("#submit").on("click", function() {
         var guessedWord = answerArray.toString();
         console.log(guessedWord)
     }
+} else {
+    loss();
+}
+
 }
     } return won;
     console.log(won); //doesn't work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -175,8 +183,9 @@ $("#submit").on("click", function() {
     }
 
 
+
+
     function startGame() {
-        //need to make sure these randomized values are regenerated after game win or loss, not just on load
 
         var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
         console.log(randomPOS);
@@ -184,7 +193,9 @@ $("#submit").on("click", function() {
         var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
         console.log("random length is " + randomLength); //ok
 
-        var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
+        var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
+
+        run();
 
         function generateBlanks() {
             answerArray = [];
@@ -193,10 +204,11 @@ $("#submit").on("click", function() {
                 answerArray.push("_ ");
             }
             $("#answerSpace").html(answerArray);
+            return answerArray;
             //console.log("answer array length is " + answerArray.length) //ok
         }
     
-        console.log(targetScore);
+        //console.log(targetScore); //ok
         generateBlanks();
         return won;
         console.log(won);
@@ -205,13 +217,13 @@ $("#submit").on("click", function() {
 
 ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
     
-
     startGame();
 
-    console.log(won) // UNDEFINED -- NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS
+    console.log(won); // UNDEFINED -- NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS
 
     if (won === true) {
         score += secondsLeft * 10;
+        console.log(score);
         //carry over score
         startGame();
     }
@@ -221,5 +233,6 @@ $("#submit").on("click", function() {
         score = 0;
         startGame(); //restart game
     }
+
 
 });
