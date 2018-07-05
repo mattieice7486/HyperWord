@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    var score = 0;
+    var won = false;
 
 //var mysql = require("mysql");
 
@@ -15,8 +17,8 @@ $(document).ready(function() {
 });*/
 
 
-    var won;
-    var score;
+    //var won;
+    //var score;
 
     var letterValues = {
         a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1, m: 3, n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10
@@ -181,24 +183,25 @@ $(document).ready(function() {
 
 
     function startGame() {
-        won = false;
-        score = 0;
         generateBlanks();
         return won;
         console.log(won);
     }
 
-///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
 
+///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
     
     startGame();
 
     if (won === true) {
         score += secondsLeft * 10;
-        return score;
+        //carry over score
+        startGame();
     }
 
     else if (won === false) {
+        //reset score to 0 here rather than in startGame????????
+        score = 0;
         startGame(); //restart game
     }
 
