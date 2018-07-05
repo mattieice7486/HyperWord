@@ -1,11 +1,15 @@
+// NEXT STEPS:
+    //INSERT AMY'S KEYBOARD AND ADD ID AND LETTER VALUES
+    //FIGURE OUT HOW TO QUERY DICTIONARY DB AND PUSH TO LEADERBOARD FROM HERE!!!!!
+    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS
+
+
 $(document).ready(function() {
 
     var score = 0;
     var won;
 
 //var mysql = require("mysql");
-
-//search for functional hangman game on github
 
 // create the connection information for the sql database
 /*var connection = mysql.createConnection({
@@ -27,10 +31,9 @@ $(document).ready(function() {
 
 
 
-
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
-    $("#letter").on("click", function() { //fill in the blanks with letters guessed
+    $("#letter").on("click", function() { //fill in the blanks
         //console.log("letter works") //ok
         var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
         var index = answerArray.indexOf("_ "); //find first blank in array
@@ -43,7 +46,7 @@ $(document).ready(function() {
     });
 
 
-    $("#clear").on("click", function() { //needs work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    $("#clear").on("click", function() {
         //console.log("clear works") //ok
         function newBlanks() {
             var length = answerArray.length;
@@ -111,7 +114,7 @@ $(document).ready(function() {
             won: true
         };
         console.log(won)
-        //push score to the leaderboard
+        //need to push score to the leaderboard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
 
@@ -127,11 +130,11 @@ $(document).ready(function() {
             //console.log("no blanks left") //ok
 
             //check to make sure the value of user's word matches the target score 
-            var scoreArray = []; //START HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            var scoreArray = [];
             for (var a=0; a<answerArray.length; a++) {
-                console.log(answerArray[a]);
+                //console.log(answerArray[a]);
                 if (answerArray[a] in letterValues) {
-                    console.log("this works")
+                    //console.log("found letter in letterValues object")
                     var letterScore = letterValues.answerArray[a]; //grab value of each letter
                     scoreArray.push(letterScore); //push to array
                     var sum;
@@ -143,7 +146,7 @@ $(document).ready(function() {
 
                     //if word's value matches target value...
                     if (sum === targetScore) {
-                        console.log("oh hey")
+                        //console.log("matching target score")
                     //query db to make sure user's word is found in the dictionary
                         /* connection.query(
                             "SELECT word,wordtype FROM entries WHERE CHAR_LENGTH(word) BETWEEN 4 AND 15",
@@ -219,17 +222,15 @@ $(document).ready(function() {
     
     startGame();
 
-    console.log(won); // UNDEFINED -- NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS
+    console.log(won); // UNDEFINED
 
     if (won === true) {
-        score += secondsLeft * 10;
+        score += secondsLeft * 10; //carry over score to next round
         console.log(score);
-        //carry over score
         startGame();
     }
 
-    else if (won === false) {   //BECAUSE IT'S ALWAYS FALSE BY DEFAULT, SCRIPT RUNS TWICE!!!!!!!!!!!!!
-        //reset score to 0 here rather than in startGame????????
+    else if (won === false) {
         score = 0;
         startGame(); //restart game
     }
