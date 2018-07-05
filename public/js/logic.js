@@ -1,3 +1,6 @@
+$(document).ready(function() {
+
+
 //var mysql = require("mysql");
 
 //search for functional hangman game on github
@@ -12,14 +15,8 @@
 });*/
 
 
-
-$(document).ready(function() {
-    
-    var won = false;
-
-    
-    var wins = 0;
-    var score = 0;
+    var won;
+    var score;
 
     var letterValues = {
         a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1, m: 3, n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10
@@ -28,14 +25,16 @@ $(document).ready(function() {
     var partsOfSpeechArray = ["noun", "adjective", "verb", "adverb", "pronoun", "preposition", "conjunction", "interjection"];
 
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
+    console.log(randomPOS);
 
     var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
-    //console.log("random length is " + randomLength); //ok
+    console.log("random length is " + randomLength); //ok
+
+    var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
+    console.log(targetScore);
 
     var answerArray;
 
-
-    //on load...
     function generateBlanks() {
         answerArray = [];
         $("#answerSpace").empty();
@@ -45,73 +44,86 @@ $(document).ready(function() {
         $("#answerSpace").html(answerArray);
         //console.log("answer array length is " + answerArray.length) //ok
     }
-    generateBlanks();
-    
-
-    var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range??
 
 
+///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
-//////////////////////////// TIMER ////////////////////////////
+    $("#letter").on("click", function() { //fill in the blanks with letters guessed
+        //console.log("letter works") //ok
+        var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
+        var index = answerArray.indexOf("_ "); //find first blank in array
+        if (index !== -1) {
+            answerArray[index] = letterGuessed; //...and replace with letter
+        }
+        //answerArray.push(letterGuessed);
+        console.log(answerArray);
+        $("#answerSpace").html = answerArray.join(" ");
+    });
 
-var secondsLeft = 30;
-var intervalId;
 
-function run() {
-    clearInterval(intervalId);
-    intervalId = setInterval(decrement, 1000);
-}
+    $("#clear").on("click", function() {
+        //console.log("clear works") //ok
+        generateBlanks();
+    });
 
-function decrement() {
-    secondsLeft--;
-    $(".timer-container").text(secondsLeft);
-    if (secondsLeft === 0) {
+
+    $("#submit").on("click", function() {
+        //console.log("submit works") //ok
         stop();
-        loss();
+        checkIfWon();
+    });
+
+
+
+//////////////////////////////////////// TIMER ////////////////////////////////////////////
+
+    var secondsLeft = 5;
+    var intervalId;
+
+    function run() {
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
     }
-    return secondsLeft;
-}
 
-function stop() {
-    clearInterval(intervalId);
-}
-
-run();
-
-
-///////////////////////////////////////////////////////////////
-
-
-//find first occurring blank in answerArray and replace it with letter button's value
-
-$("#letter").on("click", function() { //fill in the blanks with letters guessed
-    //console.log("letter works") //ok
-    var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
-    var index = answerArray.indexOf("_ "); //find first blank in array
-    if (index !== -1) {
-        answerArray[index] = letterGuessed; //...and replace with letter
+    function decrement() {
+        secondsLeft--;
+        $(".timer-container").text(secondsLeft);
+        if (secondsLeft === 0) {
+            stop();
+            loss();
+        }
+        return secondsLeft;
     }
-    //answerArray.push(letterGuessed);
-    console.log(answerArray);
-    $("#answerSpace").html = answerArray.join(" ");
-});
+
+    function stop() {
+        clearInterval(intervalId);
+    }
+
+    run();
+
+////////////////////////////////////////////////////////////////////////////////////
+
+    function loss() {
+        stop();
+        $("#lossModal").modal(); //modal with option to restart game
+        won = false;
+        return won;
+    };
+
+    function win() {
+        stop();
+        $("#winModal").modal(); //modal with option to proceed to next round
+        return {
+            score: score + secondsLeft * 10,
+            won: true
+        }
+        //push score to the leaderboard
+    };
 
 
-$("#clear").on("click", function() {
-    //console.log("clear works") //ok
-    generateBlanks();
-});
+//////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
 
-
-$("#submit").on("click", function() {
-    //console.log("submit works") //ok
-    stop();
-    checkIfWon();
-});
-
-
-
-function checkIfWon() {
+        function checkIfWon() {
 
             //check to make sure all blanks were filled in
             if (answerArray.indexOf("_") > -1) {
@@ -154,7 +166,7 @@ function checkIfWon() {
                                 }); */
                                 //need to calculate score
                         //} else {
-                          //  loss();
+                        //  loss();
                         //}
                     //}
                 //};
@@ -162,56 +174,32 @@ function checkIfWon() {
             var guessedWord = answerArray.toString();
             console.log(guessedWord)
         }
-}
-
-
-function loss() {
-    stop();
-    $("#lossModal").modal(); //modal with option to restart game
-    //won = false;
-    //return won;
-};
-
-function win() {
-    stop();
-    $("#winModal").modal(); //modal with option to proceed to next round
-    wins++;
-    return {
-        score: score + secondsLeft * 10,
-        won: true
     }
-    //push score to the leaderboard
-};
-
-}
-}
-});
+        } return won;
+        //console.log(won); //doesn't work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
 
 
+    function startGame() {
+        won = false;
+        score = 0;
+        generateBlanks();
+        return won;
+        console.log(won);
+    }
 
+///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
 
-
-
-
-/*
-function startGame() { //for initial game, loss/restarted game, and won/next round game
-
-
-    //both cases:
-    //generate new target score, word length, and part of speech
-    //logic for determining wins vs. losses
-    //functionality for all 3 buttons
+    
+    startGame();
 
     if (won === true) {
-        //add this round's score to total score
-        //add to win count
-    }
-    
-    else {
-        //score = 0
-        //timer reset
-        //
+        score += secondsLeft * 10;
+        return score;
     }
 
-}
-*/
+    else if (won === false) {
+        startGame(); //restart game
+    }
+
+});
