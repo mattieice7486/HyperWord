@@ -28,6 +28,16 @@ module.exports = function(app) {
   });
 
   // replace #### with relevant file name for a .html file
+  app.get("/bootstrap", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/bootstrap.html"));
+  });
+
+  // replace #### with relevant file name for a .html file
+  app.get("/game", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/game.html"));
+  });
+
+  // replace #### with relevant file name for a .html file
   app.get("/####", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/####.html"));
   });
