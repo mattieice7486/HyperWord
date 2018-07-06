@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Score Page</title>
@@ -11,19 +12,28 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </head>
+
 <body>
 
   <div class="container">
 
     <div class="jumbotron">
-      <h1 class="text-center"><span class="fa fa-fire"></span> Hyperword</h1>
+      <h1 class="text-center">
+        <span class="fa fa-fire"></span> Hyperword</h1>
       <hr>
       <h2 class="text-center">post a score</h2>
       <br>
 
       <div class="text-center">
-        <a href="/leaderboard"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View High Scores</button></a>
-        <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
+        <a href="/leaderboard">
+          <button class="btn btn-lg btn-primary">
+            <span class="fa fa-list-alt"></span> View High Scores</button>
+        </a>
+        <a href="/">
+          <button class="btn btn-lg btn-default">
+            <span class="fa fa-home"></span>
+          </button>
+        </a>
       </div>
     </div>
 
@@ -54,7 +64,12 @@
                 <input type="text" class="form-control" id="reserve-unique-id">
               </div>
 
-              <button type="submit" class="btn btn-primary submit">Submit</button>
+              <button type="submit" class="btn btn-primary submit" id="submit-main">Submit</button>
+
+              <button type="submit" class="btn btn-success submit" id="submit-noun">Get noun</button>
+              <button type="submit" class="btn btn-danger submit" id="submit-verb">Get verb</button>
+              <button type="submit" class="btn btn-warning submit" id="submit-adj">Get adjective</button>
+              <button type="submit" class="btn btn-info submit" id="submit-adv">Get adverb</button>
             </form>
 
           </div>
@@ -62,64 +77,137 @@
 
       </div>
     </div>
-
+    <div class="row" id="definition-div"></div>
 
     <footer class="footer">
       <div class="container">
-        <p><a href="/api/scores">API Scores Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/mattieice7486/HyperWord">GitHub Repo</a></p>
+        <p>
+          <a href="/api/scores">API Scores Link</a> |
+          <a href="/api/waitlist">API Wait List</a> |
+          <a href="https://github.com/mattieice7486/HyperWord">GitHub Repo</a>
+        </p>
+        <p>
+          <a href="/api/all">API Dictionary All</a> |
+          <a href="/api/nouns">API Noun List</a> |
+          <a href="/api/verbs">API Verb List</a> |
+          <a href="/api/adjectives">API Adj List</a> |
+          <a href="/api/adverbs">API Adv List</a> 
+        </p>
       </div>
     </footer>
 
   </div>
 
 </body>
+
 </html>
 
 <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
+  // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+  // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+  // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+  // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+  $("#submit-noun").on("click", function (event) {
+    event.preventDefault();
 
-    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
-
-    $(".submit").on("click", function(event) {
-      event.preventDefault();
-
-      // Here we grab the form elements
-      var newReservation = {
-        customerName: $("#reserve-name").val().trim(),
-        phoneNumber: $("#reserve-phone").val().trim(),
-        customerID: $("#reserve-unique-id").val().trim()
-      };
-
-      console.log(newReservation);
-
-      // This line is the magic. It"s very similar to the standard ajax function we used.
-      // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-      // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-      // depending on if a tables is available or not.
-
-      $.post("/api/scores", newReservation,
-        function(data) {
-
-          // If a table is available... tell user they are booked.
-          if (data) {
-            alert("Yay! You are officially booked!");
+    function getNouns() {
+      $.get("/api/nouns", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
           }
+        }
+      });
+    }
+    getNouns();
+  });
 
-          // If a table is available... tell user they on the waiting list.
-          else {
-            alert("Sorry you are on the wait list");
+  $("#submit-verb").on("click", function (event) {
+    event.preventDefault();
+
+    function getVerbs() {
+      $.get("/api/verbs", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
           }
+        }
+      });
+    }
+    getVerbs();
+  });
 
-          // Clear the form when submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-          $("#reserve-unique-id").val("");
+  $("#submit-adj").on("click", function (event) {
+    event.preventDefault();
 
-        });
+    function getAdjectives() {
+      $.get("/api/adjectives", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAdjectives();
+  });
 
-    });
+  $("#submit-adv").on("click", function (event) {
+    event.preventDefault();
 
+    function getAdverbs() {
+      $.get("/api/adverbs", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAdverbs();
+  });
+
+  $("#submit-main").on("click", function (event) {
+    event.preventDefault();
+
+    // Here we grab the form elements
+    var newReservation = {
+      customerName: $("#reserve-name").val().trim(),
+      phoneNumber: $("#reserve-phone").val().trim(),
+      customerID: $("#reserve-unique-id").val().trim()
+    };
+
+    console.log(newReservation);
+
+    // This line is the magic. It"s very similar to the standard ajax function we used.
+    // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+    // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+    // depending on if a tables is available or not.
+
+    $.post("/api/scores", newReservation,
+      function (data) {
+
+        // If a table is available... tell user they are booked.
+        if (data) {
+          alert("Yay! You are officially booked!");
+        }
+
+        // If a table is available... tell user they on the waiting list.
+        else {
+          alert("Sorry you are on the wait list");
+        }
+
+        // Clear the form when submitting
+        $("#reserve-name").val("");
+        $("#reserve-phone").val("");
+        $("#reserve-unique-id").val("");
+
+      });
+
+  });
 </script>
