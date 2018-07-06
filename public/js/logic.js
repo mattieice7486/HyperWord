@@ -1,13 +1,13 @@
-var mysql = require("mysql");
+// var mysql = require("mysql");
 
 // create the connection information for the sql database
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: null,
-  database: "entries"
-});
+// var connection = mysql.createConnection({
+//   host: "localhost",
+//   port: 3306,
+//   user: "root",
+//   password: null,
+//   database: "entries"
+// });
 
 var wins = 0;
 
@@ -32,7 +32,7 @@ function generateBlanks() {
         //need to identify position of each space?? how to make sure it switches to the next blank once the blank they're on is filled out? is there a way to associate first click with first blank, for instance?
     }
 }
-generateBlanks();
+// generateBlanks();
 
 var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- is 7-30 the right range?????
 //console.log(targetScore); //ok
@@ -51,7 +51,7 @@ var timer = function() { //should i change this to an object??
     }, 1000);
     console.log(secondsLeft);
 }
-timer();
+// timer();
 
 
 /*
