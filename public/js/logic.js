@@ -12,6 +12,23 @@ $(document).ready(function() {
     var winningScore;
     var won;
 
+    function targetScore() {
+        var target = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
+        return target;
+    }
+    //console.log(targetScore()); //ok
+
+    function randomPOS() {
+        var POS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
+        $("#POS").html(POS);
+        return POS;
+    }
+
+    function randomLength() {
+        var random = Math.floor(Math.random() * (10-4)) + 4;
+        return random;
+    } 
+
     var letterValues = {
         "a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1, "v": 4, "w": 4, "x": 8, "y": 4, "z": 10
     }
@@ -138,12 +155,14 @@ $(document).ready(function() {
             console.log(data);
             $("#winModal").modal(); //modal with option to proceed to next round
             
+            console.log(winningScore)
+            console.log(won) //////////////won't work until get server hooked up
+
             return {
                 winningScore: winningScore + secondsLeft * 10,
                 won: true
             };
-            console.log(winningScore)
-            console.log(won) //////////////won't work until get server hooked up
+            
         });
     };
 
@@ -161,25 +180,25 @@ $(document).ready(function() {
         } else {
             //console.log("no blanks left") //ok
 
-            var x = Object.keys(letterValues);     //x is the list of keys
+            var x = Object.keys(letterValues); //list of letters
             //console.log(x); //ok
             //check to make sure the value of user's word matches the target score 
             var scoreArray = [];
             for (var a=0; a<answerArray.length; a++) {
-                //console.log(answerArray[a]); //ok
-                if (answerArray[a] in x) {
-                    console.log("found letter in letterValues object")
-                    var letterScore = letterValues.answerArray[a]; //grab value of each letter
+                if (x.indexOf(answerArray[a]) > 0) {
+                    //console.log("found letter") //ok
+                    var letterScore = letterValues[answerArray[a]]; //grab value of each letter
+                    //console.log(letterScore); //ok
                     scoreArray.push(letterScore); //push to array
+                    //console.log(scoreArray); //ok
                     var sum;
                     for (var b=0; b<scoreArray.length; b++) {
-                        sum += scoreArray[b]; //calculate total value
+                        sum += scoreArray[b]; //calculate word's total value
                     };
-                    return sum;
-                    console.log(sum); ////////////////////////////////////////
-
+                    console.log(typeof sum) //number!!
+                    console.log(sum) //NaN!!!!!!!!!!!!!!!!!!
                     //if word's value matches target value...
-                    if (sum === targetScore) {
+                    if (sum === targetScore()) {
                         console.log("matching target score");
 
                     //query db to make sure user's word is found in the dictionary
@@ -194,7 +213,7 @@ $(document).ready(function() {
                                 console.log(results.indexOf(guessedWord));
                                 var position = (results.indexOf(guessedWord)); //?????
                                 //if part of speech matches randomly generated one...
-                                if (randomPOS == results.position.wordtype) { //not sure about this part
+                                if (randomPOS() == results.position.wordtype) { //not sure about this part
                                     win();
                                     console.log(won); /////
                                     return won;       
@@ -208,18 +227,20 @@ $(document).ready(function() {
                                 console.log(won); /////
                                 return won;                    
                             }
-                    });
+                    })
+                    } else {
+                        loss();
                     }
                            
-                    } else { 
-                        loss();
-                        return won;
-                        console.log(won); /////
-                    }
-                    }
-                    var guessedWord = answerArray.join("");
-                    console.log(guessedWord) //ok
-                    } 
+                } else { 
+                    loss();
+                    console.log(won); /////
+                    return won;
+                }
+            }
+            var guessedWord = answerArray.join("");
+            //console.log(guessedWord) //ok
+        } 
                                     
                     return won;
                     console.log(won); /////
@@ -230,21 +251,23 @@ $(document).ready(function() {
 
     function startGame() {
 
-        var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
-        $("#POS").html(randomPOS);
-        //console.log(randomPOS);
+        randomPOS();
+        randomLength();
+        targetScore(); //generate random score -- right range??
+    
+        //console.log(targetScore()); //ok
+        //console.log(randomLength()) //ok
+        //console.log(randomPOS()) //ok
 
-        var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
-        //console.log("random length is " + randomLength); //ok
+        // NOW SUBMIT BUTTON DOESN'T ALWAYS GENERATE WIN OR LOSS //
 
-        var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
 
         run();
 
         function generateBlanks() {
             answerArray = [];
             $("#answerSpace").empty();
-            for (t=0; t<randomLength; t++) {
+            for (t=0; t<randomLength(); t++) {
                 answerArray.push("_ ");
             }
             $("#answerSpace").html(answerArray);
@@ -255,8 +278,8 @@ $(document).ready(function() {
         //console.log(targetScore); //ok
         generateBlanks();
 
-        return won;
         console.log(won); //undefined
+        return targetScore, won;
 
     }
 
