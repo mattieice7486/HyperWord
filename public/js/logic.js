@@ -1,25 +1,15 @@
 // NEXT STEPS:
-    //INSERT AMY'S KEYBOARD AND ADD ID AND LETTER VALUES
+    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS    
+    //INSERT AMY'S KEYBOARD AND ADD ID AND VALUES
     //FIGURE OUT HOW TO QUERY DICTIONARY DB AND PUSH TO LEADERBOARD FROM HERE!!!!!
-    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS
+    
+
 
 
 $(document).ready(function() {
 
-    var score = 0;
+    var winningScore;
     var won;
-
-//var mysql = require("mysql");
-
-// create the connection information for the sql database
-/*var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: null,
-  database: "entries"
-});*/
-
 
     var letterValues = {
         "a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1, "v": 4, "w": 4, "x": 8, "y": 4, "z": 10
@@ -42,7 +32,8 @@ $(document).ready(function() {
         }
         //answerArray.push(letterGuessed);
         console.log(answerArray);
-        $("#answerSpace").html = answerArray.join(" ");
+        answerArray.join(" ");
+        $("#answerSpace").html(answerArray);
     });
 
 
@@ -56,6 +47,7 @@ $(document).ready(function() {
                 answerArray.splice(t, 1, "_ ");
                 //replace (don't push) all array items with blanks
             }
+            console.log(answerArray);
             $("#answerSpace").html(answerArray);
             //console.log("answer array length is " + answerArray.length) //ok
         }
@@ -67,6 +59,30 @@ $(document).ready(function() {
         //console.log("submit works") //ok
         stop();
         checkIfWon();
+        console.log(answerArray)
+    });
+
+
+    $("#yes-lost").on("click", function() {
+        //refresh page
+        location.reload();
+    });
+
+
+    $("#no-lost").on("click", function() {
+        $("#thanksForPlaying").modal();
+    });
+
+
+    $("#yes-won").on("click", function() { // need to test this!!!!!!!!!!
+        //go to next round
+        won = true;
+        startGame();
+    });
+
+
+    $("#no-won").on("click", function() {
+        $("#thanksForPlaying").modal();
     });
 
 
@@ -103,18 +119,28 @@ $(document).ready(function() {
         $("#lossModal").modal(); //modal with option to restart game
         won = false;
         return won;
-        console.log(won)
+        console.log(won) //////////////////////////////////////?????????????
     };
+
 
     function win() {
         stop();
-        $("#winModal").modal(); //modal with option to proceed to next round
-        return {
-            score: score + secondsLeft * 10,
-            won: true
-        };
-        console.log(won)
-        //need to push score to the leaderboard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        $.ajax({
+            type: "POST",
+            url: "/api/leaderboard"
+            //data: guessedWord //pass data through this variable
+        }).then(function(data) {
+        
+            console.log(data);
+            $("#winModal").modal(); //modal with option to proceed to next round
+            
+            return {
+                winningScore: winningScore + secondsLeft * 10,
+                won: true
+            };
+            console.log(winningScore)
+            console.log(won) //////////////////////////////////////?????????????
+        });
     };
 
 
@@ -146,47 +172,45 @@ $(document).ready(function() {
 
                     //if word's value matches target value...
                     if (sum === targetScore) {
-                        //console.log("matching target score")
+                        console.log("matching target score");
+
                     //query db to make sure user's word is found in the dictionary
-                        /* connection.query(
-                            "SELECT word,wordtype FROM entries WHERE CHAR_LENGTH(word) BETWEEN 4 AND 15",
-                            function(err, results) {
-                                if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
-                                    //console.log(results.indexOf(guessedWord));
-                                    var position = (results.indexOf(guessedWord));
-                                    //if part of speech of that matching word from dictionary matches randomly generated one...
-                                    if (randomPOS == results.position.wordtype) { //not sure about this
-                                        win();
-                                    }       
-                                    else {
-                                        loss();
-                                    }
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/entries"
+                            //data: guessedWord //pass data through this variable
+                        }).then(function(data) {
+                            console.log(data.word[0]);
+                            console.log(data.word.wordtype[0]);
+                            if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary... {
+                                console.log(results.indexOf(guessedWord));
+                                var position = (results.indexOf(guessedWord));
+                                //if part of speech of that matching word from dictionary matches randomly generated one...
+                                if (randomPOS == results.position.wordtype) { //not sure about this
+                                    win();
                                 } else {
                                     loss();
                                 }
-                            }); */
-                            //need to calculate score
-                    //} else {
-                    //  loss();
-                    //}
-                //}
-            //};
-        return answerArray;
-        var guessedWord = answerArray.toString();
-        console.log(guessedWord)
-    }
-} else {
-    loss();
-}
-
-}
-    } return won;
-    console.log(won); //doesn't work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+                            } else {
+                                loss();
+                            }
+                    });
+                    }
+                           
+                    } else { 
+                        loss();
+                    }
+                    }
+                    var guessedWord = answerArray.join("");
+                    console.log(guessedWord) //ok
+                    } 
+                                    
+                    return won;       //?????????????????????????????????????????????????
+                    console.log(won);                                
+              
     }
 
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
     function startGame() {
 
@@ -213,26 +237,30 @@ $(document).ready(function() {
     
         //console.log(targetScore); //ok
         generateBlanks();
-        return won;
-        console.log(won);
+        //return won; //HOW DOES IT KNOW WHETHER THEY WON OR LOST???????????????????????
+        //console.log(won);
+
     }
 
 
 ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
     
+    //on load...
     startGame();
 
     console.log(won); // UNDEFINED
 
     if (won === true) {
-        score += secondsLeft * 10; //carry over score to next round
-        console.log(score);
+        winningScore += secondsLeft * 10; //carry over score to next round
+        console.log(winningScore);
+        console.log("won");
         startGame();
     }
 
     else if (won === false) {
-        score = 0;
+        winningScore = 0;
         startGame(); //restart game
+        console.log("lost")
     }
 
 
