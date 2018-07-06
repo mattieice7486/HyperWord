@@ -10,12 +10,27 @@
   <h1>Hangman!</h1>
 
   <p class="timer-container"></p>
-  <p id="wins"></p>
   <p id="score"></p>
+  <p id="POS"></p>
   <p id="answerSpace"></p>
   <p><input type="submit" class="btn" id="submit" value="submit"></p>
   <p><input type="button" class="btn" id="clear" value="clear"></p>
-  <p><input type="button" class="btn" id="letter" value="letter"></p>
+  
+  <!-- letters -->
+  <p>
+  <input type="button" class="letter" value="a"></input>
+  <input type="button" class="letter" value="b"></input>
+  <input type="button" class="letter" value="e"></input>
+  <input type="button" class="letter" value="i"></input>
+  <input type="button" class="letter" value="l"></input>
+  <input type="button" class="letter" value="n"></input>
+  <input type="button" class="letter" value="o"></input>
+  <input type="button" class="letter" value="o"></input>
+  <input type="button" class="letter" value="r"></input>
+  <input type="button" class="letter" value="s"></input>
+  <input type="button" class="letter" value="t"></input>
+  </p>
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -32,7 +47,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Game over! Would you like to try again?</p>
+          <p>Game over! Would you like to play again?</p>
         </div>
         <div class="modal-footer">
           <button type="button" id="yes-lost" class="btn btn-primary">Yes</button>
@@ -54,6 +69,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <!-- display score?? -->
           <p>You win! Would you like to proceed to the next round?</p>
         </div>
         <div class="modal-footer">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Score Page</title>
@@ -7,36 +8,91 @@
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/styleamy.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </head>
+
 <body>
 
   <div class="container">
 
     <div class="jumbotron">
-      <h1 class="text-center"><span class="fa fa-fire"></span> Hyperword</h1>
+      <h1 class="text-center">
+        <span class="fa fa-fire"></span> Hyperword</h1>
       <hr>
       <h2 class="text-center">post a score</h2>
       <br>
 
       <div class="text-center">
-        <a href="/leaderboard"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View High Scores</button></a>
-        <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
+        <a href="/leaderboard">
+          <button class="btn btn-lg btn-info">
+            <span class="fa fa-list-alt"></span> View High Scores</button>
+        </a>
+        <a href="/">
+          <button class="btn btn-lg btn-default">
+            <span class="fa fa-home"></span>
+          </button>
+        </a>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
 
-        <!-- Reservation Page -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">Score</h4>
           </div>
           <div class="panel-body">
-
+            <div id="keyboard">
+              <div class="row">
+                  <div class="col-md-10 btn-group" id="row1">
+                      <button type="button" class="btn btn-link" value="Q">Q<sub> 10</sub></button>
+                      <button type="button" class="btn btn-link" value="W">W<sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="E">E<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="R">R<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="T">T<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="Y">Y<sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="U">U<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="I">I<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="O">O<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="P">P<sub> 3</sub></button>
+                  </div>
+              </div>    
+              <div class="row">
+                  <div class="col-md-10 btn-group" id="row2">
+                      <button type="button" class="btn btn-link" value="A">A<sub> 1</sub></button> 
+                      <button type="button" class="btn btn-link" value="S">S<sub> 1</sub></button> 
+                      <button type="button" class="btn btn-link" value="D">D<sub> 2</sub></button> 
+                      <button type="button" class="btn btn-link" value="F">F<sub> 4</sub></button> 
+                      <button type="button" class="btn btn-link" value="G">G<sub> 2</sub></button> 
+                      <button type="button" class="btn btn-link" value="H">H<sub> 4</sub></button> 
+                      <button type="button" class="btn btn-link" value="J">J<sub> 8</sub></button> 
+                      <button type="button" class="btn btn-link" value="K">K<sub> 5</sub></button>
+                      <button type="button" class="btn btn-link" value="L">L<sub> 1</sub></button>   
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-10 btn-group" id="row3">
+                      <button type="button" class="btn btn-link" value="Z">Z<sub> 10</sub></button>
+                      <button type="button" class="btn btn-link" value="X">X<sub> 8</sub></button>
+                      <button type="button" class="btn btn-link" value="C">C<sub> 3</sub></button>       
+                      <button type="button" class="btn btn-link" value="V">V<sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="B">B<sub> 3</sub></button>
+                      <button type="button" class="btn btn-link" value="N">N<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="M">M<sub> 3</sub></button>
+                  </div>
+              </div>    
+              <div class="row">
+                  <div class="col-md-10 btn-group"  id="row4">
+                      <button type="button" class="btn btn-primary">Backspace</button>
+                      <button type="button" class="btn btn-primary">Clear</button>
+                      <button type="button" class="btn btn-primary">Submit</button>
+                  </div>
+              </div>    
+          </div>
             <form role="form">
 
               <div class="form-group">
@@ -54,7 +110,12 @@
                 <input type="text" class="form-control" id="reserve-unique-id">
               </div>
 
-              <button type="submit" class="btn btn-primary submit">Submit</button>
+              <button type="submit" class="btn btn-secondary submit" id="submit-main">Submit</button>
+
+              <button type="submit" class="btn btn-success submit" id="submit-noun">Get noun</button>
+              <button type="submit" class="btn btn-danger submit" id="submit-verb">Get verb</button>
+              <button type="submit" class="btn btn-warning submit" id="submit-adj">Get adjective</button>
+              <button type="submit" class="btn btn-info submit" id="submit-adv">Get adverb</button>
             </form>
 
           </div>
@@ -62,64 +123,141 @@
 
       </div>
     </div>
-
+    <div class="row" id="definition-div"></div>
 
     <footer class="footer">
       <div class="container">
-        <p><a href="/api/scores">API Scores Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/mattieice7486/HyperWord">GitHub Repo</a></p>
+        <p>
+          <a href="/api/scores">API Scores Link</a> |
+          <a href="/api/waitlist">API Wait List</a> |
+          <a href="https://github.com/mattieice7486/HyperWord">GitHub Repo</a>
+        </p>
+        <p>
+          <a href="/api/all">API Dictionary All</a> |
+          <a href="/api/nouns">API Noun List</a> |
+          <a href="/api/verbs">API Verb List</a> |
+          <a href="/api/adjectives">API Adj List</a> |
+          <a href="/api/adverbs">API Adv List</a> 
+        </p>
       </div>
     </footer>
 
   </div>
 
 </body>
+
 </html>
 
-<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
+  // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+  // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+  // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+  // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+  $("#submit-noun").on("click", function (event) {
+    event.preventDefault();
 
-    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
-
-    $(".submit").on("click", function(event) {
-      event.preventDefault();
-
-      // Here we grab the form elements
-      var newReservation = {
-        customerName: $("#reserve-name").val().trim(),
-        phoneNumber: $("#reserve-phone").val().trim(),
-        customerID: $("#reserve-unique-id").val().trim()
-      };
-
-      console.log(newReservation);
-
-      // This line is the magic. It"s very similar to the standard ajax function we used.
-      // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-      // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-      // depending on if a tables is available or not.
-
-      $.post("/api/scores", newReservation,
-        function(data) {
-
-          // If a table is available... tell user they are booked.
-          if (data) {
-            alert("Yay! You are officially booked!");
+    function getNouns() {
+      $.get("/api/nouns", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
           }
+        }
+      });
+    }
+    getNouns();
+  });
 
-          // If a table is available... tell user they on the waiting list.
-          else {
-            alert("Sorry you are on the wait list");
+  $("#submit-verb").on("click", function (event) {
+    event.preventDefault();
+
+    function getVerbs() {
+      $.get("/api/verbs", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
           }
+        }
+      });
+    }
+    getVerbs();
+  });
 
-          // Clear the form when submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-          $("#reserve-unique-id").val("");
+  $("#submit-adj").on("click", function (event) {
+    event.preventDefault();
 
-        });
+    function getAdjectives() {
+      $.get("/api/adjectives", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAdjectives();
+  });
 
-    });
+  $("#submit-adv").on("click", function (event) {
+    event.preventDefault();
 
+    function getAdverbs() {
+      $.get("/api/adverbs", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAdverbs();
+  });
+
+  $(".btn-link").on("click", function (event) {
+    event.preventDefault();
+    console.log($(this).val());
+  });
+
+  $("#submit-main").on("click", function (event) {
+    event.preventDefault();
+
+    // Here we grab the form elements
+    var newReservation = {
+      customerName: $("#reserve-name").val().trim(),
+      phoneNumber: $("#reserve-phone").val().trim(),
+      customerID: $("#reserve-unique-id").val().trim()
+    };
+
+    console.log(newReservation);
+
+    // This line is the magic. It"s very similar to the standard ajax function we used.
+    // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+    // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+    // depending on if a tables is available or not.
+
+    $.post("/api/scores", newReservation,
+      function (data) {
+
+        // If a table is available... tell user they are booked.
+        if (data) {
+          alert("Yay! You are officially booked!");
+        }
+
+        // If a table is available... tell user they on the waiting list.
+        else {
+          alert("Sorry you are on the wait list");
+        }
+
+        // Clear the form when submitting
+        $("#reserve-name").val("");
+        $("#reserve-phone").val("");
+        $("#reserve-unique-id").val("");
+
+      });
+
+  });
 </script>

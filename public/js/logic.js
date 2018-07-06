@@ -1,7 +1,8 @@
 // NEXT STEPS:
-    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS    
-    //INSERT AMY'S KEYBOARD AND ADD ID AND VALUES
-    //FIGURE OUT HOW TO QUERY DICTIONARY DB AND PUSH TO LEADERBOARD FROM HERE!!!!!
+    //FIGURE OUT HOW TO QUERY DICTIONARY DB AND PUSH TO LEADERBOARD FROM HERE -- need to trigger win
+    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS - good progress
+    //INSERT AMY'S KEYBOARD AND ADD ID AND VALUES - will do later
+
     
 
 
@@ -23,15 +24,16 @@ $(document).ready(function() {
 
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
-    $("#letter").on("click", function() { //fill in the blanks
+    $(".letter").on("click", function() { //fill in the blanks
         //console.log("letter works") //ok
-        var letterGuessed = $("#letter").val(); //add "letter" ID and letter values (e.g. "A") to Amy's HTML!!!!
+        var letterGuessed = $(this).val(); //add "letter" class and letter values (e.g. "A") to Amy's HTML!!!!
+        //console.log(letterGuessed); //ok
         var index = answerArray.indexOf("_ "); //find first blank in array
         if (index !== -1) {
             answerArray[index] = letterGuessed; //...and replace with letter
         }
         //answerArray.push(letterGuessed);
-        console.log(answerArray);
+        //console.log(answerArray);
         answerArray.join(" ");
         $("#answerSpace").html(answerArray);
     });
@@ -47,7 +49,7 @@ $(document).ready(function() {
                 answerArray.splice(t, 1, "_ ");
                 //replace (don't push) all array items with blanks
             }
-            console.log(answerArray);
+            //console.log(answerArray);
             $("#answerSpace").html(answerArray);
             //console.log("answer array length is " + answerArray.length) //ok
         }
@@ -59,7 +61,7 @@ $(document).ready(function() {
         //console.log("submit works") //ok
         stop();
         checkIfWon();
-        console.log(answerArray)
+        //console.log(answerArray)
     });
 
 
@@ -103,6 +105,8 @@ $(document).ready(function() {
         if (secondsLeft === 0) {
             stop();
             loss();
+            //console.log(won); //ok
+            return won;
         }
         return secondsLeft;
     }
@@ -118,8 +122,8 @@ $(document).ready(function() {
         stop();
         $("#lossModal").modal(); //modal with option to restart game
         won = false;
+        //console.log(won); //ok
         return won;
-        console.log(won) //////////////////////////////////////?????????????
     };
 
 
@@ -127,7 +131,7 @@ $(document).ready(function() {
         stop();
         $.ajax({
             type: "POST",
-            url: "/api/leaderboard"
+            url: "/api/scores"
             //data: guessedWord //pass data through this variable
         }).then(function(data) {
         
@@ -139,7 +143,7 @@ $(document).ready(function() {
                 won: true
             };
             console.log(winningScore)
-            console.log(won) //////////////////////////////////////?????????????
+            console.log(won) //////////////won't work until get server hooked up
         });
     };
 
@@ -151,16 +155,20 @@ $(document).ready(function() {
         //check to make sure all blanks were filled in
         if (answerArray.indexOf("_ ") > -1) {
             loss();
+            //console.log(won); //ok
+            return won;
             //console.log("blanks remaining") //ok
         } else {
             //console.log("no blanks left") //ok
 
+            var x = Object.keys(letterValues);     //x is the list of keys
+            //console.log(x); //ok
             //check to make sure the value of user's word matches the target score 
             var scoreArray = [];
             for (var a=0; a<answerArray.length; a++) {
-                //console.log(answerArray[a]);
-                if (answerArray[a] in letterValues) {
-                    //console.log("found letter in letterValues object")
+                //console.log(answerArray[a]); //ok
+                if (answerArray[a] in x) {
+                    console.log("found letter in letterValues object")
                     var letterScore = letterValues.answerArray[a]; //grab value of each letter
                     scoreArray.push(letterScore); //push to array
                     var sum;
@@ -168,7 +176,7 @@ $(document).ready(function() {
                         sum += scoreArray[b]; //calculate total value
                     };
                     return sum;
-                    console.log(sum);
+                    console.log(sum); ////////////////////////////////////////
 
                     //if word's value matches target value...
                     if (sum === targetScore) {
@@ -177,36 +185,44 @@ $(document).ready(function() {
                     //query db to make sure user's word is found in the dictionary
                         $.ajax({
                             type: "GET",
-                            url: "/api/entries"
+                            url: "/api/all"
                             //data: guessedWord //pass data through this variable
-                        }).then(function(data) {
-                            console.log(data.word[0]);
-                            console.log(data.word.wordtype[0]);
-                            if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary... {
+                        }).then(function(results) {
+                            console.log(results);
+                            console.log(results[0].word);
+                            if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
                                 console.log(results.indexOf(guessedWord));
-                                var position = (results.indexOf(guessedWord));
-                                //if part of speech of that matching word from dictionary matches randomly generated one...
-                                if (randomPOS == results.position.wordtype) { //not sure about this
+                                var position = (results.indexOf(guessedWord)); //?????
+                                //if part of speech matches randomly generated one...
+                                if (randomPOS == results.position.wordtype) { //not sure about this part
                                     win();
+                                    console.log(won); /////
+                                    return won;       
                                 } else {
                                     loss();
+                                    console.log(won); /////
+                                    return won;                        
                                 }
                             } else {
                                 loss();
+                                console.log(won); /////
+                                return won;                    
                             }
                     });
                     }
                            
                     } else { 
                         loss();
+                        return won;
+                        console.log(won); /////
                     }
                     }
                     var guessedWord = answerArray.join("");
                     console.log(guessedWord) //ok
                     } 
                                     
-                    return won;       //?????????????????????????????????????????????????
-                    console.log(won);                                
+                    return won;
+                    console.log(won); /////
               
     }
 
@@ -215,10 +231,11 @@ $(document).ready(function() {
     function startGame() {
 
         var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
-        console.log(randomPOS);
+        $("#POS").html(randomPOS);
+        //console.log(randomPOS);
 
         var randomLength = Math.floor(Math.random() * (10-4)) + 4; //generate random word length
-        console.log("random length is " + randomLength); //ok
+        //console.log("random length is " + randomLength); //ok
 
         var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
 
@@ -237,8 +254,9 @@ $(document).ready(function() {
     
         //console.log(targetScore); //ok
         generateBlanks();
-        //return won; //HOW DOES IT KNOW WHETHER THEY WON OR LOST???????????????????????
-        //console.log(won);
+
+        return won;
+        console.log(won); //undefined
 
     }
 
@@ -248,19 +266,17 @@ $(document).ready(function() {
     //on load...
     startGame();
 
-    console.log(won); // UNDEFINED
+    console.log(won); // UNDEFINED -- need to get it recognize true or false at this level
 
     if (won === true) {
         winningScore += secondsLeft * 10; //carry over score to next round
-        console.log(winningScore);
-        console.log("won");
+        console.log("Nice work! You earned " + winningScore + " points.");
         startGame();
     }
 
     else if (won === false) {
         winningScore = 0;
         startGame(); //restart game
-        console.log("lost")
     }
 
 

@@ -1,10 +1,10 @@
 {
     "development": {
       "username": "root",
-      "password": "root",
-      "database": "entries",
+      "password": null,
+      "database": "entries_db",
       "host": "127.0.0.1",
-      "port": 3307,
+      "port": 3306,
       "dialect": "mysql"
     },
     "test": {
@@ -12,7 +12,7 @@
       "password": null,
       "database": "",
       "host": "127.0.0.1",
-      "port": 3306,
+      "port": 3307,
       "dialect": "mysql"
     },
     "production": {
@@ -20,7 +20,7 @@
       "password": null,
       "database": "",
       "host": "127.0.0.1",
-      "port": 3306,
+      "port": 3307,
       "dialect": "mysql"
     }
   }
