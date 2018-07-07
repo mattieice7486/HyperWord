@@ -186,17 +186,19 @@ $(document).ready(function() {
             var scoreArray = [];
             for (var a=0; a<answerArray.length; a++) {
                 if (x.indexOf(answerArray[a]) > 0) {
-                    //console.log("found letter") //ok
+                    console.log("found letter") //ok
                     var letterScore = letterValues[answerArray[a]]; //grab value of each letter
                     //console.log(letterScore); //ok
                     scoreArray.push(letterScore); //push to array
                     //console.log(scoreArray); //ok
                     var sum;
+/////////////////////////////////////////// ISSUE IN THIS SECTION //////////////////////////////////////////////
                     for (var b=0; b<scoreArray.length; b++) {
-                        sum += scoreArray[b]; //calculate word's total value
+                        console.log(scoreArray[b]);
+                        sum += scoreArray[b]; //only grabs value of first letter!!!!!!!!!!!!!!!!!!!!!!!!!!
                     };
-                    console.log(typeof sum) //number!!
-                    console.log(sum) //NaN!!!!!!!!!!!!!!!!!!
+                    console.log(typeof sum) //says number
+                    console.log(sum) //NaN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     //if word's value matches target value...
                     if (sum === targetScore()) {
                         console.log("matching target score");
@@ -212,6 +214,7 @@ $(document).ready(function() {
                             if (results.indexOf(guessedWord) >= 0) { //if guessed word is found in dictionary...
                                 console.log(results.indexOf(guessedWord));
                                 var position = (results.indexOf(guessedWord)); //?????
+                                console.log(position)
                                 //if part of speech matches randomly generated one...
                                 if (randomPOS() == results.position.wordtype) { //not sure about this part
                                     win();
@@ -230,11 +233,12 @@ $(document).ready(function() {
                     })
                     } else {
                         loss();
+                        console.log(won);
                     }
                            
                 } else { 
                     loss();
-                    console.log(won); /////
+                    //console.log(won); //ok
                     return won;
                 }
             }
@@ -254,14 +258,6 @@ $(document).ready(function() {
         randomPOS();
         randomLength();
         targetScore(); //generate random score -- right range??
-    
-        //console.log(targetScore()); //ok
-        //console.log(randomLength()) //ok
-        //console.log(randomPOS()) //ok
-
-        // NOW SUBMIT BUTTON DOESN'T ALWAYS GENERATE WIN OR LOSS //
-
-
         run();
 
         function generateBlanks() {
