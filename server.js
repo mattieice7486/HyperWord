@@ -7,6 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // const db = require("./models");
+//var logic = require("public/js/logic.js");
 
 // allows the entire public folder to be accessed by the server
 app.use(express.static(path.join(__dirname, 'public')));
