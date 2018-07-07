@@ -32,10 +32,10 @@ $(document).ready(function() {
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
     $(".btn-link").on("click", function() { //fill in the blanks
-        var letterGuessed = $(this).val(); 
+        var letterGuessed = $(this).val(); //get letter
         var index = answerArray.indexOf("_ "); //find first blank in array
-        if (index !== -1) {
-            answerArray[index] = letterGuessed; //...and replace with letter
+        if (index !== -1) { //if blank exists...
+            answerArray[index] = letterGuessed; //...replace with letter
         }
         answerArray.join(" ");
         $("#answerSpace").html(answerArray);
@@ -58,7 +58,7 @@ $(document).ready(function() {
     $("#submit").on("click", function() {
         stop();
         checkIfWon();
-        //console.log(answerArray)
+        console.log(answerArray)
     });
 
 
@@ -154,7 +154,6 @@ $(document).ready(function() {
             return won;
         } else {
             var x = Object.keys(letterValues); //list of all letters
-            console.log(x)
             //check to make sure the value of user's word matches the target score
             var scoreArray = [];
             //console.log(answerArray.length) //ok
@@ -168,9 +167,8 @@ $(document).ready(function() {
             var sum = 0;
             for (var b=0; b<scoreArray.length; b++) { 
                 sum += scoreArray[b]; //doesn't always grab all the letters!!!?????
-                console.log(sum)
             };
-            console.log("total sum: " + sum) //GRABS MULTIPLE TOTAL SUMS, BUT SHOULD ONLY GIVE ONE!!!!
+            //console.log("total sum: " + sum) //GRABS MULTIPLE TOTAL SUMS, BUT SHOULD ONLY GIVE ONE!!!!
             if (sum === targetScore) {
                 console.log("matching target score");
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,15 +210,8 @@ $(document).ready(function() {
                         return won;
                     }
                            
-                //} 
-                //else { ////////////////////////////// 
-                    //loss();
-                    //console.log(won); //ok
-                    //return won;
-                //}
-            //}
             var guessedWord = answerArray.join("");
-            //console.log(guessedWord) //ok
+            console.log(guessedWord) //ok
         } 
                                     
                     return won;
