@@ -393,8 +393,9 @@ $(document).ready(function() {
                             method: "GET",
                             url: "/api/all"
                         }).then (function(results) {
+                            //console.log(guessedWord)
                             console.log(results.indexOf(guessedWord));
-                            //console.log(results[0].word);
+                            console.log(results[3000].word);
                             if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                                 //console.log("hi")
@@ -418,12 +419,14 @@ $(document).ready(function() {
                     loss();
                 }
                 var guessedWord = answerArray.join("");
-                guessedWord = '"' + guessedWord + '"';
                 guessedWord = guessedWord.toLowerCase();
-                //console.log(guessedWord) //ok
-                } 
+                guessedWord = guessedWord.split("");
+                guessedWord[0] = guessedWord[0].toUpperCase();
+                var guessedWord = guessedWord.join("");
+                console.log(guessedWord);
+                }
             }
-                    
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
