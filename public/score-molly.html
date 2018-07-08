@@ -2,11 +2,12 @@
 <html lang="en">
 
 
-<!-- get API connection working -->
-<!-- get "won" var to be returned -->
 <!-- figure out how to carry over score from one round to the next -->
 <!-- should I have one set of functions for onload and another for restartGame()? should startGame() not be     
     called on load? -->
+<!-- not sure why some words aren't found in dictionary (well, warm, etc.) -->
+<!-- game is too hard!! -->
+<!-- forget interjections?? -->
 
 
 
@@ -228,14 +229,14 @@
 
 
 
-var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
+var targetScore = Math.floor(Math.random() * (20 - 7)) + 7; //generate random score -- right range??
 //function to instantiate new targetScore??????????????????????
 
 var partsOfSpeechArray = ["noun", "adjective", "verb", "adverb", "pronoun", "preposition", "conjunction", "interjection"];
 
 var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
 
-var randomLength = Math.floor(Math.random() * (10-4)) + 4;
+var randomLength = Math.floor(Math.random() * (7-4)) + 4;
 
 var letterValues = {
     "A": 1, "B": 3, "C": 3, "D": 2, "E": 1, "F": 4, "G": 2, "H": 4, "I": 1, "J": 8, "K": 5, "L": 1, "M": 3, "N": 1, "O": 1, "P": 3, "Q": 10, "R": 1, "S": 1, "T": 1, "U": 1, "V": 4, "W": 4, "X": 8, "Y": 4, "Z": 10
@@ -289,11 +290,6 @@ $(document).ready(function() {
         checkIfWon();
     });
 
-//need both on click modal buttons and var won boolean to restart game?? 
-//do i even need var won????
-//if didn't win: just restart page or exit
-//if did, either exit or calculate score and go to next round
-
 
     $("#yes-lost").on("click", function() {
         location.reload();
@@ -306,9 +302,6 @@ $(document).ready(function() {
 
 
     $("#yes-won").on("click", function() { // need to test this!!!!!!!!!!/////////////////////
-        //////////go to next round
-        //won = true;
-        //calculate score!!!!!!!!!!!!!!!!!!!!!!!!!
         startGame();
     });
 
@@ -321,7 +314,7 @@ $(document).ready(function() {
 
 //////////////////////////////////////// TIMER ////////////////////////////////////////////
 
-    var secondsLeft = 15;
+    var secondsLeft = 60;
     var intervalId;
 
     function run() {
@@ -335,8 +328,6 @@ $(document).ready(function() {
         if (secondsLeft === 0) {
             stop();
             loss();
-            //console.log(won); //ok
-            //return won;
         }
         return secondsLeft;
     }
@@ -351,8 +342,6 @@ $(document).ready(function() {
     function loss() {
         stop();
         $("#lossModal").modal(); //modal with option to restart game
-        //won = false;
-        //return won;
     };
 
 
@@ -361,17 +350,15 @@ $(document).ready(function() {
         $.ajax({
             method: "POST",
             url: "/api/scores",
-            //data: //new leaderboard data
+            //data: //new leaderboard data///////////////////////
         }).then(function(results) {        
             console.log(results);
             $("#winModal").modal(); //modal with option to proceed to next round
             
-            console.log(winningScore)
-            //console.log(won) //////////////won't work until get server hooked up
+            console.log(winningScore);
 
             return {
                 winningScore: winningScore + secondsLeft * 10,
-                //won: true
             };
             
         });
@@ -381,43 +368,35 @@ $(document).ready(function() {
 //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
 
     function checkIfWon() {
-    //console.log(answerArray) //ok
         
         if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
             loss();
-            //return won;
         } else {
             var x = Object.keys(letterValues); //list of all letters
             //check to make sure the value of user's word matches the target score
             var scoreArray = [];
-            //console.log(answerArray) //ok
             for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
-                //console.log(answerArray[a]) //ok
                 if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
                     var letterScore = letterValues[answerArray[a]];
-                    //console.log(letterScore) //ok
                     scoreArray.push(letterScore);
-                    //console.log(answerArray[a]) //ok
                 }
             }
-            //console.log(scoreArray) //ok
             var sum = 0;
             for (var b=0; b<scoreArray.length; b++) { 
                 sum += scoreArray[b];
             };
-            //console.log("total sum: " + sum) //ok
             if (sum === targetScore) {
                 console.log("matching target score");
-//////////////////////////////////////////////////////////////////////////////////////////////////
+
                         //query db to make sure user's word is found in the dictionary
                         $.ajax({
                             method: "GET",
                             url: "/api/all"
                         }).then (function(results) {
-                            //console.log(guessedWord) //ok
-                            console.log(results.indexOf(guessedWord)) //why is it -1??????????
+                            console.log(results.indexOf(guessedWord)) //THIS GAME IS TOO HARD!!
                             //console.log(results[0].word);
                             if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                                 console.log("hi")
                                 console.log(results.indexOf(guessedWord));
                                 var position = (results.indexOf(guessedWord)); //?????
@@ -425,32 +404,21 @@ $(document).ready(function() {
                                 //if part of speech matches randomly generated one...
                                 if (randomPOS == results.position.wordtype) { //not sure about this part
                                     win();
-                                    //console.log(won); /////
-                                    //return won;       
                                 } else {
                                     loss();
-                                    //console.log(won); //////////////////
-                                    //return won;                        
                                 }
                             } else {
                                 loss();
-                                //console.log(won); ////////////////////////////////////
-                                //return won;                    
                             }
                         })
                         }
                  
                     else {  
                     loss();
-                    //console.log(won); //ok
-                    //return won;
                     //console.log(answerArray) //ok
                 }
                 //console.log(answerArray) //ok
                 var guessedWord = answerArray.join("");
-                //console.log(guessedWord) //ok
-                //console.log(won); /////NOTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //return won;
                 } 
 
             }
@@ -466,7 +434,6 @@ $(document).ready(function() {
         $("#POS").text(randomPOS);
         //$("#length").text(randomPOS);
         //need to calculate target score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! new instance of function????
-        //targetScore(); //generate random score -- right range??         
         $("#score").text("Target score: " + targetScore);
         run();
 
@@ -478,14 +445,10 @@ $(document).ready(function() {
             }
             $("#answerSpace").html(answerArray);
             return answerArray;
-            //console.log("answer array length is " + answerArray.length) //ok
         }
     
-        //console.log(targetScore); //ok
         generateBlanks();
 
-        //console.log(won); //undefined
-        //return targetScore, won;
 
     }
 
@@ -494,20 +457,6 @@ $(document).ready(function() {
     
     //on load...
     startGame(); //should I really be calling this on load, or just on new game????????????????
-
-    //console.log(won); // UNDEFINED -- need to get it recognize true or false at this level
-
-    /*if (won === true) {
-        winningScore += secondsLeft * 10; //carry over score to next round
-        console.log("Nice work! You earned " + winningScore + " points.");
-        //startGame(); //?????????????????????????????????
-    }*/
-
-    /*else if (won === false) {
-        winningScore = 0;
-        //startGame(); //????????????????????????????????
-    }*/
-
 
 });
 
