@@ -393,20 +393,17 @@ $(document).ready(function() {
                             method: "GET",
                             url: "/api/all"
                         }).then (function(results) {
-                            //console.log(guessedWord) //ok
                             console.log(results.indexOf(guessedWord));
-                            //var wordWithQuotes = '"' + guessedWord + '"';
-                            //console.log(wordWithQuotes);
                             //console.log(results[0].word);
                             if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-                                console.log("hi")
-                                console.log(indexOf(guessedWord));
+                                //console.log("hi")
+                                console.log("word found at index " + indexOf(guessedWord));
                                 var position = indexOf(guessedWord); //?????
                                 console.log(position);
-                                console.log(results[position].wordType);
+                                console.log(results[position].wordType); //the word's part of speech
                                 //if part of speech matches randomly generated one...
-                                if (randomPOS == results[position].wordtype) { //not sure about this part
+                                if (randomPOS == results[position].wordtype) {
                                     win();
                                 } else {
                                     loss();
