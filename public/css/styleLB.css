@@ -1,0 +1,29 @@
+/*Style leaderboard.html*/
+
+.jumbotron {
+    background-image: url("abstract-ancient-antique-235985\ \(1\).jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+}
+#survey-button {
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 30%;
+}
+
+.h1.text-center {
+    font-size: 23px;
+    padding-left: 0;
+    padding-right: 50px;
+    font-weight: bolder;
+}
+.h1.text-center c {
+    color: #29c68c;
+    font-size: 20px;
+}

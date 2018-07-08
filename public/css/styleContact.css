@@ -1,0 +1,59 @@
+/*Style contact.html*/
+
+.contact {
+    text-align: center;
+    width: 100%;
+    margin-top: 8%;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    color: sienna;
+}
+
+.brand {
+    color: sienna;
+    font-size: 43px;
+    padding-left: 0;
+    padding-right: 50px;
+    font-weight: bolder;
+    text-emphasis: emphasis;
+    width: 100%;
+    display: block;
+    text-align: center;
+ 
+}
+.brand b {
+    color: #29c68c;
+    font-size: 40px;
+    text-align: center;
+}
+
+#ghlink {
+    background-image: url("abstract-art-backdrop-926985.jpg");
+    color: saddlebrown;
+    font-family: arial;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 10px;
+    margin-right: 7px;
+    border-bottom: 2px black groove;
+    border-right: 2px black groove;
+    border-top: 1px bisque;
+    border-left: 1px bisque;
+    text-align: center;
+    height: 66px;
+    width: 166px;
+}
+    
+.btn.btn-link:hover, .btn.btn-link:focus {
+    color: #29c68c !important;
+    border-bottom: 2px black groove;
+    border-right: 2px black groove;
+    border-top: 1px black groove;
+    border-left: 1px black groove;
+}
