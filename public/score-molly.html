@@ -2,12 +2,12 @@
 <html lang="en">
 
 
-<!-- figure out how to carry over score from one round to the next -->
-<!-- should I have one set of functions for onload and another for restartGame()? should startGame() not be     
+<!-- never able to find words in dictionary! issue with my code or with how the words are classified? -->
+<!-- need to trigger win (or use dummy data to do so) and then figure out how to carry over score from one 
+    round to the next -->
+<!-- should I have one set of functions for onload and another for startGame()? should startGame() not be     
     called on load? -->
-<!-- not sure why some words aren't found in dictionary (well, warm, etc.) -->
-<!-- game is too hard!! -->
-<!-- forget interjections?? -->
+<!-- how to make sure the proposed POS/length/score combo exists?? -->
 
 
 
@@ -104,7 +104,7 @@
               </div>    
               <div class="row">
                   <div class="col-md-10 btn-group"  id="row4">
-                      <button type="button" class="btn btn-primary">Backspace</button>
+                      <button type="button" class="btn btn-primary" id="backspace">Backspace</button>
                       <button type="button" class="btn btn-primary" id="clear">Clear</button>
                       <button type="button" class="btn btn-primary" id="submit">Submit</button>
                   </div>
@@ -229,10 +229,11 @@
 
 
 
-var targetScore = Math.floor(Math.random() * (20 - 7)) + 7; //generate random score -- right range??
+var targetScore = Math.floor(Math.random() * (15 - 7)) + 7; //generate random score -- right range??
 //function to instantiate new targetScore??????????????????????
 
-var partsOfSpeechArray = ["noun", "adjective", "verb", "adverb", "pronoun", "preposition", "conjunction", "interjection"];
+var partsOfSpeechArray = ["noun", "adjective", "verb"];
+//"pronoun", "preposition", "conjunction", "interjection", "adverb"
 
 var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
 
@@ -245,9 +246,8 @@ var letterValues = {
 
 $(document).ready(function() {
 
-    var winningScore;
-    //var won;
     var answerArray = [];
+    var newScore = 0;
 
 
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
@@ -261,12 +261,10 @@ $(document).ready(function() {
         }
         answerArray.join(" ");
         $("#answerSpace").html(answerArray);
-        //console.log(answerArray) //ok
     });
 
 
     $("#clear").on("click", function() {
-        console.log("clear works")
         function newBlanks() {
             var length = answerArray.length;
             $("#answerSpace").empty();
@@ -279,9 +277,14 @@ $(document).ready(function() {
     });
 
 
-    $("#backspace").on("click", function() {
-        ////////////////////////////////////
-        ////////////////////////////////////
+    $("#backspace").on("click", function() { //this keeps freezing the page?!
+        //cycle through word and find last item that's not a "_"
+        for (var i=answerArray.length-1; i<answerArray.length; i--) {
+            if (answerArray[i] != "_ ") {
+                answerArray.splice(i);
+            }
+        }
+        $("#answerSpace").html(answerArray);
     });
     
 
@@ -347,20 +350,17 @@ $(document).ready(function() {
 
     function win() {
         stop();
+        newScore += (secondsLeft * 10);
+        console.log(newScore);
         $.ajax({
             method: "POST",
             url: "/api/scores",
-            //data: //new leaderboard data///////////////////////
+            data: newScore
         }).then(function(results) {        
             console.log(results);
-            $("#winModal").modal(); //modal with option to proceed to next round
-            
-            console.log(winningScore);
-
-            return {
-                winningScore: winningScore + secondsLeft * 10,
-            };
-            
+            console.log(newScore)
+            $("#winModal").modal(); //another modal, with option to proceed to next round
+            return newScore;
         });
     };
 
@@ -393,20 +393,21 @@ $(document).ready(function() {
                             method: "GET",
                             url: "/api/all"
                         }).then (function(results) {
-                            console.log(results.indexOf(guessedWord)) //THIS GAME IS TOO HARD!!
+                            console.log(results.indexOf(guessedWord));
                             //console.log(results[0].word);
                             if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                                 console.log("hi")
-                                console.log(results.indexOf(guessedWord));
-                                var position = (results.indexOf(guessedWord)); //?????
+                                console.log(indexOf(guessedWord));
+                                var position = indexOf(guessedWord); //?????
                                 console.log(position);
+                                console.log(results[position].wordType);
                                 //if part of speech matches randomly generated one...
-                                if (randomPOS == results.position.wordtype) { //not sure about this part
+                                if (randomPOS == results[position].wordtype) { //not sure about this part
                                     win();
                                 } else {
                                     loss();
-                                }
+                                }  /// DUMMY WIN STUFF?? //////////////////////////////////////
                             } else {
                                 loss();
                             }
@@ -415,16 +416,10 @@ $(document).ready(function() {
                  
                     else {  
                     loss();
-                    //console.log(answerArray) //ok
                 }
-                //console.log(answerArray) //ok
                 var guessedWord = answerArray.join("");
                 } 
-
             }
-
-         
-                                    
                     
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
