@@ -235,7 +235,17 @@
 
   $("#submit-main").on("click", function (event) {
     event.preventDefault();
-
+    function getAll() {
+      $.get("/api/all", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAll();
     // Here we grab the form elements
     var newReservation = {
       customerName: $("#reserve-name").val().trim(),
