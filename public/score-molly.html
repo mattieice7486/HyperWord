@@ -372,7 +372,7 @@ $(document).ready(function() {
         if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
             loss();
         } else {
-            var x = Object.keys(letterValues); //list of all letters
+            var x = Object.keys(letterValues); //list of all letters in alphabet
             //check to make sure the value of user's word matches the target score
             var scoreArray = [];
             for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
@@ -393,7 +393,10 @@ $(document).ready(function() {
                             method: "GET",
                             url: "/api/all"
                         }).then (function(results) {
+                            //console.log(guessedWord) //ok
                             console.log(results.indexOf(guessedWord));
+                            //var wordWithQuotes = '"' + guessedWord + '"';
+                            //console.log(wordWithQuotes);
                             //console.log(results[0].word);
                             if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -407,7 +410,7 @@ $(document).ready(function() {
                                     win();
                                 } else {
                                     loss();
-                                }  /// DUMMY WIN STUFF?? //////////////////////////////////////
+                                }  /// ENTER DUMMY WIN DATA TO TEST?? //////////////////////////////////////
                             } else {
                                 loss();
                             }
@@ -418,6 +421,9 @@ $(document).ready(function() {
                     loss();
                 }
                 var guessedWord = answerArray.join("");
+                guessedWord = '"' + guessedWord + '"';
+                guessedWord = guessedWord.toLowerCase();
+                //console.log(guessedWord) //ok
                 } 
             }
                     
@@ -427,7 +433,6 @@ $(document).ready(function() {
     function startGame() {
 
         $("#POS").text(randomPOS);
-        //$("#length").text(randomPOS);
         //need to calculate target score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! new instance of function????
         $("#score").text("Target score: " + targetScore);
         run();
@@ -533,11 +538,6 @@ $(document).ready(function() {
     }
     getAdverbs();
   });
-
-//  $(".btn-link").on("click", function (event) {
-  //  event.preventDefault();
-    //console.log($(this).val());
-  //});
 
   $("#submit-main").on("click", function (event) {
     event.preventDefault();
