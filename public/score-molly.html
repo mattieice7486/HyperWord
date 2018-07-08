@@ -2,12 +2,10 @@
 <html lang="en">
 
 
-<!-- never able to find words in dictionary! issue with my code or with how the words are classified? -->
-<!-- need to trigger win (or use dummy data to do so) and then figure out how to carry over score from one 
-    round to the next -->
+<!-- figure out how to carry over score from one round to the next -->
 <!-- should I have one set of functions for onload and another for startGame()? should startGame() not be     
     called on load? -->
-<!-- how to make sure the proposed POS/length/score combo exists?? -->
+<!-- fix win modal ******************************************** -->
 
 
 
@@ -39,7 +37,7 @@
       <div class="text-center">
         <a href="/leaderboard">
           <button class="btn btn-lg btn-info">
-            <span class="fa fa-list-alt"></span> View High Scores</button>
+            <span class="fa fa-list-alt"></span>View High Scores</button>
         </a>
         <a href="/">
           <button class="btn btn-lg btn-default">
@@ -60,46 +58,47 @@
 
               <p class="timer-container"></p>
               <p id="score"></p>
+              <p id="runningScore"></p>
               <p id="POS"></p>
               <p id="answerSpace"></p>
 
             <div id="keyboard">
               <div class="row">
                   <div class="col-md-10 btn-group" id="row1">
-                      <button type="button" class="btn btn-link" value="Q">Q<sub> 10</sub></button>
-                      <button type="button" class="btn btn-link" value="W">W<sub> 4</sub></button>
-                      <button type="button" class="btn btn-link" value="E">E<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="R">R<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="T">T<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="Y">Y<sub> 4</sub></button>
-                      <button type="button" class="btn btn-link" value="U">U<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="I">I<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="O">O<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="P">P<sub> 3</sub></button>
+                      <button type="button" class="btn btn-link" value="Q" data-letterval=10>Q<sub> 10</sub></button>
+                      <button type="button" class="btn btn-link" value="W" data-letterval=4>W <sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="E" data-letterval=1>E<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="R" data-letterval=1>R<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="T" data-letterval=1>T<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="Y" data-letterval=4>Y<sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="U" data-letterval=1>U<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="I" data-letterval=1>I<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="O" data-letterval=1>O<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="P" data-letterval=3>P<sub> 3</sub></button>
                   </div>
               </div>    
               <div class="row">
                   <div class="col-md-10 btn-group" id="row2">
-                      <button type="button" class="btn btn-link" value="A">A<sub> 1</sub></button> 
-                      <button type="button" class="btn btn-link" value="S">S<sub> 1</sub></button> 
-                      <button type="button" class="btn btn-link" value="D">D<sub> 2</sub></button> 
-                      <button type="button" class="btn btn-link" value="F">F<sub> 4</sub></button> 
-                      <button type="button" class="btn btn-link" value="G">G<sub> 2</sub></button> 
-                      <button type="button" class="btn btn-link" value="H">H<sub> 4</sub></button> 
-                      <button type="button" class="btn btn-link" value="J">J<sub> 8</sub></button> 
-                      <button type="button" class="btn btn-link" value="K">K<sub> 5</sub></button>
-                      <button type="button" class="btn btn-link" value="L">L<sub> 1</sub></button>   
+                      <button type="button" class="btn btn-link" value="A" data-letterval=1>A<sub> 1</sub></button> 
+                      <button type="button" class="btn btn-link" value="S" data-letterval=1>S<sub> 1</sub></button> 
+                      <button type="button" class="btn btn-link" value="D" data-letterval=2>D<sub> 2</sub></button> 
+                      <button type="button" class="btn btn-link" value="F" data-letterval=4>F<sub> 4</sub></button> 
+                      <button type="button" class="btn btn-link" value="G" data-letterval=2>G<sub> 2</sub></button> 
+                      <button type="button" class="btn btn-link" value="H" data-letterval=4>H<sub> 4</sub></button> 
+                      <button type="button" class="btn btn-link" value="J" data-letterval=8>J<sub> 8</sub></button> 
+                      <button type="button" class="btn btn-link" value="K" data-letterval=5>K<sub> 5</sub></button>
+                      <button type="button" class="btn btn-link" value="L" data-letterval=1>L<sub> 1</sub></button>   
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-10 btn-group" id="row3">
-                      <button type="button" class="btn btn-link" value="Z">Z<sub> 10</sub></button>
-                      <button type="button" class="btn btn-link" value="X">X<sub> 8</sub></button>
-                      <button type="button" class="btn btn-link" value="C">C<sub> 3</sub></button>       
-                      <button type="button" class="btn btn-link" value="V">V<sub> 4</sub></button>
-                      <button type="button" class="btn btn-link" value="B">B<sub> 3</sub></button>
-                      <button type="button" class="btn btn-link" value="N">N<sub> 1</sub></button>
-                      <button type="button" class="btn btn-link" value="M">M<sub> 3</sub></button>
+                      <button type="button" class="btn btn-link" value="Z" data-letterval=10>Z<sub> 10</sub></button>
+                      <button type="button" class="btn btn-link" value="X" data-letterval=8>X<sub> 8</sub></button>
+                      <button type="button" class="btn btn-link" value="C" data-letterval=3>C<sub> 3</sub></button>       
+                      <button type="button" class="btn btn-link" value="V" data-letterval=4>V<sub> 4</sub></button>
+                      <button type="button" class="btn btn-link" value="B" data-letterval=3>B<sub> 3</sub></button>
+                      <button type="button" class="btn btn-link" value="N" data-letterval=1>N<sub> 1</sub></button>
+                      <button type="button" class="btn btn-link" value="M" data-letterval=3>M<sub> 3</sub></button>
                   </div>
               </div>    
               <div class="row">
@@ -232,10 +231,21 @@
 var targetScore = Math.floor(Math.random() * (15 - 7)) + 7; //generate random score -- right range??
 //function to instantiate new targetScore??????????????????????
 
-var partsOfSpeechArray = ["noun", "adjective", "verb"];
-//"pronoun", "preposition", "conjunction", "interjection", "adverb"
+var partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
+var partsOfSpeechArray = Object.values(partsOfSpeech); //array of POS spelled out
+var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
+
+//DISPLAY KEY'S VALUE ON PAGE AND KEY ON BACK END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
+var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
+//console.log(POSIndex);
+var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
+
+
+
+///////////////show running score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 var randomLength = Math.floor(Math.random() * (7-4)) + 4;
 
@@ -251,6 +261,8 @@ $(document).ready(function() {
 
 
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
+var runningScoreArray = [];
+//var runningScore = 0;
 
     $(".btn-link").on("click", function(event) { //fill in the blanks
         event.preventDefault();
@@ -261,10 +273,25 @@ $(document).ready(function() {
         }
         answerArray.join(" ");
         $("#answerSpace").html(answerArray);
+        var letterVal = $(this).data("letterval");
+        runningScoreArray.push(letterVal);
+        for (var x=0; x<runningScoreArray.length; x++) {
+            //add up contents of runningScoreArray!!!!
+            runningScore += runningScoreArray[x];
+        }
+        function tot(total, num) {
+            return total + num;
+        }
+        var runningScore = runningScoreArray.reduce(tot);
+        console.log(runningScore)
+        //console.log(runningScoreArray)
+        //console.log(runningScore);
+        $("#runningScore").text("Your score: " + runningScore); ////////////////////////////////
     });
 
 
     $("#clear").on("click", function() {
+        runningScoreArray = [];
         function newBlanks() {
             var length = answerArray.length;
             $("#answerSpace").empty();
@@ -384,40 +411,62 @@ $(document).ready(function() {
             var sum = 0;
             for (var b=0; b<scoreArray.length; b++) { 
                 sum += scoreArray[b];
+                console.log("sum: " + sum) //need to add up running score on click!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             };
+            console.log("total sum: " + sum);
             if (sum === targetScore) {
                 console.log("matching target score");
-
-                        //query db to make sure user's word is found in the dictionary
-                        $.ajax({
-                            method: "GET",
-                            url: "/api/all"
-                        }).then (function(results) {
-                            //console.log(guessedWord)
-                            console.log(results.indexOf(guessedWord));
-                            console.log(results[3000].word);
-                            if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-                                //console.log("hi")
-                                console.log("word found at index " + indexOf(guessedWord));
-                                var position = indexOf(guessedWord); //?????
-                                console.log(position);
-                                console.log(results[position].wordType); //the word's part of speech
-                                //if part of speech matches randomly generated one...
-                                if (randomPOS == results[position].wordtype) {
-                                    win();
-                                } else {
-                                    loss();
-                                }  /// ENTER DUMMY WIN DATA TO TEST?? //////////////////////////////////////
+                function getDefinition() {
+                $.get("/api/all", function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (guessedWord === data[i].word) { //if it's a word
+                            $("#definition-div").html(data[i].definition); //print def'n
+                            var wordtype = data[i].wordtype; //get POS
+                            console.log(data[i]);
+                            if (abbreviatedRandomPOS == wordtype) { //ir right POS
+                                win();
                             } else {
                                 loss();
                             }
-                        })
+
+                        } else {
+                        loss();
                         }
-                 
-                    else {  
-                    loss();
+                    } 
+                });
                 }
+                getDefinition();
+
+
+
+                            //var position = indexOf(guessedWord); //?????
+                            //console.log(position);
+                            //console.log(results[position].wordtype); 
+                        //query db to make sure user's word is found in the dictionary
+                        //$.ajax({
+                            //method: "GET",
+                            //url: "/api/all"
+                        //}).then (function(results) {
+                            //console.log(guessedWord)
+                            // console.log(results.indexOf(guessedWord));
+                            // console.log(results[10000].wordtype);
+                            // if (results.indexOf(guessedWord) > -1) { //if guessed word is found in dictionary...
+                            //     console.log("word found at index " + indexOf(guessedWord));
+                        //         var position = indexOf(guessedWord); //?????
+                        //         console.log(position);
+                        //         console.log(results[position].wordtype); //the word's part of speech
+                        // //////////////////////POS is abbreviated!!!!!!!!!!!!!!!!!!
+                                
+                            //if part of speech matches randomly generated one...
+                                //if (abbreviatedRandomPOS == results[position].wordtype) {
+                                    //win();
+                                //} else {
+                                  //  loss();
+                                //}
+                            
+                        } else {  
+                            loss();
+                        }
                 var guessedWord = answerArray.join("");
                 guessedWord = guessedWord.toLowerCase();
                 guessedWord = guessedWord.split("");
