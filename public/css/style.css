@@ -3,6 +3,11 @@
 body {
     font-family: 'Open Sans', sans-serif;
     background-image: url("bground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    height: 100vh;
 }
 
 .navbar-header.col {
@@ -15,6 +20,8 @@ body {
 
 .navbar {
     background-image: url("bground.jpg");
+    background-size: cover;
+    background-position: center;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 0;
