@@ -1,5 +1,3 @@
-/*Style finalGame.html*/
-
 body {
     font-family: 'Open Sans', sans-serif;
     background-image: url("bground.jpg");
@@ -160,8 +158,9 @@ body {
 
 #countdown {
     background-color: transparent !important;
-    color: #29c68c !important;
+    color: #000000 !important;
     border: none;
+    font-size: 40px;
 }
 
 #keyboard {
@@ -188,9 +187,9 @@ body {
 
 .btn.btn-link {
     background-image: url("abstract-art-backdrop-926985.jpg");
-    color: saddlebrown;
+    color: rgb(80, 40, 10);
     font-family: arial;
-    font-size: 22px;
+    font-size: 32px;
     padding: 10px;
     margin-right: 7px;
     border-bottom: 2px black groove;
@@ -206,10 +205,15 @@ body {
 .btn.btn-link:focus {
     color: #29c68c !important;
     border: 1px #29c68c groove;
+    text-decoration: none;
 }
 
 sub {
-    font-size: 8px;
+    font-size: 18px;
+}
+
+#answerSpace {
+    font-size: 80px;
 }
 
 .btn.btn-primary {
