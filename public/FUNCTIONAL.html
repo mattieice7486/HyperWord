@@ -196,10 +196,10 @@
                                 <input type="text" class="form-control" id="reserve-name">
                             </div>
 
-                            <div class="form-group">
-                                <!-- <label for="reserve-phone">Round Completed</label> -->
+                            <!-- <div class="form-group">
+                                <label for="reserve-phone">Round Completed</label> 
                                 <input type="text" class="form-control" id="reserve-phone">
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                 <label for="reserve-unique-id">Score</label>
@@ -310,7 +310,6 @@
     var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
     var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
-    console.log(POSIndex);
     var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
     var randomLength = Math.floor(Math.random() * (7-4)) + 4;
     
@@ -439,21 +438,22 @@
             $("#lossModal").modal(); //modal with option to restart game
         };
         function win() {
-            stop();
-            newScore += (secondsLeft * 10);
-            console.log(newScore);
-            $.ajax({
-                method: "POST",
-                url: "/api/scores",
-                data: newScore
-            }).then(function (results) {
-                console.log("results? " + results);
-                console.log("new score: " + newScore)
-                $("#points").text(newScore);
-                $("#winModal").modal();
-                return newScore;
-            });
-        };
+        stop();
+        console.log("seconds left: " + secondsLeft) //ok
+        newScore += (secondsLeft * 10);
+        $.ajax({
+            method: "POST",
+            url: "/api/scores",
+            data: newScore
+        }).then(function(results) {        
+            console.log("results: " + results);
+            $("#points").text(newScore);
+            $("#winModal").modal(); //modal, with option to proceed to next round
+            //console.log("you scored " + newScore + " points!");
+            return newScore;
+        });
+    };
+
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
         function checkIfWon() {
         
@@ -484,9 +484,8 @@
                                 var wordtypelong = data[i].wordtype; //get POS from API
                                 var wordtype = wordtypelong[0] + wordtypelong[1];
                                 console.log(wordtype);
-                                win(); //will need to delete this later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 if (abbreviatedRandomPOS == wordtype) { //if right POS
-                                    win(); //UN-COMMENT LATER!!!!!!!!!!!!!!!!!!!!!
+                                    win();
                                 } else {
                                     loss();
                                 }
