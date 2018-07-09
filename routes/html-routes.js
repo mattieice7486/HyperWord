@@ -38,8 +38,8 @@ module.exports = function(app) {
   });
 
   // replace #### with relevant file name for a .html file
-  app.get("/####", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/####.html"));
+  app.get("/login", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
 };

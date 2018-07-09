@@ -87,8 +87,8 @@
               </div>    
               <div class="row">
                   <div class="col-md-10 btn-group"  id="row4">
-                      <button type="button" class="btn btn-primary">Backspace</button>
-                      <button type="button" class="btn btn-primary">Clear</button>
+                      <button type="button" class="btn btn-primary" id="Backspace">Backspace</button>
+                      <button type="button" class="btn btn-primary" id="Clear">Clear</button>
                       <button type="button" class="btn btn-primary">Submit</button>
                   </div>
               </div>    
@@ -123,6 +123,7 @@
 
       </div>
     </div>
+    <div class="row" id="user-word-div"></div>
     <div class="row" id="definition-div"></div>
 
     <footer class="footer">
@@ -220,11 +221,31 @@
   $(".btn-link").on("click", function (event) {
     event.preventDefault();
     console.log($(this).val());
+    $("#user-word-div").append($(this).val())
   });
+
+  $("#Backspace").on("click", function (event) {
+    $("#user-word-div")
+  });
+
+  $("#Clear").on("click", function (event) {
+    $("#user-word-div").empty()
+  });
+
 
   $("#submit-main").on("click", function (event) {
     event.preventDefault();
-
+    function getAll() {
+      $.get("/api/all", function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if ($("#reserve-unique-id").val().trim() === data[i].word) {
+            $("#definition-div").html(data[i].definition);
+            console.log(data[i]);
+          }
+        }
+      });
+    }
+    getAll();
     // Here we grab the form elements
     var newReservation = {
       customerName: $("#reserve-name").val().trim(),
