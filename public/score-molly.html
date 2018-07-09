@@ -4,7 +4,8 @@
 
 <!-- work on presentation & create test.html file -->
 <!-- combine our code -->
-<!-- not sure why, when 'no' button on win modal is clicked, the yes and no buttons stay on the thanks for playing modal!!!!!!!!!****************************************************************************-->
+<!-- not posting to /api/scores ********************************************** -->
+<!-- try to get scores to be saved and pushed to next round?? ********************************************** -->
 
 
 
@@ -58,7 +59,7 @@
 
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class="panel-title">Score</h4>
+            <h4 class="panel-title">Target score:</h4>
           </div>
           <div class="panel-body">
 
@@ -122,10 +123,10 @@
                 <input type="text" class="form-control" id="reserve-name">
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="reserve-phone">Round Completed</label>
                 <input type="text" class="form-control" id="reserve-phone">
-              </div>
+              </div> -->
 
               <div class="form-group">
                 <label for="reserve-unique-id">Score</label>
@@ -382,20 +383,19 @@ var runningScoreArray = [];
     };
 
 
-//why is this being triggered twice????????????????????????????????????????????
     function win() {
         stop();
         //console.log(secondsLeft) //ok
         newScore += (secondsLeft * 10);
         $.ajax({
             method: "POST",
-            url: "/api/scores",
+            url: "/api/scores", //IS THIS THE RIGHT URL????????????????????????????????????????/
             data: newScore
         }).then(function(results) {        
             //console.log("results: " + results);
             $("#points").text(newScore);
             $("#winModal").modal(); //modal, with option to proceed to next round
-            console.log("you scored " + newScore + " points!");
+            //console.log("you scored " + newScore + " points!");
             return newScore;
         });
     };
@@ -428,18 +428,17 @@ var runningScoreArray = [];
                 function getDefinition() {
                     $.get("/api/all", function (data) {
                         for (var i=0; i <data.length; i++) {
-//////////////////// THIS IS SAYING, FOR EACH OF THE POSSIBLE DEFINITIONS, DO THESE THINGS............
                             if (guessedWord === data[i].word) { //if it's a word
                                 $("#definition-div").html(data[i].definition); //print definition
                                 var wordtypelong = data[i].wordtype; //get POS from API
                                 var wordtype = wordtypelong[0] + wordtypelong[1];
                                 console.log(wordtype);
                                 win(); //will need to delete this later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                /*if (abbreviatedRandomPOS == wordtype) { //if right POS
+                                if (abbreviatedRandomPOS == wordtype) { //if right POS
                                     win(); //UN-COMMENT LATER!!!!!!!!!!!!!!!!!!!!!
                                 } else {
                                     loss();
-                                }*/
+                                }
                                 return;
 
                             } else {
@@ -471,7 +470,6 @@ var runningScoreArray = [];
     function startGame() {
 
         $("#POS").text(randomPOS);
-        //need to calculate target score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! new instance of function????
         $("#score").text("Target score: " + targetScore);
         run();
 

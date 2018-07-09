@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Hyperword</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="css/styleJesse.css" type="text/css" /> -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-expand-lg navbar-light">
+        <div class="navbar-header d-flex col">
+            <a class="navbar-brand" href="#">Hyper
+                <b>Word</b>
+            </a>
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+                <span class="navbar-toggler-icon"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collection of nav links, forms, and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item">
+                    <a href="/" class="nav-link col-md-1">
+                        <span class="glyphicon glyphicon-home "></span>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link col-md-1">
+                        <span class="glyphicon glyphicon-user "></span>Account</a>
+                </li>
+                <li class="nav-item">
+                    <a href="leaderboard.html" class="nav-link col-md-1">
+                        <span class="glyphicon glyphicon-list "></span>Score</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link col-md-1">
+                        <span class="glyphicon glyphicon-leaf"></span>Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+
+        <div class="row">
+            <h1 class="text-center">
+                <span class="fa fa-fire"></span> Hyperword</h1>
+            <hr>
+            <h2 class="text-center">Catchy Tagline Here!</h2>
+            <br>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm" id="answerSpace">Word goes here</div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-sm" id="POS">Part of speech</div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-sm" id="definition-div">&nbsp;</div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-sm-1" id="score"></div>
+                <div class="col-sm-1 timer-container" id="countdown">60</div>
+                <div class="col-sm-1" id="runScore">Your score: <span id="runningScore"></span></div>
+            </div>
+        </div>
+        <div class="container">
+            <div id="keyboard">
+                <div class="row">
+                    <div class="btn-group" id="row1">
+                        <button type="button" class="btn btn-link col-md-1" value="Q" data-letterval=10>Q
+                            <sub> 10</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="W" data-letterval=4>W
+                            <sub> 4</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="E" data-letterval=1>E
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="R" data-letterval=1>R
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="T" data-letterval=1>T
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="Y" data-letterval=4>Y
+                            <sub> 4</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="U" data-letterval=1>U
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="I" data-letterval=1>I
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="O" data-letterval=1>O
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="P" data-letterval=3>P
+                            <sub> 3</sub>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" id="row2">
+                        <button type="button" class="btn btn-link col-md-1" value="A" data-letterval=1>A
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="S" data-letterval=1>S
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="D" data-letterval=2>D
+                            <sub> 2</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="F" data-letterval=4>F
+                            <sub> 4</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="G" data-letterval=2>G
+                            <sub> 2</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="H" data-letterval=4>H
+                            <sub> 4</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="J" data-letterval=8>J
+                            <sub> 8</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="K" data-letterval=5>K
+                            <sub> 5</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="L" data-letterval=1>L
+                            <sub> 1</sub>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" id="row3">
+                        <button type="button" class="btn btn-link col-md-1" value="Z" data-letterval=10>Z
+                            <sub>10</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="X" data-letterval=8>X
+                            <sub> 8</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="C" data-letterval=3>C
+                            <sub> 3</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="V" data-letterval=4>V
+                            <sub> 4</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="B" data-letterval=3>B
+                            <sub> 3</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="N" data-letterval=1>N
+                            <sub> 1</sub>
+                        </button>
+                        <button type="button" class="btn btn-link col-md-1" value="M" data-letterval=3>M
+                            <sub> 3</sub>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" id="row4">
+                        <button type="button" class="btn btn-primary"  id="backspace">Backspace</button>
+                        <button type="button" class="btn btn-primary" id="clear">Clear</button>
+                        <button type="button" class="btn btn-primary" id="submit">Submit</button>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="row">
+                <div id="start">
+                    <button type="button" class="btn btn-danger col-md-1 col-md-offset-2 text-center">START</button>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                        <form role="form">
+
+                            <div class="form-group">
+                                <label for="reserve-name">UserName</label>
+                                <input type="text" class="form-control" id="reserve-name">
+                            </div>
+
+                            <div class="form-group">
+                                <!-- <label for="reserve-phone">Round Completed</label> -->
+                                <input type="text" class="form-control" id="reserve-phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reserve-unique-id">Score</label>
+                                <input type="text" class="form-control" id="reserve-unique-id">
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary submit" id="submit-main">Submit</button>
+
+                            <button type="submit" class="btn btn-success submit" id="submit-noun">Get noun</button>
+  
+                        </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    <a href="/api/scores">API Scores Link</a> |
+                    <a href="/api/waitlist">API Wait List</a> |
+                    <a href="https://github.com/mattieice7486/HyperWord">GitHub Repo</a>
+                </p>
+                <p>
+                    <a href="/api/all">API Dictionary All</a> |
+                    <a href="/api/nouns">API Noun List</a> |
+                    <a href="/api/verbs">API Verb List</a> |
+                    <a href="/api/adjectives">API Adj List</a> |
+                    <!-- <a href="/api/adverbs">API Adv List</a> -->
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- loss modal -->
+    <div class="modal" id="lossModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Game over! Would you like to play again?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="yes-lost" class="btn btn-primary">Yes</button>
+                    <button type="button" id="no-lost" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- win modal -->
+    <div class="modal" id="winModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Great job! You earned <span id="points"></span> points. Would you like to play again?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="yes-won" class="btn btn-primary">Yes</button>
+                    <button type="button" id="no-won" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- thanks for playing modal -->
+    <div class="modal" id="thanksForPlaying" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Thanks for playing! Come back soon.</p>
+                </div>
+                <div class="modal-footer">
+                        <br>
+                        <br>
+                        <br>
+                      </div>
+                  </div>
+            </div>
+        </div>
+    
+
+</body>
+
+
+
+<script type="text/javascript">
+    var targetScore = Math.floor(Math.random() * (15 - 7)) + 7;
+    var partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
+    var partsOfSpeechArray = Object.values(partsOfSpeech); //array of POS spelled out
+    var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
+    var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
+    var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
+    console.log(POSIndex);
+    var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
+    var randomLength = Math.floor(Math.random() * (7-4)) + 4;
+    
+    var letterValues = {
+        "A": 1,
+        "B": 3,
+        "C": 3,
+        "D": 2,
+        "E": 1,
+        "F": 4,
+        "G": 2,
+        "H": 4,
+        "I": 1,
+        "J": 8,
+        "K": 5,
+        "L": 1,
+        "M": 3,
+        "N": 1,
+        "O": 1,
+        "P": 3,
+        "Q": 10,
+        "R": 1,
+        "S": 1,
+        "T": 1,
+        "U": 1,
+        "V": 4,
+        "W": 4,
+        "X": 8,
+        "Y": 4,
+        "Z": 10
+    }
+    $(document).ready(function () {
+        var answerArray = [];
+        var newScore = 0;
+        runningScoreArray = [];
+
+        ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
+        $(".btn-link").on("click", function (event) { //fill in the blanks
+            event.preventDefault();
+            var letterGuessed = $(this).val(); //get letter
+            var index = answerArray.indexOf("_ "); //find first blank in array
+            if (index !== -1) { //if there's a blank there...
+                answerArray[index] = letterGuessed; //replace with letter
+            }
+            answerArray.join(" ");
+            $("#answerSpace").html(answerArray);
+
+            var letterVal = $(this).data("letterval");
+            runningScoreArray.push(letterVal);
+            
+            for (var x=0; x<runningScoreArray.length; x++) {
+            //add up contents of runningScoreArray!!!!
+            runningScore += runningScoreArray[x];
+            }
+        
+            function tot(total, num) {
+            return total + num;
+            }
+        
+            var runningScore = runningScoreArray.reduce(tot);
+            $("#runningScore").text(runningScore); ////////////////////////////////
+        });
+        $("#clear").on("click", function () {
+            runningScoreArray = [];
+            function newBlanks() {
+                var length = answerArray.length;
+                $("#answerSpace").empty();
+                for (var t = 0; t < length; t++) {
+                    answerArray.splice(t, 1, "_ ");
+                }
+                $("#answerSpace").html(answerArray);
+            }
+            newBlanks();
+        });
+        $("#backspace").on("click", function () { //this keeps freezing the page?!
+            //cycle through word and find last item that's not a "_"
+            for (var i = answerArray.length - 1; i < answerArray.length; i--) {
+                if (answerArray[i] != "_ ") {
+                    answerArray.splice(i);
+                }
+            }
+            $("#answerSpace").html(answerArray);
+        });
+        $("#submit").on("click", function () {
+            stop();
+            checkIfWon();
+        });
+        $("#yes-lost").on("click", function () {
+            location.reload();
+        });
+        $("#no-lost").on("click", function () {
+            $("#lossModal").modal("hide");
+            $("#thanksForPlaying").modal();
+        });
+        $("#yes-won").on("click", function () { // need to test this!!!!!!!!!!/////////////////////
+            //startGame();
+            location.reload();
+        });
+        $("#no-won").on("click", function () {
+            $("#winModal").modal("hide");
+            $("#thanksForPlaying").modal();
+        });
+
+        //////////////////////////////////////// TIMER ////////////////////////////////////////////
+        var secondsLeft = 60;
+        var intervalId;
+        function run() {
+            clearInterval(intervalId);
+            intervalId = setInterval(decrement, 1000);
+        }
+        function decrement() {
+            secondsLeft--;
+            $(".timer-container").text(secondsLeft);
+            if (secondsLeft === 0) {
+                stop();
+                loss();
+            }
+            return secondsLeft;
+        }
+        function stop() {
+            clearInterval(intervalId);
+        }
+        ////////////////////////////////////////////////////////////////////////////////////
+        function loss() {
+            stop();
+            $("#lossModal").modal(); //modal with option to restart game
+        };
+        function win() {
+            stop();
+            newScore += (secondsLeft * 10);
+            console.log(newScore);
+            $.ajax({
+                method: "POST",
+                url: "/api/scores",
+                data: newScore
+            }).then(function (results) {
+                console.log("results? " + results);
+                console.log("new score: " + newScore)
+                $("#points").text(newScore);
+                $("#winModal").modal();
+                return newScore;
+            });
+        };
+        //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
+        function checkIfWon() {
+        
+        if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
+            loss();
+        } else {
+            var x = Object.keys(letterValues); //list of all letters in alphabet
+            //check to make sure the value of user's word matches the target score
+            var scoreArray = [];
+            for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
+                if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
+                    var letterScore = letterValues[answerArray[a]];
+                    scoreArray.push(letterScore);
+                }
+            }
+            var sum = 0;
+            for (var b=0; b<scoreArray.length; b++) { 
+                sum += scoreArray[b];
+            };
+            if (sum === targetScore) {
+                console.log("matching target score");
+
+                    function getDefinition() {
+                    $.get("/api/all", function (data) {
+                        for (var i=0; i <data.length; i++) {
+                            if (guessedWord === data[i].word) { //if it's a word
+                                $("#definition-div").html(data[i].definition); //print definition
+                                var wordtypelong = data[i].wordtype; //get POS from API
+                                var wordtype = wordtypelong[0] + wordtypelong[1];
+                                console.log(wordtype);
+                                win(); //will need to delete this later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                if (abbreviatedRandomPOS == wordtype) { //if right POS
+                                    win(); //UN-COMMENT LATER!!!!!!!!!!!!!!!!!!!!!
+                                } else {
+                                    loss();
+                                }
+                                return;
+
+                            } else {
+                            loss();
+                            }
+                        } 
+                    });
+                }
+                getDefinition();
+
+} else {  
+                loss();
+            }
+                var guessedWord = answerArray.join("");
+                guessedWord = guessedWord.toLowerCase();
+                guessedWord = guessedWord.split("");
+                guessedWord[0] = guessedWord[0].toUpperCase();
+                var guessedWord = guessedWord.join("");
+                console.log(guessedWord);
+                }
+            }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        function startGame() {
+            $("#POS").text(randomPOS);
+            $("#score").text("Target score: " + targetScore);
+            run();
+            function generateBlanks() {
+                answerArray = [];
+                $("#answerSpace").empty();
+                for (var t = 0; t < randomLength; t++) {
+                    answerArray.push("_ ");
+                }
+                $("#answerSpace").html(answerArray);
+                return answerArray;
+            }
+            generateBlanks();
+        }
+        ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
+    
+        startGame();
+    });
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+    $("#submit-noun").on("click", function (event) {
+        event.preventDefault();
+        function getNouns() {
+            $.get("/api/all", function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (guessedWord === data[i].word) {
+                        $("#definition-div").html(data[i].definition);
+                        console.log(data[i]);
+                    }
+                }
+            });
+        }
+        getNouns();
+    });
+    $("#submit-main").on("click", function (event) {
+        event.preventDefault();
+        // Here we grab the form elements
+        var newReservation = {
+            customerName: $("#reserve-name").val().trim(),
+            phoneNumber: $("#reserve-phone").val().trim(),
+            customerID: $("#reserve-unique-id").val().trim()
+        };
+        console.log(newReservation);
+        stop();
+        checkIfWon();
+        // This line is the magic. It"s very similar to the standard ajax function we used.
+        // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+        // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+        // depending on if a tables is available or not.
+        $.post("/api/scores", newReservation,
+            function (data) {
+                // If a table is available... tell user they are booked.
+                if (data) {
+                    alert("Yay! You are officially booked!");
+                }
+                // If a table is available... tell user they on the waiting list.
+                else {
+                    alert("Sorry you are on the wait list");
+                }
+                // Clear the form when submitting
+                $("#reserve-name").val("");
+                $("#reserve-phone").val("");
+                $("#reserve-unique-id").val("");
+            });
+    });
+</script>
+</html>
