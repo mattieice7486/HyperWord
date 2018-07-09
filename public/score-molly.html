@@ -2,13 +2,10 @@
 <html lang="en">
 
 
-<!-- figure out how to carry over score from one round to the next -->
-<!-- should I have one set of functions for onload and another for startGame()? should startGame() not be     
-    called on load? -->
 <!-- work on presentation & create test.html file -->
-<!-- fix win modal ******************************************** -->
 <!-- combine our code -->
-<!-- IS V. CONTAINED IN WORDTYPE??????????? (BECAUSE IT COULD BE V. T.) -->
+<!-- not sure why, when 'no' button on win modal is clicked, the yes and no buttons stay on the thanks for playing modal!!!!!!!!!****************************************************************************-->
+
 
 
 
@@ -174,7 +171,6 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -196,14 +192,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <!-- display score?? -->
-            <p>You earned <span id="points"></span> points! Would you like to play again?</p>
+            <p>Great job! You earned <span id="points"></span> points. Would you like to play again?</p>
           </div>
           <div class="modal-footer">
             <button type="button" id="yes-won" class="btn btn-primary">Yes</button>
@@ -225,6 +219,11 @@
           <div class="modal-body">
             <p>Thanks for playing! Come back soon.</p>
           </div>
+          <div class="modal-footer">
+              <br>
+              <br>
+              <br>
+            </div>
         </div>
       </div>
     </div>
@@ -333,6 +332,7 @@ var runningScoreArray = [];
 
 
     $("#no-lost").on("click", function() {
+        $("#lossModal").modal("hide");
         $("#thanksForPlaying").modal();
     });
 
@@ -343,6 +343,7 @@ var runningScoreArray = [];
 
 
     $("#no-won").on("click", function() {
+        $("#winModal").modal("hide");
         $("#thanksForPlaying").modal();
     });
 
@@ -395,7 +396,7 @@ var runningScoreArray = [];
             $("#points").text(newScore);
             $("#winModal").modal(); //modal, with option to proceed to next round
             console.log("you scored " + newScore + " points!");
-            //return newScore;
+            return newScore;
         });
     };
 
@@ -432,15 +433,14 @@ var runningScoreArray = [];
                                 $("#definition-div").html(data[i].definition); //print definition
                                 var wordtypelong = data[i].wordtype; //get POS from API
                                 var wordtype = wordtypelong[0] + wordtypelong[1];
-                                console.log(wordtype)
+                                console.log(wordtype);
                                 win(); //will need to delete this later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
                                 /*if (abbreviatedRandomPOS == wordtype) { //if right POS
                                     win(); //UN-COMMENT LATER!!!!!!!!!!!!!!!!!!!!!
                                 } else {
                                     loss();
                                 }*/
-
+                                return;
 
                             } else {
                             loss();
