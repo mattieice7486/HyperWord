@@ -1,18 +1,16 @@
 /*Style login.html-moved from stylejesse.css*/
 
-.input.form-control {
-    color: ivory;
-}
+
 
 .form-control {
     box-shadow: none;
     border-radius: 4px;
-    border-color: #dfe3e8;
+    border-color:saddlebrown;
     color: ivory;
 }
 
 .form-control:focus {
-    border-color: #29c68c;
+    border-color: saddlebrown;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -25,7 +23,8 @@
     margin-bottom: 15px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 30px;
-    background-image: url("abstract-art-backdrop-926985.jpg");
+    background-color: #fff;
+    
 }
 
 .login-form h2 {
@@ -38,24 +37,35 @@
     min-height: 38px;
     border-radius: 2px;
     color: saddlebrown;
+    background-color: transparent;
+
 }
 
 .form-control:focus {
-    border-color: sienna;
+    border-color: saddlebrown;
 }
 
-.btn {
+/*.btn {
     font-size: 15px;
     font-weight: bold;
-    border-color: sienna;
+    border-color: saddlebrown;
+}*/
+.login-form .btn {
+    color:ivory;
+    border-radius: 4px;
+    background: saddlebrown;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    border: none;
 }
 
 body {
-    font-family: 'Varela Round', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .modal-login {
-    color: #636363;
+    color: saddlebrown;
     width: 350px;
 }
 
@@ -63,6 +73,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     border: none;
+    
 }
 
 .modal-login .modal-header {
@@ -78,13 +89,18 @@ body {
 }
 
 .modal-login .form-control:focus {
-    border-color: #70c5c0;
+    border-color: saddlebrown;
 }
 
 .modal-login .form-control,
 .modal-login .btn {
     min-height: 40px;
     border-radius: 3px;
+    color: saddlebrown;
+}
+
+.modal-login.form-control.name {
+    color: saddlebrown;
 }
 
 .modal-login .close {
@@ -94,7 +110,8 @@ body {
 }
 
 .modal-login .modal-footer {
-    background: #ecf0f1;
+   
+    color: ivory;
     border-color: #dee4e7;
     text-align: center;
     justify-content: center;
@@ -104,7 +121,7 @@ body {
 }
 
 .modal-login .modal-footer a {
-    color: #999;
+    color:saddlebrown;
 }
 
 .modal-login .avatar {
@@ -117,7 +134,7 @@ body {
     height: 95px;
     border-radius: 50%;
     z-index: 9;
-    background: #60c7c1;
+    background-image: url("avatar.jpeg");
     padding: 15px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
@@ -131,9 +148,9 @@ body {
 }
 
 .modal-login .btn {
-    color: #fff;
+    color:ivory;
     border-radius: 4px;
-    background: #60c7c1;
+    background: saddlebrown;
     text-decoration: none;
     transition: all 0.4s;
     line-height: normal;
@@ -142,13 +159,21 @@ body {
 
 .modal-login .btn:hover,
 .modal-login .btn:focus {
-    background: #45aba6;
+    color: #26bb84 !important;
+    background: transparent !important;
     outline: none;
 }
 
 .trigger-btn {
     display: inline-block;
     margin: 0px auto;
+    color: ivory;
+}
+
+a.trigger-btn {
+    display: inline-block;
+    margin: 0px auto;
+    color: ivory;
 }
 
 @media (min-width: 1200px) {

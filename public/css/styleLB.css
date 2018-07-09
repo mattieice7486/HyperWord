@@ -1,13 +1,14 @@
 /*Style leaderboard.html*/
 
 .jumbotron {
-    background-image: url("abstract-ancient-antique-235985\ \(1\).jpg");
+    background-color:transparent;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     position: relative;
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
+    color: ivory!important;
 }
 #survey-button {
     margin-left: 35%;
@@ -17,13 +18,32 @@
     width: 30%;
 }
 
+.btn-info.active>a,
+.btn-info.open>a {
+    color: #26bb84 !important;
+    background: transparent !important;
+
+}
+
+.btn-info.a:hover,
+.btn-info.a:focus {
+    color: #29c68c !important;
+}
+
 .h1.text-center {
     font-size: 23px;
     padding-left: 0;
     padding-right: 50px;
     font-weight: bolder;
+    color: ivory;
 }
 .h1.text-center c {
-    color: #29c68c;
+    color: ivory;
     font-size: 20px;
+}
+
+.btn-info {
+    color: ivory;
+    background-color: saddlebrown;
+    border-color: none;
 }
