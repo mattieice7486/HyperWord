@@ -17,29 +17,16 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
-  // replace ### with relevant file name for a .html file
   app.get("/leaderboard", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/leaderboard.html"));
   });
 
-  // replace #### with relevant file name for a .html file
-  app.get("/score", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/score.html"));
-  });
-
-  // replace #### with relevant file name for a .html file
-  app.get("/bootstrap", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/bootstrap.html"));
-  });
-
-  // replace #### with relevant file name for a .html file
-  app.get("/game", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/game.html"));
-  });
-
-  // replace #### with relevant file name for a .html file
   app.get("/login", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
+  app.get("/test", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/test.html"));
   });
 
 };
