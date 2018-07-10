@@ -58,7 +58,8 @@
         <div class="row">
             <h1 class="text-center" id="Hyperword-title">HyperWord</h1>
             <hr>
-            <h2 class="text-center">Fill in the blanks with letters that add up to the Target score.<br>Your word must match the part of speech as well!</h2>
+            <h2 class="text-center">Fill in the blanks with letters that add up to the Target score.
+                <br>Your word must match the part of speech as well!</h2>
             <br>
         </div>
 
@@ -75,7 +76,9 @@
             <div class="row top-buffer">
                 <div class="col-sm-1" id="score"></div>
                 <div class="col-sm-1 timer-container" id="countdown">60</div>
-                <div class="col-sm-1" id="runScore">Your score: <span id="runningScore"></span></div>
+                <div class="col-sm-1" id="runScore">Your score:
+                    <span id="runningScore"></span>
+                </div>
             </div>
         </div>
         <div class="container">
@@ -172,12 +175,12 @@
                 </div>
                 <div class="row">
                     <div class="btn-group" id="row4">
-                        <button type="button" class="btn btn-primary"  id="backspace">Backspace</button>
+                        <button type="button" class="btn btn-primary" id="backspace">Backspace</button>
                         <button type="button" class="btn btn-primary" id="clear">Clear</button>
                         <button type="button" class="btn btn-primary" id="submit">Submit</button>
                     </div>
                 </div>
-    
+
             </div>
             <!-- <div class="row">
                 <div id="start">
@@ -236,7 +239,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Great job! You earned <span id="points"></span> points. Would you like to play again?</p>
+                    <p>Great job! You earned
+                        <span id="points"></span> points. Would you like to play again?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="yes-won" class="btn btn-primary">Yes</button>
@@ -272,15 +276,19 @@
 
 
 <script type="text/javascript">
-    var targetScore = 7;
-    var partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
+    var targetScore = 6;
+    var partsOfSpeech = {
+        "n.": "noun",
+        "a.": "adjective",
+        "v.": "verb"
+    };
     var partsOfSpeechArray = Object.values(partsOfSpeech); //array of POS
     var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
-    var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
+    var randomPOS = partsOfSpeechArray[2];
     var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
     var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
-    var randomLength = 4;
-    
+    var randomLength = 6;
+
     var letterValues = {
         "A": 1,
         "B": 3,
@@ -325,20 +333,21 @@
             $("#answerSpace").html(answerArray);
             var letterVal = $(this).data("letterval");
             runningScoreArray.push(letterVal);
-            
-            for (var x=0; x<runningScoreArray.length; x++) {
+
+            for (var x = 0; x < runningScoreArray.length; x++) {
                 runningScore += runningScoreArray[x];
             }
-        
+
             function tot(total, num) {
                 return total + num;
             }
-        
+
             var runningScore = runningScoreArray.reduce(tot);
             $("#runningScore").text(runningScore);
         });
         $("#clear").on("click", function () {
             runningScoreArray = [];
+
             function newBlanks() {
                 var length = answerArray.length;
                 $("#answerSpace").empty();
@@ -379,12 +388,14 @@
             $("#thanksForPlaying").modal();
         });
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
-        var secondsLeft = 60;
+        var secondsLeft = 180;
         var intervalId;
+
         function run() {
             clearInterval(intervalId);
             intervalId = setInterval(decrement, 1000);
         }
+
         function decrement() {
             secondsLeft--;
             $(".timer-container").text(secondsLeft);
@@ -394,6 +405,7 @@
             }
             return secondsLeft;
         }
+
         function stop() {
             clearInterval(intervalId);
         }
@@ -402,90 +414,86 @@
             stop();
             $("#lossModal").modal();
         };
+
         function win() {
-        stop();
-        newScore += (secondsLeft * 10);
-        var newHighScore = {
-            userName: $("#Hyperword-title"),
-            roundNumber: 1,
-            score: newScore 
-        };
-        $.post("/api/scores", newHighScore,
-            function (data) {
-                // If a table is available... tell user they are booked.
-                if (data) {
-                    console.log("Top ten score added");
-                }
-                // If a table is available... tell user they on the waiting list.
-                else {
-                    console.log("Top fifty score added");
-                }
+            stop();
+            newScore += (secondsLeft * 10);
+            var newHighScore = {
+                userName: "matt",
+                roundNumber: 1,
+                score: secondsLeft * 10
+            };
+            $.post("/api/scores", newHighScore,
+                function (data) {
+                    if (data) {
+                        console.log("Top ten score added");
+                    }
+                    else {
+                        console.log("Top fifty score added");
+                    }
+
+            }).then(function (results) {
+                $("#points").text(newScore);
+                $("#winModal").modal();
+                return newScore;
             });
-        $.ajax({
-            method: "POST",
-            url: "/api/scores",
-            data: newScore
-        }).then(function(results) {        
-            $("#points").text(newScore);
-            $("#winModal").modal();
-            return newScore;
-        });
-    };
+        };
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
         function checkIfWon() {
-        
-        if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
-            loss();
-        } else {
-            var x = Object.keys(letterValues); //list of all letters in alphabet
-            //check to make sure the value of user's word matches the target score
-            var scoreArray = [];
-            for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
-                if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
-                    var letterScore = letterValues[answerArray[a]];
-                    scoreArray.push(letterScore); //push its value to array
+
+            if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
+                loss();
+            } else {
+                var x = Object.keys(letterValues); //list of all letters in alphabet
+                //check to make sure the value of user's word matches the target score
+                var scoreArray = [];
+                for (var a = 0; a < answerArray.length; a++) { //for each letter in user's answer...
+                    if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
+                        var letterScore = letterValues[answerArray[a]];
+                        scoreArray.push(letterScore); //push its value to array
+                    }
                 }
-            }
-            var sum = 0;
-            for (var b=0; b<scoreArray.length; b++) { 
-                sum += scoreArray[b];
-            };
-            if (sum === targetScore) {
+                var sum = 0;
+                for (var b = 0; b < scoreArray.length; b++) {
+                    sum += scoreArray[b];
+                };
+                if (sum === targetScore) {
                     function getDefinition() {
-                    $.get("/api/all", function (data) {
-                        for (var i=0; i <data.length; i++) {
-                            if (guessedWord === data[i].word) { //if it's a word
-                                $("#definition-div").html(data[i].definition); //print definition
-                                var wordtypelong = data[i].wordtype; //get POS from API
-                                var wordtype = wordtypelong[0] + wordtypelong[1];
-                                if (abbreviatedRandomPOS == wordtype) { //if right POS
-                                    win();
+                        $.get("/api/all", function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (guessedWord === data[i].word) { //if it's a word
+                                    $("#definition-div").html(data[i].definition); //print definition
+                                    var wordtypelong = data[i].wordtype; //get POS from API
+                                    var wordtype = wordtypelong[0] + wordtypelong[1];
+                                    if (abbreviatedRandomPOS == wordtype) { //if right POS
+                                        win();
+                                    } else {
+                                        loss();
+                                    }
+                                    return;
                                 } else {
                                     loss();
                                 }
-                                return;
-                            } else {
-                            loss();
                             }
-                        } 
-                    });
+                        });
+                    }
+                    getDefinition();
+                } else {
+                    loss();
                 }
-                getDefinition();
-            } else {  
-                loss();
-            }
                 var guessedWord = answerArray.join("");
                 guessedWord = guessedWord.toLowerCase();
                 guessedWord = guessedWord.split("");
                 guessedWord[0] = guessedWord[0].toUpperCase();
                 var guessedWord = guessedWord.join("");
-                }
             }
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         function startGame() {
             $("#POS").text(randomPOS);
             $("#score").text("Target score: " + targetScore);
             run();
+
             function generateBlanks() {
                 answerArray = [];
                 $("#answerSpace").empty();
@@ -498,31 +506,12 @@
             generateBlanks();
         }
         ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
-    
+
         startGame();
 
-    /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
-    $("#submit").on("click", function (event) {
-        event.preventDefault();
-        // Here we grab the form elements
-        var newHighScore = {
-            userName: $("#Hyperword-title").val().trim(),
-            roundNumber: 1,
-            score: newScore 
-        };
-        $.post("/api/scores", newHighScore,
-            function (data) {
-                // If a table is available... tell user they are booked.
-                if (data) {
-                    console.log("Top ten score added");
-                }
-                // If a table is available... tell user they on the waiting list.
-                else {
-                    console.log("Top fifty score added");
-                }
-            });
     });
-});
 </script>
+
 </html>
