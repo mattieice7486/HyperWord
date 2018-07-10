@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- POST!!!! -->
+<!-- possible to save scores and # of wins?? -->
+<!-- backspace -->
+
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -389,10 +395,11 @@
             //cycle through word and find last item that's not a "_"
             for (var i = answerArray.length - 1; i < answerArray.length; i--) {
                 if (answerArray[i] != "_ ") {
-                    answerArray.splice(i);
+                    answerArray.splice(i, 1, "_ ");
+                    $("#answerSpace").html(answerArray);
+                    return;
                 }
             }
-            $("#answerSpace").html(answerArray);
         });
         $("#submit").on("click", function () {
             stop();
