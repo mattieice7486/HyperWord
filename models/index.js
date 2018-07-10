@@ -34,3 +34,7 @@ if (config.use_env_variable) {
   db.Sequelize = Sequelize;
   
   module.exports = db;
+
+
+
+  

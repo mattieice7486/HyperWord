@@ -28,8 +28,16 @@
   },
   "homepage": "https://github.com/mattieice7486/HyperWord#readme",
   "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jwt-express": "^1.1.0",
+    "my": "^0.3.3",
+    "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "sql": "^0.78.0"
   }
 }

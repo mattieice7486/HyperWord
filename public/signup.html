@@ -28,7 +28,7 @@
 		<!-- Collection of nav links, forms, and other content for toggling -->
 		<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
 			<ul class="nav navbar-nav">
-				<li class="nav-item"><a href="signup" class="nav-link">Sign Up!</a></li>
+				<li class="nav-item"><a href="login" class="nav-link">Log in</a></li>
 				<li class="nav-item"><a href="leaderboard" class="nav-link">Leaderboards</a></li>			
 				<li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
 			</ul>
@@ -39,8 +39,8 @@
 
 
 	<div class="login-form">
-		<form action="/login" method="post">
-			<h2 class="text-center">Log In</h2>       
+		<form action="/signup" method="post">
+			<h2 class="text-center">Create an Account</h2>       
 			<div class="form-group">
 				<input type="text" name="username" class="form-control" placeholder="Username" required="required">
 			</div>
@@ -51,17 +51,33 @@
 				<input type="password" class="form-control" placeholder="Type Password Again" required="required">
 			</div> -->
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block" value="Log In">Log in</button>
+				<button type="submit" class="btn btn-primary btn-block" value="Sign Up">Sign Up</button>
 			</div>
 			<div class="text-center">
 				<!-- Button HTML (to Trigger Modal) -->
+
+				<a href="login" class="trigger-btn" >Already a Member?</a>
+
 				<!-- <a href="#myModal" class="trigger-btn" data-toggle="modal">Already a Member?</a> -->
 			</div>
 		</form>
 	</div>
 
 
+	<div id="errorModal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+				
+					<h4 class="modal-title">Username or Password is incorrect</h4>	
 
+				</div>
+				<div class="modal-footer">
+					<!-- <a href="#">Forgot Password?</a> -->
+				</div>
+			</div>
+		</div>
+	</div> 
 
 
 	<!-- Modal HTML -->

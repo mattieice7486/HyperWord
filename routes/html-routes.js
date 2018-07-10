@@ -14,22 +14,30 @@ module.exports = function(app) {
 
   // index route loads index.html
   app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.redirect('/signup');
   });
 
-  // replace ### with relevant file name for a .html file
+  app.get("/signup", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/signup.html"));
+  });
+
+  app.get("/login", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
+  app.get("/hyperword", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/hyperword.html"));
+  });
+
   app.get("/leaderboard", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/leaderboard.html"));
   });
 
-  // replace #### with relevant file name for a .html file
-  app.get("/score", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/score.html"));
-  });
-
-  // replace #### with relevant file name for a .html file
-  app.get("/####", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/####.html"));
+  app.get("/test", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/test.html"));
   });
 
 };
+
+
+

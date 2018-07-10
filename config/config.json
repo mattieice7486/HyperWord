@@ -1,11 +1,12 @@
 {
     "development": {
       "username": "root",
-      "password": "root",
-      "database": "entries",
+      "password": "mysqlpwd",
+      "database": "auth",
       "host": "127.0.0.1",
-      "port": 3307,
-      "dialect": "mysql"
+      "port": 3306,
+      "dialect": "mysql",
+      "tokenSecret": "WCFQC9PY8QAFVHUR6XZHG225ZGG5GFTJGILN"
     },
     "test": {
       "username": "root",
