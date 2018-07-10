@@ -1,5 +1,5 @@
 intro (Amy)
-demo
+demo with test.html
 front end
 	UI
 	Javascript
@@ -17,20 +17,15 @@ You will also be responsible for preparing a 10 minute formal presentation.
 
 
 INTRO: Amy and _____
-- Your overall application’s concept
-
-
-	Cross between Scrabble and hangman
-	How we came up with the concept
+- Your overall application's concept
+	Cross between Scrabble and Hangman
+	How we came up with the concept: we enjoy games, especially word games, but we're tired of the ones that are out there, so we thought we'd create a new one
 - The motivation for its development
-
-
 	Most games these days are mindless; this actually keeps your brain sharp
+	Like crossword puzzle but can be played on mobile
 	Helps build vocabulary
-	Good for English language learners
-- Your design process
-
-
+	Good for English language learners and elders trying to prevent dementia
+- Your design process (Amy)
 	HyperWord name origin
 - The technologies you used (and briefly how they work)
 
@@ -50,6 +45,8 @@ DEMO: ______
 
 CLOSING: _______
 - Directions for future development
-	*Make more difficult by limiting letters given to user
-	*Show definition of the word they guessed
+	*Make more difficult by limiting which letters are given to user, and expand possibilites for parts of speech (prepositions, conjuntions, adverbs, etc.)
+	*Adjust length of words based on the part of speech
 	*Show other possible answers
+	*Possibility to give hint?
+	*Employ dictionaries in other languages
