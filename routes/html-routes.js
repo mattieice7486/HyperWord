@@ -14,19 +14,32 @@ module.exports = function(app) {
 
   // index route loads index.html
   app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.redirect('/signup');
   });
 
-  app.get("/leaderboard", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/leaderboard.html"));
+  app.get("/signup", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
   app.get("/login", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
+  app.get("/hyperword", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/hyperword.html"));
+  });
+
+  app.get("/leaderboard", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/leaderboard.html"));
+  });
+
   app.get("/test", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/test.html"));
   });
 
+  app.get("/contact", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/contact.html"));
+  });
+
 };
+

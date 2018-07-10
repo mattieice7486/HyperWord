@@ -1,3 +1,14 @@
+<!-- //SHOULDN'T BE ABLE TO KEEP PLAYING ONCE TIMER STOPS! 
+//WHEN CLICK NO TO PLAY AGAIN, SHOULD EXIT WINDOW??
+//BUG WITH WIN MODAL: WON'T GO AWAY IF CLICK NO
+//WITH WIN MODAL, WHEN CLICK OUTSIDE, SAYS LOST?
+//SHOULD BE ABLE TO POST TO DATABASE!!
+//MODAL SHOULD BE CHANGED SO IT DOESN'T BLOCK THE DEFINITION!
+//push to master 
+//heroku -->
+
+
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -348,7 +359,7 @@
                 answerArray[index] = letterGuessed; //replace with letter
                 var letterVal = $(this).data("letterval");
                 runningScoreArray.push(letterVal);
-//SHOULD ONLY ADD SCORE IF THERE ARE BLANKS LEFT!!!!!!
+
 
             }
             answerArray.join(" ");
@@ -397,16 +408,25 @@
             location.reload();
         });
         $("#no-lost").on("click", function () {
-            $("#lossModal").modal("hide");
+            //$("#lossModal").modal("hide");
+            $("#lossModal").hide();
             $("#thanksForPlaying").modal();
         });
         $("#yes-won").on("click", function () {
             location.reload();
         });
         $("#no-won").on("click", function () {
-            $("#winModal").modal("hide");
+            $("#winModal").hide();
             $("#thanksForPlaying").modal();
+            window.close();
         });
+
+//$("[data-dismiss=winModal]").trigger({ type: "click" });
+
+$('#thanksForPlaying').on('shown', function () {
+      $('#winModal').modal('hide');
+}); //DOES THIS WORK????????????????????????????????????????????????
+
 
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
         var secondsLeft = 60;

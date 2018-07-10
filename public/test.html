@@ -379,9 +379,10 @@
             location.reload();
         });
         $("#no-won").on("click", function () {
-            $("#winModal").modal("hide");
+            $("#winModal").hide();
             $("#thanksForPlaying").modal();
         });
+
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
         var secondsLeft = 180;
         var intervalId;
