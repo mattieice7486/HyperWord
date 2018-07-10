@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
-  database: "entries_db"
+  database: "auth"
 });
 
 // Connect to the database
