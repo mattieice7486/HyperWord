@@ -1,12 +1,3 @@
-// NEXT STEPS:
-    //FIGURE OUT HOW TO QUERY DICTIONARY DB AND PUSH TO LEADERBOARD FROM HERE -- need to trigger win
-    //NEED TO WORK ON GETTING STARTGAME TO RETURN WIN OR LOSS - good progress
-    //INSERT AMY'S KEYBOARD AND ADD ID AND VALUES - will do later
-
-    //document.ready stuff different from startGame() function? should startGame() not be included in on load page functions? should on load just have each individual function, not contained in startGame()?
-
-
-
 var targetScore = Math.floor(Math.random() * (30 - 7)) + 7; //generate random score -- right range??
 //function to instantiate new targetScore??????????????????????
 
@@ -32,37 +23,47 @@ $(document).ready(function() {
 ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
 
     $(".btn-link").on("click", function() { //fill in the blanks
-        var letterGuessed = $(this).val(); //get letter
+        //console.log("letter works") //ok
+        var letterGuessed = $(this).val(); 
         var index = answerArray.indexOf("_ "); //find first blank in array
-        if (index !== -1) { //if blank exists...
-            answerArray[index] = letterGuessed; //...replace with letter
+        if (index !== -1) {
+            answerArray[index] = letterGuessed; //...and replace with letter
         }
+        //answerArray.push(letterGuessed);
+        //console.log(answerArray);
         answerArray.join(" ");
         $("#answerSpace").html(answerArray);
     });
 
 
     $("#clear").on("click", function() {
+        //console.log("clear works") //ok
         function newBlanks() {
             var length = answerArray.length;
+            //console.log(length); //ok
             $("#answerSpace").empty();
             for (var t=0; t<length; t++) {
                 answerArray.splice(t, 1, "_ ");
+                //replace (don't push) all array items with blanks
             }
+            //console.log(answerArray);
             $("#answerSpace").html(answerArray);
+            //console.log("answer array length is " + answerArray.length) //ok
         }
         newBlanks();
     });
 
 
     $("#submit").on("click", function() {
+        //console.log("submit works") //ok
         stop();
         checkIfWon();
-        console.log(answerArray)
+        //console.log(answerArray)
     });
 
 
     $("#yes-lost").on("click", function() {
+        //refresh page
         location.reload();
     });
 
@@ -73,7 +74,7 @@ $(document).ready(function() {
 
 
     $("#yes-won").on("click", function() { // need to test this!!!!!!!!!!
-        //////////go to next round
+        //go to next round
         won = true;
         startGame();
     });
@@ -151,26 +152,31 @@ $(document).ready(function() {
         //check to make sure all blanks were filled in
         if (answerArray.indexOf("_ ") > -1) {
             loss();
+            //console.log(won); //ok
             return won;
         } else {
-            var x = Object.keys(letterValues); //list of all letters
+            //console.log("no blanks left") //ok
+            var x = Object.keys(letterValues); //list of letters
+            //console.log(x); //ok
             //check to make sure the value of user's word matches the target score
             var scoreArray = [];
-            //console.log(answerArray.length) //ok
             for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
-                if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
-                    var letterScore = letterValues[answerArray[a]];
+                if (x.indexOf(answerArray[a]) > 0) { //if letter appears in array...
+                    //console.log("found letter") //ok
+                    var letterScore = letterValues[answerArray[a]]; //grab value of each letter
+                    //console.log("letter score: " + letterScore); //ok
                     scoreArray.push(letterScore);
-                    console.log(answerArray[a])
-                }
-            }
-            var sum = 0;
-            for (var b=0; b<scoreArray.length; b++) { 
-                sum += scoreArray[b]; //doesn't always grab all the letters!!!?????
-            };
-            //console.log("total sum: " + sum) //GRABS MULTIPLE TOTAL SUMS, BUT SHOULD ONLY GIVE ONE!!!!
-            if (sum === targetScore) {
-                console.log("matching target score");
+                    //should for-loop end here??????????????????????? return scoreArray??
+                    var sum = 0;
+                    //console.log(scoreArray.length) //ok
+                    for (var b=0; b<scoreArray.length; b++) { 
+                        //console.log("each item in score array: " + scoreArray[b]); //ok
+                        sum += scoreArray[b]; //only grabs value of first letter!!!?????
+                    };
+                    console.log("total sum: " + sum) //GRABS MULTIPLE TOTAL SUMS, BUT SHOULD ONLY GIVE ONE!!!!
+                    //console.log("target score: " + targetScore); //ok
+                    if (sum === targetScore) {
+                        console.log("matching target score");
 //////////////////////////////////////////////////////////////////////////////////////////////////
                         //query db to make sure user's word is found in the dictionary
                         $.ajax({
@@ -207,11 +213,16 @@ $(document).ready(function() {
                     } else {
                         loss();
                         console.log(won); //looping through to here multiple times (sum never = target score)
-                        return won;
                     }
                            
+                } else { 
+                    loss();
+                    //console.log(won); //ok
+                    return won;
+                }
+            }
             var guessedWord = answerArray.join("");
-            console.log(guessedWord) //ok
+            //console.log(guessedWord) //ok
         } 
                                     
                     return won;
