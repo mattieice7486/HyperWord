@@ -335,7 +335,7 @@
     }
     $(document).ready(function () {
         var answerArray = [];
-        var newScore = 0;
+        var newWinningScore = 0;
         runningScoreArray = [];
 
         ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
@@ -431,20 +431,20 @@
         };
         function win() {
         stop();
-        newScore += (secondsLeft * 10);
+        newWinningScore += (secondsLeft * 10);
     
         
 
-        $.post("/api/scores", newScore,
+        $.post("/api/scores", newWinningScore,
             function(data) {
                 if (data) {
-                    console.log("posted " + newScore);
-                    $("#points").text(newScore);
+                    console.log("posted " + newWinningScore);
+                    $("#points").text(newWinningScore);
                     $("#winModal").modal();
-                    return newScore;
+                    return newWinningScore;
                 }
             });
-            
+
     };
 
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
@@ -545,11 +545,12 @@
     $("#submit-main").on("click", function (event) {
         event.preventDefault();
         // Here we grab the form elements
-        var newReservation = {
-            customerName: $("#reserve-name").val().trim(),
-            phoneNumber: $("#reserve-phone").val().trim(),
-            customerID: $("#reserve-unique-id").val().trim()
+
+        var newScore = {
+            userName: , //needs to come from form?? NEED TO REQUIRE LOGIN.HTML?????????????? (AND INSERT MODULE.EXPORTS THERE?????)
+            score: newWinningScore
         };
+
         //console.log(newReservation);
         //stop();
         //checkIfWon();
