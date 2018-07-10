@@ -432,15 +432,18 @@
         function win() {
         stop();
         newScore += (secondsLeft * 10);
-        $.ajax({
-            method: "POST",
-            url: "/api/scores",
-            data: newScore
-        }).then(function(results) {        
-            $("#points").text(newScore);
-            $("#winModal").modal();
-            return newScore;
-        });
+    
+        
+
+        $.post("/api/scores", newScore,
+            function(data) {
+                if (data) {
+                    console.log("posted " + newScore);
+                    $("#points").text(newScore);
+                    $("#winModal").modal();
+                    return newScore;
+                }
+            });
     };
 
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
