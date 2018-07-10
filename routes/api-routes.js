@@ -12,13 +12,26 @@ var waitListData = require("../data/waitinglistData");
 // ROUTING
 // ===============================================================================
 
-module.exports = function(app) {
-  // API GET Requests
-  // Below code handles when users "visit" a page.
-  // In each of the below cases when a user visits a link
-  // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
-  // ---------------------------------------------------------------------------
+// module.exports = function(app) {
+//   // API GET Requests
+//   // Below code handles when users "visit" a page.
+//   // In each of the below cases when a user visits a link
+//   // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
+//   // ---------------------------------------------------------------------------
 
+
+// };
+
+
+
+// login
+const db = require("../models");
+const Op = require('sequelize').Op;
+
+
+
+
+module.exports = (app) => {
   app.get("/api/scores", function(req, res) {
     res.json(userData);
   });
@@ -59,5 +72,39 @@ module.exports = function(app) {
     waitListData = [];
 
     console.log(userData);
+  });
+  // POST route for logging in
+  app.post("/login", async(req, res, next) => {
+    try {
+      let account = await db.Account.findOne({
+        where: {
+          [Op.or]: [
+            {username: req.body.username}
+          ]
+        }
+      });
+
+      let valid = await account.validPassword(req.body.password);
+
+      if (!valid) {
+        //next({status: 401, message: 'Username/Password Wrong!'});
+        res.redirect('/login');
+
+      }
+
+      // res.status(200).send(res.jwt({
+      //   id: account.id,
+      //   username: account.username
+      // }));
+
+      res.redirect('/hyperword');
+
+
+    } catch (error) {
+      //next({status: 401, message: 'Username/Password Wrong!!!'});
+      //console.log(error);
+      res.redirect('/login');
+
+    }
   });
 };

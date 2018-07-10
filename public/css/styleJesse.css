@@ -1,5 +1,11 @@
 body{
     font-family: 'Open Sans', sans-serif;
+    background-image: url("bground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    height: 100vh;
 }
 .form-control {
     box-shadow: none;
@@ -7,38 +13,56 @@ body{
     border-color: #dfe3e8;
 }
 .form-control:focus {
-    border-color: #29c68c;
+    border-color: #60c7c1;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 .navbar-header.col {
     padding: 0 !important;
-}	
+}
+
+.navbar-default {
+    border: none !important;
+}
+
 .navbar {
-    background: #fff;
+    background-image: url("bground.jpg");
+    background-size: cover;
+    background-position: center;
     padding-left: 16px;
     padding-right: 16px;
-    border-bottom: 1px solid #dfe3e8;
     border-radius: 0;
 }
+
 .navbar .navbar-brand {
-    font-size: 20px;
+    font-size: 25px;
     padding-left: 0;
     padding-right: 50px;
+    text-emphasis: emphasis;
+    font-weight: bolder;
+    color: ivory;
 }
+
 .navbar .navbar-brand b {
-    font-weight: bold;
-    color: #29c68c;		
+    color: #29c68c;
+    font-size: 21px;
 }
+
 .navbar ul.nav li a {
-    color: #999;
+    color: ivory !important;
+    font-weight: 900;
 }
-.navbar ul.nav li a:hover, .navbar ul.nav li a:focus {
+
+.navbar ul.nav li a:hover,
+.navbar ul.nav li a:focus {
     color: #29c68c !important;
 }
-.navbar ul.nav li.active > a, .navbar ul.nav li.open > a {
+
+.navbar ul.nav li.active>a,
+.navbar ul.nav li.open>a {
     color: #26bb84 !important;
     background: transparent !important;
 }
+
 .navbar .form-inline .input-group-addon {
     box-shadow: none;
     border-radius: 2px 0 0 2px;
@@ -46,9 +70,11 @@ body{
     border-color: #dfe3e8;
     font-size: 16px;
 }
+
 .navbar .form-inline i {
     font-size: 16px;
 }
+
 .navbar .form-inline .btn {
     border-radius: 2px;
     color: #fff;
@@ -56,38 +82,49 @@ body{
     background: #29c68c;
     outline: none;
 }
-.navbar .form-inline .btn:hover, .navbar .form-inline .btn:focus {
-    border-color: #26bb84;
+
+.navbar .form-inline .btn:hover,
+.navbar .form-inline .btn:focus {
+    border-color: ivory;
     background: #26bb84;
 }
+
 .navbar .search-form {
     display: inline-block;
 }
+
 .navbar .search-form .btn {
     margin-left: 4px;
 }
+
 .navbar .search-form .form-control {
     border-radius: 2px;
 }
+
 .navbar .login-form .input-group {
     margin-right: 4px;
     float: left;
 }
+
 .navbar .login-form .form-control {
     max-width: 158px;
     border-radius: 0 2px 2px 0;
-}    	
+}
+
 .navbar .navbar-right .dropdown-toggle::after {
     display: none;
 }
+
 .navbar .dropdown-menu {
     border-radius: 1px;
     border-color: #e5e5e5;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
 }
+
 .navbar .dropdown-menu li a {
     padding: 6px 20px;
 }
+
 .navbar .navbar-right .dropdown-menu {
     width: 505px;
     padding: 20px;
@@ -123,13 +160,13 @@ body{
 
 .login-form {
     width: 340px;
-    margin: 50px auto;
+    margin: 100px auto  0px;
 }
 .login-form form {
     margin-bottom: 15px;
-    background: #f7f7f7;
+    background: #f8f7f7;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    padding: 30px;
+    padding: 30px 30px 15px 30px;
 }
 .login-form h2 {
     margin: 0 0 15px;
@@ -138,11 +175,21 @@ body{
     min-height: 38px;
     border-radius: 2px;
 }
-.btn {        
-    font-size: 15px;
-    font-weight: bold;
-}
+.login-form .btn {        
 
+    color: #fff;
+    border-radius: 4px;
+    background: #60c7c1;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    border: none;
+
+}
+.login-form .btn:hover, .login-form .btn:focus {
+    background: #45aba6;
+    outline: none;
+}
 
 
 
@@ -236,9 +283,15 @@ body {
     margin: 0px auto;
 }
 
+
+
+
+
+
+
 body {
     background-color: #ededed;
-    background-image: url("http://4.bp.blogspot.com/-9ZlCMPcJRww/Ug-07RhzLoI/AAAAAAAAA6o/oTipxIj7r6M/s1600/fzm-Wooden.Scrabble.Letter.Tiles-01.jpg");
+    /* background-image: url("http://4.bp.blogspot.com/-9ZlCMPcJRww/Ug-07RhzLoI/AAAAAAAAA6o/oTipxIj7r6M/s1600/fzm-Wooden.Scrabble.Letter.Tiles-01.jpg"); */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
