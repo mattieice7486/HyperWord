@@ -1,14 +1,3 @@
-<!-- //SHOULDN'T BE ABLE TO KEEP PLAYING ONCE TIMER STOPS! 
-//WHEN CLICK NO TO PLAY AGAIN, SHOULD EXIT WINDOW??
-//BUG WITH WIN MODAL: WON'T GO AWAY IF CLICK NO
-//WITH WIN MODAL, WHEN CLICK OUTSIDE, SAYS LOST?
-//SHOULD BE ABLE TO POST TO DATABASE!!
-//MODAL SHOULD BE CHANGED SO IT DOESN'T BLOCK THE DEFINITION!
-//push to master 
-//heroku -->
-
-
- 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,10 +56,10 @@
     <div class="container">
 
         <div class="row">
-            <h1 class="text-center">
-                <span class="fa fa-fire"></span> Hyperword</h1>
+            <h1 class="text-center" id="Hyperword-title">HyperWord</h1>
             <hr>
-            <h2 class="text-center">Catchy Tagline Here!</h2>
+            <h2 class="text-center">Fill in the blanks with letters that add up to the Target score.
+                <br>Your word must match the part of speech as well!</h2>
             <br>
         </div>
 
@@ -87,7 +76,9 @@
             <div class="row top-buffer">
                 <div class="col-sm-1" id="score"></div>
                 <div class="col-sm-1 timer-container" id="countdown">60</div>
-                <div class="col-sm-1" id="runScore">Your score: <span id="runningScore"></span></div>
+                <div class="col-sm-1" id="runScore">Your score:
+                    <span id="runningScore"></span>
+                </div>
             </div>
         </div>
         <div class="container">
@@ -184,45 +175,22 @@
                 </div>
                 <div class="row">
                     <div class="btn-group" id="row4">
-                        <button type="button" class="btn btn-primary"  id="backspace">Backspace</button>
+                        <button type="button" class="btn btn-primary" id="backspace">Backspace</button>
                         <button type="button" class="btn btn-primary" id="clear">Clear</button>
                         <button type="button" class="btn btn-primary" id="submit">Submit</button>
                     </div>
                 </div>
-    
+
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div id="start">
                     <button type="button" class="btn btn-danger col-md-1 col-md-offset-2 text-center">START</button>
                 </div>
-            </div>
-        <div class="row">
-            <div class="col-lg-12">
+            </div> -->
 
-                        <form role="form">
-
-                            <div class="form-group">
-                                <label for="reserve-name">UserName</label>
-                                <input type="text" class="form-control" id="reserve-name">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reserve-unique-id">Score</label>
-                                <input type="text" class="form-control" id="reserve-unique-id">
-                            </div>
-
-                            <button type="submit" class="btn btn-secondary submit" id="submit-main">Submit</button>
-
-                            <button type="submit" class="btn btn-success submit" id="submit-noun">Get noun</button>
-  
-                        </form>
-
-                </div>
-
-            </div>
         </div>
 
-        <footer class="footer">
+        <!-- <footer class="footer">
             <div class="container">
                 <p>
                     <a href="/api/scores">API Scores Link</a> |
@@ -236,7 +204,7 @@
                     <a href="/api/adjectives">API Adj List</a> |
                 </p>
             </div>
-        </footer>
+        </footer> -->
 
     </div>
 
@@ -271,7 +239,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Great job! You earned <span id="points"></span> points. Would you like to play again?</p>
+                    <p>Great job! You earned
+                        <span id="points"></span> points. Would you like to play again?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="yes-won" class="btn btn-primary">Yes</button>
@@ -307,17 +276,19 @@
 
 
 <script type="text/javascript">
-
     var targetScore = Math.floor(Math.random() * (15 - 7)) + 7;
-    var partsOfSpeech = { "n.": "noun", "a.": "adjective", "v.": "verb" };
-    var clicked = false;
+    var partsOfSpeech = {
+        "n.": "noun",
+        "a.": "adjective",
+        "v.": "verb"
+    };
     var partsOfSpeechArray = Object.values(partsOfSpeech); //array of POS
     var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
     var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
     var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
-    var randomLength = Math.floor(Math.random() * (7-4)) + 4;
-    
+    var randomLength = Math.floor(Math.random() * (7 - 4)) + 4;
+
     var letterValues = {
         "A": 1,
         "B": 3,
@@ -348,36 +319,35 @@
     }
     $(document).ready(function () {
         var answerArray = [];
-        var newWinningScore = 0;
+        var newScore = 0;
         runningScoreArray = [];
-
         ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
         $(".btn-link").on("click", function (event) { //fill in the blanks
             event.preventDefault();
             var letterGuessed = $(this).val();
             var index = answerArray.indexOf("_ "); //find first blank in array
-            if ((index !== -1) && (secondsLeft !== 0) && (clicked === false)) { //if there are blanks left and timer hasn't run out and submit hasn't been clicked
+            if (index !== -1) {
                 answerArray[index] = letterGuessed; //replace with letter
-                var letterVal = $(this).data("letterval");
-                runningScoreArray.push(letterVal); //update score
             }
             answerArray.join(" ");
             $("#answerSpace").html(answerArray);
+            var letterVal = $(this).data("letterval");
+            runningScoreArray.push(letterVal);
 
-
-            for (var x=0; x<runningScoreArray.length; x++) {
+            for (var x = 0; x < runningScoreArray.length; x++) {
                 runningScore += runningScoreArray[x];
             }
-        
+
             function tot(total, num) {
                 return total + num;
             }
-        
+
             var runningScore = runningScoreArray.reduce(tot);
             $("#runningScore").text(runningScore);
         });
         $("#clear").on("click", function () {
             runningScoreArray = [];
+
             function newBlanks() {
                 var length = answerArray.length;
                 $("#answerSpace").empty();
@@ -402,59 +372,30 @@
         $("#submit").on("click", function () {
             stop();
             checkIfWon();
-
-            /* var newScore = {
-            userName: userName, //need to pull in username variable from jesse's code, but can't find it!!!!!!!!! any way to grab username from jesse's login.html, maybe if add ID to form?? but how to import that info?????? just create new var userName here and do ajax call from jesse's database to get it??????  
-
-            score: newWinningScore
-        };*/
-        clicked = true;
-        return clicked;
         });
         $("#yes-lost").on("click", function () {
             location.reload();
         });
         $("#no-lost").on("click", function () {
-            //$("#lossModal").modal("hide");
-            $("#lossModal").hide();
+            $("#lossModal").modal("hide");
             $("#thanksForPlaying").modal();
-            $("#submit").prop("disabled",true);
-            $("#clear").prop("disabled",true);
-            $("#backspace").prop("disabled",true);
-            clicked = true;
-            return clicked;
-            //window.close();
         });
         $("#yes-won").on("click", function () {
             location.reload();
         });
         $("#no-won").on("click", function () {
-            $("#winModal").hide();
+            $("#winModal").modal("hide");
             $("#thanksForPlaying").modal();
-            $("#submit").prop("disabled",true);
-            $("#clear").prop("disabled",true);
-            $("#backspace").prop("disabled",true);
-            clicked = true;
-            return clicked;
-            //window.close();
         });
-
-//on click of X should close window??
-
-//$("[data-dismiss=winModal]").trigger({ type: "click" });
-
-$('#thanksForPlaying').on('shown', function () {
-      $('#winModal').modal('hide');
-}); //DOES THIS WORK????????????????????????????????????????????????
-
-
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
         var secondsLeft = 60;
         var intervalId;
+
         function run() {
             clearInterval(intervalId);
             intervalId = setInterval(decrement, 1000);
         }
+
         function decrement() {
             secondsLeft--;
             $(".timer-container").text(secondsLeft);
@@ -464,6 +405,7 @@ $('#thanksForPlaying').on('shown', function () {
             }
             return secondsLeft;
         }
+
         function stop() {
             clearInterval(intervalId);
         }
@@ -475,83 +417,89 @@ $('#thanksForPlaying').on('shown', function () {
 
         function win() {
             stop();
-            newWinningScore += (secondsLeft * 10);
-    
-        
-
-            $.post("/api/scores", newWinningScore,
-                function(data) {
+            newScore += (secondsLeft * 10);
+            var newHighScore = {
+                userName: $("#Hyperword-title"),
+                roundNumber: 1,
+                score: newScore
+            };
+            $.post("/api/scores", newHighScore,
+                function (data) {
+                    // If a table is available... tell user they are booked.
                     if (data) {
-                        //console.log("posted " + newWinningScore);
-                        $("#points").text(newWinningScore);
-                        $("#winModal").modal();
-                        return newWinningScore;
+                        console.log("Top ten score added");
                     }
-                    return newWinningScore;
-            }); //POSTING BLANK DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return newWinningScore;
-    };
-
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                        console.log("Top fifty score added");
+                    }
+                });
+            $.ajax({
+                method: "POST",
+                url: "/api/scores",
+                data: newScore
+            }).then(function (results) {
+                $("#points").text(newScore);
+                $("#winModal").modal();
+                return newScore;
+            });
+        };
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
         function checkIfWon() {
-        
-        if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
-            loss();
-        } else {
-            var x = Object.keys(letterValues); //list of all letters in alphabet
-            //check to make sure the value of user's word matches the target score
-            var scoreArray = [];
-            for (var a=0; a<answerArray.length; a++) { //for each letter in user's answer...
-                if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
-                    var letterScore = letterValues[answerArray[a]];
-                    scoreArray.push(letterScore); //push its value to array
-                }
-            }
-            var sum = 0;
-            for (var b=0; b<scoreArray.length; b++) { 
-                sum += scoreArray[b];
-            };
-            if (sum === targetScore) {
 
+            if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
+                loss();
+            } else {
+                var x = Object.keys(letterValues); //list of all letters in alphabet
+                //check to make sure the value of user's word matches the target score
+                var scoreArray = [];
+                for (var a = 0; a < answerArray.length; a++) { //for each letter in user's answer...
+                    if (x.indexOf(answerArray[a]) > -1) { //if letter appears in array...
+                        var letterScore = letterValues[answerArray[a]];
+                        scoreArray.push(letterScore); //push its value to array
+                    }
+                }
+                var sum = 0;
+                for (var b = 0; b < scoreArray.length; b++) {
+                    sum += scoreArray[b];
+                };
+                if (sum === targetScore) {
                     function getDefinition() {
-                    $.get("/api/all", function (data) {
-                        for (var i=0; i <data.length; i++) {
-                            if (guessedWord === data[i].word) { //if it's a word
-                                $("#definition-div").html(data[i].definition); //print definition
-                                var wordtypelong = data[i].wordtype; //get POS from API
-                                var wordtype = wordtypelong[0] + wordtypelong[1];
-                                if (abbreviatedRandomPOS == wordtype) { //if right POS
-                                    win();
+                        $.get("/api/all", function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (guessedWord === data[i].word) { //if it's a word
+                                    $("#definition-div").html(data[i].definition); //print definition
+                                    var wordtypelong = data[i].wordtype; //get POS from API
+                                    var wordtype = wordtypelong[0] + wordtypelong[1];
+                                    if (abbreviatedRandomPOS == wordtype) { //if right POS
+                                        win();
+                                    } else {
+                                        loss();
+                                    }
+                                    return;
                                 } else {
                                     loss();
                                 }
-                                return;
-
-                            } else {
-                            loss();
                             }
-                        } 
-                    });
+                        });
+                    }
+                    getDefinition();
+                } else {
+                    loss();
                 }
-                getDefinition();
-
-} else {  
-                loss();
-            }
                 var guessedWord = answerArray.join("");
                 guessedWord = guessedWord.toLowerCase();
                 guessedWord = guessedWord.split("");
                 guessedWord[0] = guessedWord[0].toUpperCase();
                 var guessedWord = guessedWord.join("");
-                }
             }
-
-
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         function startGame() {
             $("#POS").text(randomPOS);
             $("#score").text("Target score: " + targetScore);
             run();
+
             function generateBlanks() {
                 answerArray = [];
                 $("#answerSpace").empty();
@@ -564,50 +512,32 @@ $('#thanksForPlaying').on('shown', function () {
             generateBlanks();
         }
         ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
-    
+
         startGame();
-    });
 
-    /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
-    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
-    $("#submit-noun").on("click", function (event) {
-        event.preventDefault();
-        function getNouns() {
-            $.get("/api/all", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (guessedWord === data[i].word) {
-                        $("#definition-div").html(data[i].definition);
+        $("#submit").on("click", function (event) {
+            event.preventDefault();
+            // Here we grab the form elements
+            var newHighScore = {
+                userName: $("#Hyperword-title").val().trim(),
+                roundNumber: 1,
+                score: newScore
+            };
+            $.post("/api/scores", newHighScore,
+                function (data) {
+                    // If a table is available... tell user they are booked.
+                    if (data) {
+                        console.log("Top ten score added");
                     }
-                }
-            });
-        }
-        getNouns();
-    });
-    $("#submit-main").on("click", function (event) {
-        event.preventDefault();
-        // Here we grab the form elements
-////////////////////////////////////////////////////////////
-
-
-        $.post("/api/scores", newReservation,
-            function (data) {
-                // If a table is available... tell user they are booked.
-                if (data) {
-                    alert("Yay! You are officially booked!");
-                }
-                // If a table is available... tell user they on the waiting list.
-                else {
-                    alert("Sorry you are on the wait list");
-                }
-                // Clear the form when submitting
-                $("#reserve-name").val("");
-                $("#reserve-phone").val("");
-                $("#reserve-unique-id").val("");
-            });
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                        console.log("Top fifty score added");
+                    }
+                });
+        });
     });
 </script>
+
 </html>

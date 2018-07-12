@@ -156,6 +156,10 @@ body {
     width: 20%;
 }
 
+.center {
+    text-align: center;
+}
+
 #countdown {
     background-color: transparent !important;
     color: #000000 !important;
@@ -216,6 +220,12 @@ sub {
     font-size: 80px;
 }
 
+#Hyperword-title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 60px;
+    margin-top: 0;
+}
+
 .btn.btn-primary {
     background-image: url("abstract-art-backdrop-926985.jpg");
     color: saddlebrown;
@@ -235,7 +245,7 @@ sub {
 .btn.btn-primary:hover,
 .btn.btn-primary:focus {
     color: #29c68c !important;
-    background: transparent !important;
+    /* background: transparent !important; */
     border: 1px #29c68c groove;
 }
 

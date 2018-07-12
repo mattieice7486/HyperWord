@@ -288,6 +288,7 @@
     var POSIndex = partsOfSpeechArray.indexOf(randomPOS);
     var abbreviatedRandomPOS = abbreviatedPOSArray[POSIndex];
     var randomLength = 6;
+
     var letterValues = {
         "A": 1,
         "B": 3,
@@ -332,17 +333,21 @@
             $("#answerSpace").html(answerArray);
             var letterVal = $(this).data("letterval");
             runningScoreArray.push(letterVal);
+
             for (var x = 0; x < runningScoreArray.length; x++) {
                 runningScore += runningScoreArray[x];
             }
+
             function tot(total, num) {
                 return total + num;
             }
+
             var runningScore = runningScoreArray.reduce(tot);
             $("#runningScore").text(runningScore);
         });
         $("#clear").on("click", function () {
             runningScoreArray = [];
+
             function newBlanks() {
                 var length = answerArray.length;
                 $("#answerSpace").empty();
@@ -379,17 +384,18 @@
             location.reload();
         });
         $("#no-won").on("click", function () {
-            $("#winModal").hide();
+            $("#winModal").modal("hide");
             $("#thanksForPlaying").modal();
         });
-
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
         var secondsLeft = 180;
         var intervalId;
+
         function run() {
             clearInterval(intervalId);
             intervalId = setInterval(decrement, 1000);
         }
+
         function decrement() {
             secondsLeft--;
             $(".timer-container").text(secondsLeft);
@@ -399,6 +405,7 @@
             }
             return secondsLeft;
         }
+
         function stop() {
             clearInterval(intervalId);
         }
@@ -407,6 +414,7 @@
             stop();
             $("#lossModal").modal();
         };
+
         function win() {
             stop();
             newScore += (secondsLeft * 10);
@@ -423,6 +431,7 @@
                     else {
                         console.log("Top fifty score added");
                     }
+
             }).then(function (results) {
                 $("#points").text(newScore);
                 $("#winModal").modal();
@@ -431,6 +440,7 @@
         };
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
         function checkIfWon() {
+
             if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
                 loss();
             } else {
@@ -483,6 +493,7 @@
             $("#POS").text(randomPOS);
             $("#score").text("Target score: " + targetScore);
             run();
+
             function generateBlanks() {
                 answerArray = [];
                 $("#answerSpace").empty();
@@ -495,8 +506,11 @@
             generateBlanks();
         }
         ///////////////////////////////////// CALLING FUNCTIONS ////////////////////////////////////////////
+
         startGame();
+
         /////////////////////////////////////////////////////////////////////////////////////////////
+
     });
 </script>
 
