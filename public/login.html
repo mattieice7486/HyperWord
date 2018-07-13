@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<link rel="stylesheet" href="css/styleJesse.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head> 
+
+<body>
+		<nav class="navbar navbar-default navbar-expand-lg navbar-light">
+				<div class="navbar-header d-flex col">
+					<a class="navbar-brand" href="#">Hyper
+						<b>Word</b>
+					</a>
+					<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+						<span class="navbar-toggler-icon"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<!-- Collection of nav links, forms, and other content for toggling -->
+				<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a href="/" class="nav-link col-md-1">
+								<span class="glyphicon glyphicon-home "></span>Home</a>
+						</li>
+						<li class="nav-item">
+							<a href="login.html" class="nav-link col-md-1">
+								<span class="glyphicon glyphicon-user "></span>Account</a>
+						</li>
+						<li class="nav-item">
+							<a href="leaderboard.html" class="nav-link col-md-1">
+								<span class="glyphicon glyphicon-list "></span>Score</a>
+						</li>
+						<li class="nav-item">
+							<a href="contact.html" class="nav-link col-md-1">
+								<span class="glyphicon glyphicon-leaf"></span>Contact</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+
+
+	<div class="login-form">
+		<form action="/login" method="post">
+			<h2 class="text-center">Log In</h2>       
+			<div class="form-group">
+				<input type="text" name="username" class="form-control" placeholder="Username" required="required">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" class="form-control" placeholder="Password" required="required">
+			</div>
+			<!-- <div class="form-group">
+				<input type="password" class="form-control" placeholder="Type Password Again" required="required">
+			</div> -->
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block" value="Log In">Log in</button>
+			</div>
+			<div class="text-center">
+				<!-- Button HTML (to Trigger Modal) -->
+				<!-- <a href="#myModal" class="trigger-btn" data-toggle="modal">Already a Member?</a> -->
+			</div>
+		</form>
+	</div>
+
+
+
+
+
+	<!-- Modal HTML -->
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="avatar">
+						<!-- <img src="" alt="Avatar"> -->
+					</div>				
+					<h4 class="modal-title">Member Login</h4>	
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form action="/examples/actions/confirmation.php" method="post">
+						<div class="form-group">
+							<input type="text" class="form-control" name="modal-username" placeholder="Username" required="required">		
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="modal-password" placeholder="Password" required="required">	
+						</div>        
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- <a href="#">Forgot Password?</a> -->
+				</div>
+			</div>
+		</div>
+	</div>     
+</body>
+</html>             
+
+
+<script type="text/javascript">
+	//POST
+	//{username: , password: }
+	// get back a token, save that to localStorage
+	
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: url,
+	// 	body: {username: username, password: password}
+	// }).done(function(data){
+	// 	localStorage.token = data.token;
+	// });
+
+	// Every subsequent request (inside members area) add Authorization: `Bearer ${token}` 
+	//Members area rest calls
+	// $.ajax({
+	// 	type: 'GET',
+	// 	url: url,
+	// 	headers: {"Authorization": `Bearer ${localStorage.token}`}
+	// })
+</script>
