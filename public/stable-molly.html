@@ -282,6 +282,7 @@
         "a.": "adjective",
         "v.": "verb"
     };
+    var clicked = false;
     var partsOfSpeechArray = Object.values(partsOfSpeech); //array of POS
     var abbreviatedPOSArray = Object.keys(partsOfSpeech); //array of abbreviated POS
     var randomPOS = partsOfSpeechArray[Math.floor(Math.random() * partsOfSpeechArray.length)];
@@ -325,19 +326,23 @@
             event.preventDefault();
             var letterGuessed = $(this).val();
             var index = answerArray.indexOf("_ "); //find first blank in array
-            if (index !== -1) {
+            if ((index !== -1) && (secondsLeft !== 0) && (clicked === false)) { //if there are blanks left and timer hasn't run out and submit hasn't been clicked
                 answerArray[index] = letterGuessed; //replace with letter
+                var letterVal = $(this).data("letterval");
+                runningScoreArray.push(letterVal); //update score
             }
             answerArray.join(" ");
             $("#answerSpace").html(answerArray);
-            var letterVal = $(this).data("letterval");
-            runningScoreArray.push(letterVal);
-            for (var x = 0; x < runningScoreArray.length; x++) {
+
+
+            for (var x=0; x<runningScoreArray.length; x++) {
                 runningScore += runningScoreArray[x];
             }
+        
             function tot(total, num) {
                 return total + num;
             }
+        
             var runningScore = runningScoreArray.reduce(tot);
             $("#runningScore").text(runningScore);
         });
@@ -367,6 +372,8 @@
         $("#submit").on("click", function () {
             stop();
             checkIfWon();
+            clicked = true;
+            return clicked;
         });
         $("#yes-lost").on("click", function () {
             location.reload();
@@ -374,6 +381,11 @@
         $("#no-lost").on("click", function () {
             $("#lossModal").modal("hide");
             $("#thanksForPlaying").modal();
+            $("#submit").prop("disabled",true);
+            $("#clear").prop("disabled",true);
+            $("#backspace").prop("disabled",true);
+            clicked = true;
+            return clicked;
         });
         $("#yes-won").on("click", function () {
             location.reload();
@@ -381,7 +393,16 @@
         $("#no-won").on("click", function () {
             $("#winModal").modal("hide");
             $("#thanksForPlaying").modal();
+            $("#submit").prop("disabled",true);
+            $("#clear").prop("disabled",true);
+            $("#backspace").prop("disabled",true);
+            clicked = true;
+            return clicked;
         });
+        $('#thanksForPlaying').on('shown', function () {
+      $('#winModal').modal('hide');
+}); //DOES THIS WORK????????????????????????????????????????????????
+
         //////////////////////////////////////// TIMER ////////////////////////////////////////////
         var secondsLeft = 60;
         var intervalId;
@@ -440,7 +461,7 @@
             if (answerArray.indexOf("_ ") > -1) { //check to make sure all blanks were filled in
                 loss();
             } else {
-                var x = Object.keys(letterValues);
+                var x = Object.keys(letterValues); //list of all letters in alphabet
                 //check to make sure the value of user's word matches the target score
                 var scoreArray = [];
                 for (var a = 0; a < answerArray.length; a++) { //for each letter in user's answer...

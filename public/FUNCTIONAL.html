@@ -1,10 +1,9 @@
-<!-- //SHOULDN'T BE ABLE TO KEEP PLAYING ONCE TIMER STOPS! 
-//WHEN CLICK NO TO PLAY AGAIN, SHOULD EXIT WINDOW??
-//BUG WITH WIN MODAL: WON'T GO AWAY IF CLICK NO
+<!-- //BUG WITH WIN MODAL: WON'T GO AWAY IF CLICK NO
+//look at mysql errors in console
 //WITH WIN MODAL, WHEN CLICK OUTSIDE, SAYS LOST?
 //SHOULD BE ABLE TO POST TO DATABASE!!
 //MODAL SHOULD BE CHANGED SO IT DOESN'T BLOCK THE DEFINITION!
-//push to master 
+//push to master
 //heroku -->
 
 
@@ -12,22 +11,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Hyperword</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title> Hyperword</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+    </head>
 
 <body>
     <nav class="navbar navbar-default navbar-expand-lg navbar-light">
@@ -67,7 +66,7 @@
     <div class="container">
 
         <div class="row">
-            <h1 class="text-center">
+            <h1 class="text-center" id="Hyperword-title">
                 <span class="fa fa-fire"></span> Hyperword</h1>
             <hr>
             <h2 class="text-center">Catchy Tagline Here!</h2>
@@ -348,7 +347,7 @@
     }
     $(document).ready(function () {
         var answerArray = [];
-        var newWinningScore = 0;
+        var newScore = 0;
         runningScoreArray = [];
 
         ///////////////////////////// BUTTON FUNCTIONALITY ////////////////////////////////
@@ -399,24 +398,40 @@
                 }
             }
         });
+
+        var userName = $("userName").val();
+
         $("#submit").on("click", function () {
+            event.preventDefault();
+            
+            var newHighScore = {
+                userName: $("#Hyperword-title").val().trim(),
+                //roundNumber: 1,
+                score: newScore
+            };
+            $.post("/api/scores", newHighScore,
+                function (data) {
+                    // If a table is available... tell user they are booked.
+                    if (data) {
+                        console.log("Top ten score added");
+                    }
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                        console.log("Top fifty score added");
+                    }
+            });
+
             stop();
-            checkIfWon();
-
-            /* var newScore = {
-            userName: userName, //need to pull in username variable from jesse's code, but can't find it!!!!!!!!! any way to grab username from jesse's login.html, maybe if add ID to form?? but how to import that info?????? just create new var userName here and do ajax call from jesse's database to get it??????  
-
-            score: newWinningScore
-        };*/
-        clicked = true;
-        return clicked;
+            checkIfWon(); 
+            clicked = true;
+            return clicked;
         });
         $("#yes-lost").on("click", function () {
             location.reload();
         });
         $("#no-lost").on("click", function () {
             //$("#lossModal").modal("hide");
-            $("#lossModal").hide();
+            $("#lossModal").modal("hide");
             $("#thanksForPlaying").modal();
             $("#submit").prop("disabled",true);
             $("#clear").prop("disabled",true);
@@ -475,21 +490,23 @@ $('#thanksForPlaying').on('shown', function () {
 
         function win() {
             stop();
-            newWinningScore += (secondsLeft * 10);
-    
-        
-
-            $.post("/api/scores", newWinningScore,
+            newScore += (secondsLeft * 10);
+            var newHighScore = {
+                userName: $("#Hyperword-title"),
+                roundNumber: null,
+                score: newScore
+            };
+            $.post("/api/scores", newScore,
                 function(data) {
                     if (data) {
                         //console.log("posted " + newWinningScore);
-                        $("#points").text(newWinningScore);
+                        $("#points").text(newScore);
                         $("#winModal").modal();
-                        return newWinningScore;
+                        return newScore;
                     }
-                    return newWinningScore;
+                    return newScore;
             }); //POSTING BLANK DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return newWinningScore;
+    return newScore;
     };
 
         //////////////////////////////////// DETERMINE WIN OR LOSS ///////////////////////////////////////
