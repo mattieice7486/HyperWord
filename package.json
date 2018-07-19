@@ -27,7 +27,7 @@
     "url": "https://github.com/mattieice7486/HyperWord/issues"
   },
   "engines": {
-  "node": "8.9.3"
+    "node": "8.9.3"
   },
   "homepage": "https://github.com/mattieice7486/HyperWord#readme",
   "dependencies": {
