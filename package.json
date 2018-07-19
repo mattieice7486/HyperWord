@@ -26,6 +26,9 @@
   "bugs": {
     "url": "https://github.com/mattieice7486/HyperWord/issues"
   },
+  "engines": {
+  "node": "8.9.3"
+  },
   "homepage": "https://github.com/mattieice7486/HyperWord#readme",
   "dependencies": {
     "bcrypt": "^3.0.0",
