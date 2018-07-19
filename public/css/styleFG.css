@@ -1,0 +1,324 @@
+/*Style finalGame.html*/
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("bgrounde.jpg");
+}
+
+.navbar-header.col {
+    padding: 0 !important;
+}
+
+.navbar-default {
+    border: none !important;
+}
+
+.navbar {
+    background-image: url("bgrounde.jpg");
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 0;
+}
+
+.navbar .navbar-brand {
+    font-size: 25px;
+    padding-left: 0;
+    padding-right: 50px;
+    text-emphasis: emphasis;
+    font-weight: bolder;
+    color: ivory;
+}
+
+.navbar .navbar-brand b {
+    color: #29c68c;
+    font-size: 21px;
+}
+
+.navbar ul.nav li a {
+    color: ivory !important;
+    font-weight: 900;
+}
+
+.navbar ul.nav li a:hover,
+.navbar ul.nav li a:focus {
+    color: #29c68c !important;
+}
+
+.navbar ul.nav li.active>a,
+.navbar ul.nav li.open>a {
+    color: #26bb84 !important;
+    background: transparent !important;
+}
+
+.navbar .form-inline .input-group-addon {
+    box-shadow: none;
+    border-radius: 2px 0 0 2px;
+    background: #f5f5f5;
+    border-color: #dfe3e8;
+    font-size: 16px;
+}
+
+.navbar .form-inline i {
+    font-size: 16px;
+}
+
+.navbar .form-inline .btn {
+    border-radius: 2px;
+    color: #fff;
+    border-color: #29c68c;
+    background: #29c68c;
+    outline: none;
+}
+
+.navbar .form-inline .btn:hover,
+.navbar .form-inline .btn:focus {
+    border-color: ivory;
+    background: #26bb84;
+}
+
+.navbar .search-form {
+    display: inline-block;
+}
+
+.navbar .search-form .btn {
+    margin-left: 4px;
+}
+
+.navbar .search-form .form-control {
+    border-radius: 2px;
+}
+
+.navbar .login-form .input-group {
+    margin-right: 4px;
+    float: left;
+}
+
+.navbar .login-form .form-control {
+    max-width: 158px;
+    border-radius: 0 2px 2px 0;
+}
+
+.navbar .navbar-right .dropdown-toggle::after {
+    display: none;
+}
+
+.navbar .dropdown-menu {
+    border-radius: 1px;
+    border-color: #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.navbar .dropdown-menu li a {
+    padding: 6px 20px;
+}
+
+.navbar .navbar-right .dropdown-menu {
+    width: 505px;
+    padding: 20px;
+    left: auto;
+    right: 0;
+    font-size: 14px;
+}
+
+.top-buffer {
+    margin-top: 1%;
+}
+
+.col-xs {
+    margin: 0 auto;
+    float: none;
+    color: saddlebrown;
+    
+    text-align: center;
+    font-family: arial;
+    font-size: 16px;
+    padding: 10px;
+    border: 1.5px #29c68c solid;
+    border-radius: 20px;
+    width: 40%;
+    background-image: url("abstract-art-backdrop-926985.jpg");
+}
+
+.col-xs-1 {
+    margin-left: 10%;
+    margin-right: 0%;
+    display: inline-block;
+    color: saddlebrown;
+    
+    text-align: center;
+    font-family: arial;
+    font-size: 16px;
+    padding: 10px;
+    border: 1.5px #29c68c solid;
+    border-radius: 20px;
+    width: 20%;
+    background-image: url("abstract-art-backdrop-926985.jpg");
+}
+
+#countdown {
+    background-color: transparent !important;
+    color: #29c68c !important;
+    border: none;
+}
+
+#keyboard {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+#row1 {
+    margin-top: 10px;
+}
+
+#row2 {
+    margin-top: 10px;
+}
+
+#row3 {
+    margin-top: 10px;
+}
+
+#row4 {
+    margin-top: 10px;
+}
+
+.btn.btn-link {
+    background-color: transparent;
+    color: saddlebrown;
+    font-weight: 700;
+    font-family: arial;
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 7px;
+    border-bottom: 2px black groove;
+    border-right: 2px black groove;
+    border-top: 1px black groove;
+    border-left: 1px black groove;
+    text-align: center;
+    height: 66px;
+    width: 66px;
+}
+
+.btn.btn-link:hover,
+.btn.btn-link:focus {
+    color: #29c68c !important;
+    border: 1px #29c68c groove;
+}
+
+sub {
+    font-size: 10px;
+}
+
+.btn.btn-primary {
+    background-image: url("abstract-art-backdrop-926985.jpg");
+    color: saddlebrown;
+    font-family: arial;
+    font-size: 14px;
+    padding: 10px;
+    margin-right: 7px;
+    border-bottom: 2px black groove;
+    border-right: 2px black groove;
+    border-top: 1px ivory;
+    border-left: 1px ivory;
+    text-align: center;
+    height: 42px;
+    width: 105px;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+    color: #29c68c !important;
+    background: transparent !important;
+    border: 1px #29c68c groove;
+}
+
+.btn.btn-danger {
+    margin-left: 30%;
+    float: none;
+    background-image: url("abstract-art-backdrop-926985.jpg");
+    color: saddlebrown;
+    font-family: arial;
+    font-weight: 800;
+    border-bottom: 2px black groove;
+    border-right: 2px black groove;
+    border-top: 1px ivory;
+    border-left: 1px ivory;
+    text-align: center;
+    width: 40%;
+}
+
+.btn.btn-danger:hover,
+.btn.btn-danger:focus {
+    color: #29c68c !important;
+    background: transparent !important;
+    border: 1px #29c68c groove;
+}
+
+footer {
+    margin: 0 auto;
+    float: none;
+    background-color:transparent;
+    color: saddlebrown;
+
+}
+
+.list-unstyled a  {
+    color: saddlebrown!important;
+}
+
+.col-md-3 {
+    margin: 0 auto;
+    float: none;
+}
+
+.footer-copyright a {
+    color:saddlebrown!important;
+}
+
+/*@media (max-width: 768px){
+    .navbar .navbar-right .dropdown-menu {
+        width: 100%;
+        background: transparent;
+        padding: 10px 20px;
+    }
+    .navbar .input-group {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .navbar .input-group .form-control {
+        max-width: none;			
+    }
+    .navbar .login-form .btn {
+        width: 100%;
+    }
+}
+    /* Extra small devices (phones, less than 600px) */
+
+@media only screen and (max-width: 600px) {
+    .btn-link {
+        font-size: 9px;
+        height: 25%;
+        width: 25%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600 - 768px) */
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    .btn-link {
+        font-size: 11px;
+        height: 50%;
+        width: 50%;
+    }
+}
+
+/* Medium devices (tablets, 768 - 1024px) */
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .btn-link {
+        font-size: 17px;
+        height: 75%;
+        width: 75%x;
+    }
+}
