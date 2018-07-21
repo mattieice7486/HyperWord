@@ -12,7 +12,7 @@ var connection = mysql.createConnection(process.env.JAWSDB_URL ||
   host: "localhost",
   user: "root",
   password: "root",
-  database: "entries_db"
+  database: "auth"
 });
 // Connect to the database
 connection.connect(function(err) {
